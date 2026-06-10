@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physician Freedom Snapshot</title>
+<meta name="description" content="A one-page diagnostic: see your current financial structure before you try to improve it. Physician Freedom System.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@400;500;600&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+<style>
+  :root{
+    --ink:#1F1F1F; --charcoal:#2B2B2B; --slate:#637381;
+    --warm-white:#FBF9F5; --cream-input:#FFF8EC; --warm-box:#F7F1E8;
+    --tan:#D7CCBC; --brass:#B8873A; --gold:#C58D3A;
+    --teal:#2F7A78; --teal-fill:#E8F3F2; --green:#2E6B4F; --green-fill:#EAF5EF;
+    --yellow-fill:#FFF4DA; --red:#A23B3B; --red-fill:#FBEAEA;
+    --gold-fill:#F7E8C8; --slate-fill:#EEF2F4; --navy:#0A1B24;
+    --serif:"Source Serif 4",Georgia,serif;
+    --sans:"Source Sans 3","Aptos",Arial,sans-serif;
+    --maxw:880px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);color:var(--ink);background:var(--warm-white);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+  h1,h2,h3,.serif{font-family:var(--serif)}
+  .muted{color:var(--slate)}
+
+  /* header band (navy, logo) */
+  header.band{background:var(--navy);color:#f3efe6}
+  header .wrap{padding:22px 22px 24px;display:flex;align-items:center;gap:16px}
+  .logo{display:flex;align-items:center;gap:13px;min-width:0}
+  .logo .mark{flex:none;width:40px;height:40px}
+  .logo .mark svg{width:100%;height:100%;display:block}
+  .logo .wm{font-family:var(--serif);font-size:21px;line-height:1.05;letter-spacing:.01em}
+  .logo .wm .f{color:var(--gold)}
+  .logo .tag{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#b9a98a;margin-top:3px}
+  @media(max-width:560px){.logo .tag{display:none}}
+
+  /* intro */
+  .intro{padding:30px 0 8px}
+  .intro h1{font-size:clamp(26px,4vw,34px);font-weight:600;letter-spacing:-.01em;color:var(--ink)}
+  .intro .lede{margin-top:8px;color:var(--slate);font-size:15.5px;max-width:60ch}
+  .intro .meta{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+  .pill{font-size:11.5px;letter-spacing:.02em;color:var(--brass);background:var(--warm-box);border:1px solid var(--tan);border-radius:999px;padding:4px 11px}
+
+  /* disclaimer */
+  .disclaimer{margin:18px 0;background:var(--warm-box);border:1px solid var(--tan);border-left:4px solid var(--brass);border-radius:8px;padding:13px 16px;font-size:12.5px;color:var(--charcoal);line-height:1.55}
+  .disclaimer b{font-weight:600}
+
+  section{padding:20px 0}
+  .sec-h{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--tan);padding-bottom:8px;margin-bottom:18px}
+  .sec-h .n{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:18px}
+  .sec-h h2{font-size:20px;font-weight:600}
+  .sec-h .hint{margin-left:auto;font-size:12px;color:var(--slate)}
+
+  /* the snapshot table */
+  .rows{display:flex;flex-direction:column;gap:0;border:1px solid var(--tan);border-radius:10px;overflow:hidden;background:#fff}
+  .row{display:grid;grid-template-columns:1.5fr 150px 150px;gap:0;border-top:1px solid var(--tan)}
+  .row:first-child{border-top:none}
+  .row.head{background:var(--warm-box);font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--slate)}
+  .row.head .cell{padding:10px 14px}
+  .cell{padding:12px 14px;display:flex;flex-direction:column;justify-content:center;border-left:1px solid var(--tan)}
+  .cell:first-child{border-left:none}
+  .cell .lab{font-weight:600;font-size:14px;color:var(--ink)}
+  .cell .src{font-size:11.5px;color:var(--slate);margin-top:2px}
+  .cell input[type=text]{font-family:var(--sans)}
+  .money,.gyr{width:100%}
+  .money{background:var(--cream-input);border:1px solid var(--tan);border-radius:7px;padding:9px 11px;font-size:14px;color:var(--ink);font-variant-numeric:tabular-nums}
+  .money:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-fill)}
+  .money::placeholder{color:#b9b0a0}
+  .gyr{background:#fff;border:1px solid var(--tan);border-radius:7px;padding:9px 11px;font-size:13.5px;color:var(--ink);cursor:pointer}
+  .gyr:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-fill)}
+  .gyr[data-v=green]{background:var(--green-fill)} .gyr[data-v=yellow]{background:var(--yellow-fill)}
+  .gyr[data-v=red]{background:var(--red-fill)} .gyr[data-v=na]{background:var(--warm-white)}
+  .row.calc .cell:first-child{background:var(--gold-fill)}
+  .row.calc .lab .out{font-family:var(--serif);font-size:20px;font-weight:600;color:var(--ink);margin-top:3px;display:block}
+  .row.calc .lab .out small{font-family:var(--sans);font-size:12px;color:var(--slate);font-weight:400}
+  .row.calc .lab .formula{font-size:11px;color:var(--slate);margin-top:3px}
+  @media(max-width:640px){
+    .row{grid-template-columns:1fr 1fr}
+    .row .cell.srccell{display:none}
+    .row.head .cell.srccell{display:none}
+    .cell:first-child{grid-column:1/-1;border-bottom:1px solid var(--tan)}
+    .row.calc .cell:first-child{grid-column:1/-1}
+  }
+
+  /* results dashboard */
+  .dash{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:22px}
+  .stat{grid-column:span 2}
+  .stat.compass{grid-column:span 3}
+  @media(max-width:640px){.dash{grid-template-columns:1fr 1fr}.stat,.stat.compass{grid-column:auto}}
+  .stat{background:#fff;border:1px solid var(--tan);border-radius:10px;padding:16px;border-top:3px solid var(--gold)}
+  .stat .k{font-size:11.5px;letter-spacing:.03em;text-transform:uppercase;color:var(--slate)}
+  .stat .v{font-family:var(--serif);font-size:26px;font-weight:600;color:var(--ink);margin-top:6px;font-variant-numeric:tabular-nums}
+  .stat .v small{font-size:13px;color:var(--slate);font-weight:400;font-family:var(--sans)}
+  .stat .sub{font-size:11.5px;color:var(--slate);margin-top:4px}
+  .stat.compass{border-top-color:var(--brass);background:var(--warm-box)}
+
+  .quickscore{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+  .qs{flex:1;min-width:90px;border:1px solid var(--tan);border-radius:9px;padding:12px 14px;text-align:center}
+  .qs .c{font-family:var(--serif);font-size:24px;font-weight:600}
+  .qs .l{font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--slate);margin-top:2px}
+  .qs.g{background:var(--green-fill)} .qs.g .c{color:var(--green)}
+  .qs.y{background:var(--yellow-fill)} .qs.y .c{color:#8a6a17}
+  .qs.r{background:var(--red-fill)} .qs.r .c{color:var(--red)}
+  .qs.n{background:var(--warm-white)} .qs.n .c{color:var(--slate)}
+
+  /* first action */
+  .action{background:var(--warm-box);border:1px solid var(--tan);border-left:4px solid var(--brass);border-radius:10px;padding:18px}
+  .action h3{font-size:16px;font-weight:600;margin-bottom:4px}
+  .action .why{font-size:13px;color:var(--slate);margin-bottom:10px}
+  .action textarea{width:100%;background:var(--cream-input);border:1px solid var(--tan);border-radius:8px;padding:11px 13px;font-family:var(--sans);font-size:14px;color:var(--ink);min-height:64px;resize:vertical}
+  .action textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-fill)}
+
+  /* email capture */
+  .capture{margin-top:22px;background:var(--navy);border-radius:12px;padding:24px;color:#eef0e9}
+  .capture b{font-family:var(--serif);font-size:18px;font-weight:500;display:block;margin-bottom:4px}
+  .capture p{font-size:13px;color:#b9c4cf;margin-bottom:14px}
+  .capture form{display:flex;gap:9px;flex-wrap:wrap}
+  .capture input{flex:1;min-width:220px;padding:12px 14px;border-radius:8px;border:1px solid #2c3f4a;background:#10242e;color:#fff;font-size:14px}
+  .capture button{padding:12px 22px;border:none;border-radius:8px;background:var(--gold);color:var(--navy);font-weight:600;font-size:14px;cursor:pointer}
+  .capture .note{width:100%;font-size:11px;color:#8aa0ab;margin-top:4px}
+
+  /* QA harness */
+  .qa{margin-top:30px;border:1px dashed var(--tan);border-radius:10px;padding:18px;background:#fff}
+  .qa h3{font-size:13px;font-family:var(--sans);font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--slate)}
+  .qa p{font-size:12.5px;color:var(--slate);margin-top:4px}
+  .qa table{width:100%;border-collapse:collapse;margin-top:12px;font-size:12px}
+  .qa th{text-align:left;font-family:var(--sans);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--slate);padding:7px 8px;border-bottom:2px solid var(--tan)}
+  .qa td{padding:7px 8px;border-bottom:1px solid var(--warm-box);font-variant-numeric:tabular-nums}
+  .qa .pass{color:var(--green);font-weight:600} .qa .fail{color:var(--red);font-weight:700}
+  .qa .summary{margin-top:12px;font-size:13px;font-weight:600}
+  .qa-scroll{overflow-x:auto}
+  @media(max-width:640px){.qa{padding:14px 12px}.qa td,.qa th{padding:6px 7px}}
+
+  footer{margin-top:10px;padding:26px 0 50px;color:var(--slate);font-size:12px;text-align:center}
+  footer .tagline{font-family:var(--serif);font-style:italic;color:var(--brass);font-size:15px;margin-bottom:6px}
+
+  @media print{
+    .capture,.qa,.disclaimer{break-inside:avoid}
+    .capture button,.action textarea{display:none}
+    body{background:#fff}
+  }
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="wrap">
+    <div class="logo">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="18.5" stroke="#C58D3A" stroke-width="1.2"/>
+          <circle cx="20" cy="20" r="13" stroke="#C58D3A" stroke-opacity=".5" stroke-width="1"/>
+          <path d="M20 4 L23 17 L36 20 L23 23 L20 36 L17 23 L4 20 L17 17 Z" fill="#C58D3A"/>
+          <path d="M20 9 L21.6 18.4 L31 20 L21.6 21.6 L20 31 L18.4 21.6 L9 20 L18.4 18.4 Z" fill="#0A1B24"/>
+        </svg>
+      </span>
+      <div>
+        <div class="wm">Physician <span class="f">Freedom</span> System</div>
+        <div class="tag">Income is loud. Freedom is quiet.</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="intro">
+    <h1>Freedom Snapshot</h1>
+    <p class="lede">A one-page diagnostic: see your current structure before you try to improve it. Enter your real, document-based numbers, then mark each row Green, Yellow, or Red using the guidance shown.</p>
+    <div class="meta">
+      <span class="pill">Takes about 5 minutes</span>
+      <span class="pill">Your numbers are never stored</span>
+      <span class="pill">Educational, not financial advice</span>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <b>Educational use only.</b> This tool is part of an educational system and does not provide financial, tax, legal, or investment advice. It organizes your own numbers so you can see structure and decide what to do next. Nothing you enter is saved or transmitted, except the email you choose to provide.
+  </div>
+
+  <!-- INPUTS + STATUS -->
+  <section>
+    <div class="sec-h"><span class="n">i.</span><h2>Your numbers</h2><span class="hint">cream = you enter | gold = calculated</span></div>
+    <div class="rows" id="rows">
+      <div class="row head">
+        <div class="cell">Metric</div>
+        <div class="cell srccell">Source</div>
+        <div class="cell">Status</div>
+      </div>
+      <!-- input + calc rows injected by JS -->
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section>
+    <div class="sec-h"><span class="n">ii.</span><h2>Your snapshot</h2></div>
+    <div class="dash">
+      <div class="stat"><div class="k">Freedom Delta</div><div class="v" id="d-delta">–</div><div class="sub">carried by clinical labor each month</div></div>
+      <div class="stat"><div class="k">Runway</div><div class="v" id="d-runway">–</div><div class="sub">months without clinical income</div></div>
+      <div class="stat"><div class="k">Core covered</div><div class="v" id="d-pct">–</div><div class="sub">by reliable non-clinical income</div></div>
+      <div class="stat compass"><div class="k">Freedom Number Compass</div><div class="v" id="d-compass">–</div><div class="sub">a compass, not a guarantee</div></div>
+      <div class="stat compass"><div class="k">Progress to Freedom Number</div><div class="v" id="d-progress">–</div><div class="sub">ownership assets vs. compass</div></div>
+    </div>
+    <div class="quickscore">
+      <div class="qs g"><div class="c" id="q-g">0</div><div class="l">Green</div></div>
+      <div class="qs y"><div class="c" id="q-y">0</div><div class="l">Yellow</div></div>
+      <div class="qs r"><div class="c" id="q-r">0</div><div class="l">Red</div></div>
+      <div class="qs n"><div class="c" id="q-n">11</div><div class="l">Not assessed</div></div>
+    </div>
+    <div class="action">
+      <h3>First action this week</h3>
+      <p class="why" id="action-why">Mark your rows above and the weakest one suggests your first move. You can edit or replace it.</p>
+      <textarea id="action-text" placeholder="Your first action this week..."></textarea>
+    </div>
+  </section>
+
+  <!-- EMAIL CAPTURE (Kajabi-wired in production) -->
+  <div class="capture">
+    <b>Get your Snapshot summary</b>
+    <p>Enter your email to save a copy of your results and your first action.</p>
+    <form id="capture-form" onsubmit="event.preventDefault();this.querySelector('button').textContent='Sent ✓';">
+      <input type="email" placeholder="you@example.com" required aria-label="Email address">
+      <button type="submit">Email my Snapshot</button>
+      <div class="note">In production this connects to the Physician Freedom System list in Kajabi. No financial numbers are sent, only your email and the summary you approve.</div>
+    </form>
+  </div>
+
+  <!-- QA HARNESS -->
+  <div class="qa" id="qa">
+    <h3>QA harness | formulas verified against the approved workbook samples</h3>
+    <p>Computed live on this page. Every row must pass before the calculator is considered complete.</p>
+    <div class="qa-scroll"><table id="qa-table"><thead><tr><th>Test</th><th>Metric</th><th>Expected</th><th>Computed</th><th>Status</th></tr></thead><tbody></tbody></table></div>
+    <div class="summary" id="qa-summary"></div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="tagline">Income is loud. Freedom is quiet.</div>
+    <div>Physician Freedom System | physicianfreedomsystem.com | educational tool, not financial advice</div>
+  </div>
+</footer>
+
+<script>
+/* ================= CONFIG | edit copy, thresholds, and assumptions here ================= */
+const CONFIG = {
+  rule_multiplier: 300,            // Freedom Number Compass = Freedom Delta x 300 (from workbook "Freedom Delta and 300 Rule" tab)
+  gyr_helper: "Green: known, documented, current. Yellow: partly known, estimated, or outdated. Red: unknown, missing, verbal-only, or would force improvisation.",
+  // The 8 entered metrics (workbook Freedom Snapshot tab rows 7-12 + 16-17). is_money = user enters a number.
+  inputs: [
+    { id:"income",   label:"Actual monthly take-home income", src:"Paystub / bank deposit / tax return", money:true },
+    { id:"core",     label:"Core monthly spending", src:"Bank / credit-card summary", money:true },
+    { id:"fixed",    label:"Fixed monthly obligations", src:"Loan / tuition statements", money:true },
+    { id:"liquid",   label:"Liquid reserves", src:"Cash account statements", money:true },
+    { id:"ownership",label:"Ownership assets", src:"Retirement / brokerage / property", money:true },
+    { id:"nonclin",  label:"Reliable non-clinical monthly income", src:"Only recurring income trusted in a bad month", money:true },
+    { id:"calendar", label:"Calendar pressure", src:"Actual calendar / call schedule", money:false },
+    { id:"family",   label:"Family access and clarity", src:"Family access folder / estate docs", money:false }
+  ],
+  // The 3 calculated metrics also carry a status row (so 11 status rows total).
+  calcs: [
+    { id:"delta",   label:"Freedom Delta", formula:"core spending minus reliable non-clinical income" },
+    { id:"runway",  label:"Runway months", formula:"liquid reserves divided by core spending" },
+    { id:"pct",     label:"Percent of core covered", formula:"non-clinical income divided by core spending" }
+  ],
+  // weakest-first-action suggestions, keyed by metric id, used when that row is the weakest Red/Yellow
+  actions: {
+    income:"Confirm your actual take-home figure from a recent paystub or deposit, not the offer-letter number.",
+    core:"Pull 2-3 months of statements and write down your true core monthly spending.",
+    fixed:"List every fixed monthly obligation from current statements so none are hidden.",
+    liquid:"Confirm how much truly liquid cash you could reach this week, separate from investments.",
+    ownership:"Gather current balances for retirement, brokerage, property, and business assets.",
+    nonclin:"Identify any income you would still trust in a bad month, and confirm it in writing.",
+    calendar:"Look at your actual calendar and name the single biggest recurring time pressure.",
+    family:"Confirm someone you trust could locate your key financial and estate documents.",
+    delta:"Reduce the Freedom Delta: lower core spending or build reliable non-clinical income.",
+    runway:"Build liquid reserves toward at least six months of core spending.",
+    pct:"Grow reliable non-clinical income so it covers a larger share of core costs."
+  }
+};
+
+/* ================= ENGINE | 1:1 with the approved workbook formulas ================= */
+function compute(v){
+  const core = +v.core || 0, nonclin = +v.nonclin || 0, liquid = +v.liquid || 0, own = +v.ownership || 0;
+  const delta = Math.max(core - nonclin, 0);
+  const runway = core > 0 ? liquid / core : null;          // blank if core = 0
+  const pct = core > 0 ? nonclin / core : null;            // blank if core = 0
+  const compass = delta * CONFIG.rule_multiplier;
+  const progress = compass > 0 ? own / compass : null;     // "reached" if compass = 0
+  return { delta, runway, pct, compass, progress };
+}
+
+/* ================= UI ================= */
+const $ = id => document.getElementById(id);
+const money = n => "$" + Math.round(n).toLocaleString("en-US");
+const state = { vals:{}, status:{} };
+
+const GYR = [["na","Not assessed"],["green","Green"],["yellow","Yellow"],["red","Red"]];
+function gyrSelect(rowId){
+  return `<select class="gyr" data-row="${rowId}" data-v="na" aria-label="Status for this row" title="${CONFIG.gyr_helper}">`
+    + GYR.map(([v,l])=>`<option value="${v}">${l}</option>`).join("") + `</select>`;
+}
+
+function buildRows(){
+  const rows = $("rows");
+  // input rows
+  CONFIG.inputs.forEach(inp=>{
+    state.status[inp.id]="na";
+    const div=document.createElement("div"); div.className="row";
+    div.innerHTML = `
+      <div class="cell"><span class="lab">${inp.label}</span>
+        ${inp.money?`<input class="money" inputmode="numeric" data-in="${inp.id}" placeholder="$ per month" aria-label="${inp.label}">`:`<span class="src">Status only</span>`}</div>
+      <div class="cell srccell"><span class="src">${inp.src}</span></div>
+      <div class="cell">${gyrSelect(inp.id)}</div>`;
+    rows.appendChild(div);
+  });
+  // calculated rows (also carry status)
+  CONFIG.calcs.forEach(c=>{
+    state.status[c.id]="na";
+    const div=document.createElement("div"); div.className="row calc";
+    div.innerHTML = `
+      <div class="cell"><span class="lab">${c.label}<span class="out" id="row-${c.id}">–</span><span class="formula">${c.formula}</span></span></div>
+      <div class="cell srccell"><span class="src">Calculated</span></div>
+      <div class="cell">${gyrSelect(c.id)}</div>`;
+    rows.appendChild(div);
+  });
+  rows.addEventListener("input", onInput);
+  rows.addEventListener("change", onStatus);
+}
+
+function onInput(e){
+  const el = e.target.closest("[data-in]"); if(!el) return;
+  const raw = el.value.replace(/[^0-9.]/g,"");
+  state.vals[el.dataset.in] = raw === "" ? "" : parseFloat(raw);
+  render();
+}
+function onStatus(e){
+  const el = e.target.closest(".gyr"); if(!el) return;
+  el.dataset.v = el.value;
+  state.status[el.dataset.row] = el.value;
+  render();
+}
+
+function render(){
+  const o = compute(state.vals);
+  $("row-delta").innerHTML = money(o.delta);
+  $("row-runway").innerHTML = o.runway===null ? "–" : o.runway.toFixed(1)+" <small>months</small>";
+  $("row-pct").innerHTML = o.pct===null ? "–" : (o.pct*100).toFixed(1)+"<small>%</small>";
+  $("d-delta").textContent = money(o.delta);
+  $("d-runway").innerHTML = o.runway===null ? "–" : o.runway.toFixed(1)+" <small>mo</small>";
+  $("d-pct").innerHTML = o.pct===null ? "–" : (o.pct*100).toFixed(1)+"<small>%</small>";
+  $("d-compass").textContent = money(o.compass);
+  $("d-progress").innerHTML = o.progress===null ? "Reached" : (o.progress*100).toFixed(1)+"<small>%</small>";
+
+  // tally across all 11 status rows
+  const counts = {green:0,yellow:0,red:0,na:0};
+  Object.values(state.status).forEach(s=>counts[s]++);
+  $("q-g").textContent=counts.green; $("q-y").textContent=counts.yellow;
+  $("q-r").textContent=counts.red; $("q-n").textContent=counts.na;
+
+  // weakest red/yellow -> suggested first action (red beats yellow; follows row order)
+  const order = [...CONFIG.inputs.map(i=>i.id), ...CONFIG.calcs.map(c=>c.id)];
+  let weakest = order.find(id=>state.status[id]==="red") || order.find(id=>state.status[id]==="yellow");
+  const at = $("action-text"), why = $("action-why");
+  if(weakest && !at.dataset.touched){
+    at.value = CONFIG.actions[weakest] || "";
+    const lbl = [...CONFIG.inputs,...CONFIG.calcs].find(x=>x.id===weakest).label;
+    why.textContent = `Suggested from your weakest row (${lbl}). Edit or replace it freely.`;
+  } else if(!weakest && !at.dataset.touched){
+    at.value=""; why.textContent="Mark your rows above and the weakest one suggests your first move. You can edit or replace it.";
+  }
+}
+$("action-text").addEventListener("input", e=>{ e.target.dataset.touched = "1"; });
+
+buildRows();
+render();
+
+/* ================= QA HARNESS ================= */
+const QA = [
+  { name:"A (workbook example)", in:{core:18000,nonclin:3000,liquid:90000,ownership:900000},
+    exp:{delta:"$15,000",runway:"5.0",pct:"16.7%",compass:"$4,500,000",progress:"20.0%"} },
+  { name:"B (new attending)", in:{core:11000,nonclin:0,liquid:22000,ownership:120000},
+    exp:{delta:"$11,000",runway:"2.0",pct:"0.0%",compass:"$3,300,000",progress:"3.6%"} },
+  { name:"C (established)", in:{core:12000,nonclin:6000,liquid:96000,ownership:1500000},
+    exp:{delta:"$6,000",runway:"8.0",pct:"50.0%",compass:"$1,800,000",progress:"83.3%"} },
+  { name:"D (zero guard)", in:{core:0,nonclin:0,liquid:50000,ownership:0},
+    exp:{delta:"$0",runway:"blank",pct:"blank",compass:"$0",progress:"reached"} }
+];
+function fmt(o){
+  return {
+    delta: money(o.delta),
+    runway: o.runway===null?"blank":o.runway.toFixed(1),
+    pct: o.pct===null?"blank":(o.pct*100).toFixed(1)+"%",
+    compass: money(o.compass),
+    progress: o.progress===null?"reached":(o.progress*100).toFixed(1)+"%"
+  };
+}
+(function runQA(){
+  const tb=document.querySelector("#qa-table tbody"); let pass=0,total=0;
+  const metrics=[["delta","Freedom Delta"],["runway","Runway"],["pct","% covered"],["compass","Compass"],["progress","Progress"]];
+  QA.forEach(tc=>{
+    const got=fmt(compute(tc.in));
+    metrics.forEach(([k,lbl],i)=>{
+      total++; const ok = got[k]===tc.exp[k]; if(ok)pass++;
+      const tr=document.createElement("tr");
+      tr.innerHTML=(i===0?`<td rowspan="5"><b>${tc.name}</b></td>`:"")
+        +`<td>${lbl}</td><td>${tc.exp[k]}</td><td>${got[k]}</td><td class="${ok?'pass':'fail'}">${ok?'PASS':'FAIL'}</td>`;
+      tb.appendChild(tr);
+    });
+  });
+  // G/Y/R tally test
+  total++; const tally={green:0,yellow:0,red:0,na:0};
+  ["green","green","green","green","green","green","yellow","yellow","yellow","red","red"].forEach(s=>tally[s]++);
+  const tallyOk = tally.green===6 && tally.yellow===3 && tally.red===2 && (tally.green+tally.yellow+tally.red)===11;
+  if(tallyOk)pass++;
+  const tr=document.createElement("tr");
+  tr.innerHTML=`<td><b>G/Y/R tally</b></td><td>11-row count</td><td>6 / 3 / 2 = 11</td><td>${tally.green} / ${tally.yellow} / ${tally.red} = ${tally.green+tally.yellow+tally.red}</td><td class="${tallyOk?'pass':'fail'}">${tallyOk?'PASS':'FAIL'}</td>`;
+  tb.appendChild(tr);
+  const s=$("qa-summary");
+  s.textContent = pass===total ? `All ${total} checks pass.` : `${pass} of ${total} pass – see FAIL rows.`;
+  s.style.color = pass===total ? "var(--green)" : "var(--red)";
+})();
+</script>
+</body>
+</html>

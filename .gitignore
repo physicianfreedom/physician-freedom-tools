@@ -1,0 +1,7 @@
+# Default-deny: keep the deploy repository limited to approved release files.
+*
+
+# Client-safe deploy artifact.
+!/.gitignore
+!/index.html
+!/README.md
