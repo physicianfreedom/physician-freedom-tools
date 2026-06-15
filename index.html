@@ -237,7 +237,7 @@
         padding: 10px 14px;
       }
       .cell {
-        padding: 12px 14px;
+        padding: 10px 14px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -264,7 +264,7 @@
         width: 100%;
       }
       .money-control {
-        margin-top: 8px;
+        margin-top: 6px;
       }
       .money-line {
         display: flex;
@@ -283,7 +283,7 @@
         background: var(--cream-input);
         border: 1px solid var(--tan);
         border-radius: 7px;
-        padding: 9px 11px;
+        padding: 8px 10px;
         font-size: 14px;
         color: var(--ink);
         font-variant-numeric: tabular-nums;
@@ -298,17 +298,9 @@
       }
       .money-range {
         width: 100%;
-        margin-top: 10px;
+        margin-top: 7px;
         accent-color: var(--brass);
         cursor: pointer;
-      }
-      .range-meta {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 2px;
-        font-size: 10.5px;
-        color: var(--slate);
-        font-variant-numeric: tabular-nums;
       }
       .gyr {
         background: #fff;
@@ -1065,9 +1057,8 @@
 	      <input class="money" inputmode="numeric" data-in="${inp.id}" value="${money(val)}" aria-label="${inp.label}">
 	      <span class="range-val" id="v-${inp.id}">${display}</span>
 	    </div>
-	    <input class="money-range" type="range" data-range="${inp.id}" min="${inp.min}" max="${inp.max}" step="${inp.step}" value="${val}" aria-label="${inp.label} slider">
-	    <div class="range-meta"><span>${money(inp.min)}</span><span>${money(inp.max)}</span></div>
-	  </div>`;
+          <input class="money-range" type="range" data-range="${inp.id}" min="${inp.min}" max="${inp.max}" step="${inp.step}" value="${val}" aria-label="${inp.label} slider">
+        </div>`;
       }
       function gyrSelect(rowId) {
         return (
