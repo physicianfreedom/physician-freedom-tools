@@ -484,13 +484,21 @@
         color: var(--slate);
       }
 
-      /* first action */
+      /* snapshot read + first action */
       .action {
         background: var(--warm-box);
         border: 1px solid var(--tan);
         border-left: 4px solid var(--brass);
         border-radius: 10px;
         padding: 18px;
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+        gap: 18px;
+      }
+      @media (max-width: 720px) {
+        .action {
+          grid-template-columns: 1fr;
+        }
       }
       .action h3 {
         font-size: 16px;
@@ -501,6 +509,31 @@
         font-size: 13px;
         color: var(--slate);
         margin-bottom: 10px;
+      }
+      .snapshot-read {
+        border-right: 1px solid var(--tan);
+        padding-right: 18px;
+      }
+      @media (max-width: 720px) {
+        .snapshot-read {
+          border-right: none;
+          border-bottom: 1px solid var(--tan);
+          padding-right: 0;
+          padding-bottom: 14px;
+        }
+      }
+      .snapshot-read .read-body {
+        display: grid;
+        gap: 8px;
+        font-size: 13px;
+        color: var(--charcoal);
+      }
+      .snapshot-read p {
+        margin: 0;
+      }
+      .snapshot-read b {
+        color: var(--ink);
+        font-weight: 600;
       }
       .action textarea {
         width: 100%;
@@ -813,15 +846,21 @@
           </div>
         </div>
         <div class="action">
-          <h3>First action this week</h3>
-          <p class="why" id="action-why">
-            Mark your rows above and the weakest one suggests your first move.
-            You can edit or replace it.
-          </p>
-          <textarea
-            id="action-text"
-            placeholder="Your first action this week..."
-          ></textarea>
+          <div class="snapshot-read">
+            <h3>What this means</h3>
+            <div class="read-body" id="snapshot-read"></div>
+          </div>
+          <div class="action-edit">
+            <h3>First action this week</h3>
+            <p class="why" id="action-why">
+              Mark your rows above and the weakest one suggests your first
+              move. You can edit or replace it.
+            </p>
+            <textarea
+              id="action-text"
+              placeholder="Your first action this week..."
+            ></textarea>
+          </div>
         </div>
       </section>
 
@@ -1209,6 +1248,42 @@
           el.dataset.v = status;
         });
       }
+      function snapshotRead(v, o, counts) {
+        const core = +v.core || 0;
+        const covered =
+          o.pct === null ? "an unknown share" : (o.pct * 100).toFixed(1) + "%";
+        const progress =
+          o.progress === null ? null : (o.progress * 100).toFixed(0) + "%";
+        let position;
+        if (o.delta === 0) {
+          position =
+            "<b>Your core spending is covered.</b> Reliable non-clinical income covers the monthly core number entered here, so the Snapshot shifts from gap-closing to protecting the structure.";
+        } else if (o.progress !== null && o.progress >= 0.75) {
+          position = `<b>You are close to the compass.</b> Ownership assets cover about ${progress} of the ${money(o.compass)} Freedom Number Compass, with ${money(o.delta)} still carried by clinical income each month.`;
+        } else if (o.progress !== null && o.progress >= 0.25) {
+          position = `<b>You are in the building phase.</b> Ownership assets cover about ${progress} of the ${money(o.compass)} Freedom Number Compass, and non-clinical income currently covers ${covered} of core spending.`;
+        } else {
+          position = `<b>The gap is still doing most of the work.</b> Freedom Delta is ${money(o.delta)} per month, so the main levers are lower core spending, more reliable non-clinical income, or both.`;
+        }
+        let runway;
+        if (o.runway === null) {
+          runway =
+            "Add core spending to see runway. Without that baseline, the calculator cannot estimate how long liquid reserves would last.";
+        } else if (o.runway < 3) {
+          runway = `<b>Runway needs attention first.</b> ${o.runway.toFixed(1)} months is thin; six months of core spending would be ${money(core * 6)}.`;
+        } else if (o.runway < 6) {
+          runway = `<b>Runway is workable but not yet comfortable.</b> ${o.runway.toFixed(1)} months gives some room, with six months of core spending at ${money(core * 6)}.`;
+        } else {
+          runway = `<b>Runway is solid.</b> ${o.runway.toFixed(1)} months gives room to absorb a transition without immediately touching ownership assets.`;
+        }
+        const status =
+          counts.red > 0
+            ? `The status scan is pointing to ${counts.red} red row${counts.red === 1 ? "" : "s"} to resolve first.`
+            : counts.yellow > 0
+              ? `No red rows are showing; the next layer is tightening ${counts.yellow} yellow row${counts.yellow === 1 ? "" : "s"}.`
+              : "The status scan is clean based on the current rows; keep the supporting documents current.";
+        return `<p>${position}</p><p>${runway} ${status}</p>`;
+      }
 
       function render() {
         const o = compute(state.vals);
@@ -1238,6 +1313,7 @@
         $("q-y").textContent = counts.yellow;
         $("q-r").textContent = counts.red;
         $("q-n").textContent = counts.na;
+        $("snapshot-read").innerHTML = snapshotRead(state.vals, o, counts);
 
         // weakest red/yellow -> suggested first action (red beats yellow; follows row order)
         const order = [
