@@ -895,7 +895,28 @@
       const CONFIG = {
         rule_multiplier: 300, // Freedom Number Compass = Freedom Delta x 300 (from workbook "Freedom Delta and 300 Rule" tab)
         gyr_helper:
-          "Green: known, documented, current. Yellow: partly known, estimated, or outdated. Red: unknown, missing, verbal-only, or would force improvisation.",
+          "Statuses are suggested from the calculator rules. Use them as a starting point and override any row if your context says otherwise.",
+        // Status suggestions are simple traffic-light guardrails, not financial advice.
+        status_rules: {
+          income:
+            "Green if take-home income covers core spending plus fixed obligations; Yellow if it covers core spending; Red if it does not cover core spending.",
+          core:
+            "Green if core spending is 60% or less of take-home income; Yellow if 85% or less; Red above 85%.",
+          fixed:
+            "Green if fixed obligations are 35% or less of take-home income; Yellow if 50% or less; Red above 50%.",
+          liquid:
+            "Green with 6+ months of runway; Yellow with 3-5.9 months; Red below 3 months.",
+          ownership:
+            "Green at 75%+ progress to the Freedom Number Compass, Yellow at 25-74.9%, Red below 25%.",
+          nonclin:
+            "Green when reliable non-clinical income covers 50%+ of core spending; Yellow at 10-49.9%; Red below 10%.",
+          delta:
+            "Green when Freedom Delta is 0; Yellow when it is 50% or less of core spending; Red above 50%.",
+          runway:
+            "Green with 6+ months of runway; Yellow with 3-5.9 months; Red below 3 months.",
+          pct:
+            "Green when reliable non-clinical income covers 50%+ of core spending; Yellow at 10-49.9%; Red below 10%.",
+        },
         // The 8 entered metrics (workbook Freedom Snapshot tab rows 7-12 + 16-17). Money rows use sliders with realistic defaults.
         inputs: [
           {
@@ -1041,7 +1062,7 @@
         const raw = String(value || "").replace(/[^0-9.]/g, "");
         return raw === "" ? "" : parseFloat(raw);
       };
-      const state = { vals: {}, status: {} };
+      const state = { vals: {}, status: {}, overridden: {} };
 
       const GYR = [
         ["na", "Not assessed"],
@@ -1136,13 +1157,62 @@
       function onStatus(e) {
         const el = e.target.closest(".gyr");
         if (!el) return;
+        state.overridden[el.dataset.row] = true;
         el.dataset.v = el.value;
         state.status[el.dataset.row] = el.value;
         render();
       }
 
+      const band = (value, greenMin, yellowMin) => {
+        if (value === null || !Number.isFinite(value)) return "red";
+        if (value >= greenMin) return "green";
+        if (value >= yellowMin) return "yellow";
+        return "red";
+      };
+      const ratioMax = (part, total, greenMax, yellowMax) => {
+        if (!(total > 0)) return "red";
+        const ratio = part / total;
+        if (ratio <= greenMax) return "green";
+        if (ratio <= yellowMax) return "yellow";
+        return "red";
+      };
+      function suggestStatuses(v, o) {
+        const income = +v.income || 0,
+          core = +v.core || 0,
+          fixed = +v.fixed || 0;
+        return {
+          income:
+            income >= core + fixed
+              ? "green"
+              : income >= core
+                ? "yellow"
+                : "red",
+          core: ratioMax(core, income, 0.6, 0.85),
+          fixed: ratioMax(fixed, income, 0.35, 0.5),
+          liquid: band(o.runway, 6, 3),
+          ownership: o.progress === null ? "green" : band(o.progress, 0.75, 0.25),
+          nonclin: band(o.pct, 0.5, 0.1),
+          delta:
+            o.delta === 0 ? "green" : core > 0 && o.delta <= core * 0.5 ? "yellow" : "red",
+          runway: band(o.runway, 6, 3),
+          pct: band(o.pct, 0.5, 0.1),
+        };
+      }
+      function applySuggestedStatuses(o) {
+        const suggested = suggestStatuses(state.vals, o);
+        Object.entries(suggested).forEach(([id, status]) => {
+          if (state.overridden[id]) return;
+          state.status[id] = status;
+          const el = document.querySelector(`.gyr[data-row="${id}"]`);
+          if (!el) return;
+          el.value = status;
+          el.dataset.v = status;
+        });
+      }
+
       function render() {
         const o = compute(state.vals);
+        applySuggestedStatuses(o);
         $("row-delta").innerHTML = money(o.delta);
         $("row-runway").innerHTML =
           o.runway === null
