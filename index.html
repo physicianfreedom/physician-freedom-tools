@@ -397,83 +397,141 @@
         }
       }
 
-      /* results dashboard */
-      .dash {
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        gap: 14px;
-        margin-bottom: 22px;
-      }
-      .stat {
-        grid-column: span 2;
-      }
-      .stat.compass {
-        grid-column: span 3;
-      }
-      @media (max-width: 640px) {
-        .dash {
-          grid-template-columns: 1fr 1fr;
-        }
-        .stat,
-        .stat.compass {
-          grid-column: auto;
-        }
-      }
-      .stat {
+      /* snapshot panel */
+      .snapshot-panel {
         background: #fff;
         border: 1px solid var(--tan);
-        border-radius: 10px;
-        padding: 16px;
-        border-top: 3px solid var(--gold);
+        border-radius: 12px;
+        padding: 24px 26px;
+        box-shadow: 0 1px 2px rgba(10, 27, 36, 0.04);
+        margin-bottom: 16px;
       }
-      .stat .k {
-        font-size: 11.5px;
-        letter-spacing: 0.03em;
+      .panel-label {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
         color: var(--slate);
+        margin-bottom: 22px;
       }
-      .stat .v {
-        font-family: var(--serif);
-        font-size: 26px;
-        font-weight: 600;
-        color: var(--ink);
-        margin-top: 6px;
-        font-variant-numeric: tabular-nums;
+      .score-ring {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        border-bottom: 1px solid var(--tan);
+        padding-bottom: 22px;
+        margin-bottom: 20px;
       }
-      .stat .v small {
-        font-size: 13px;
-        color: var(--slate);
-        font-weight: 400;
+      .ring {
+        width: 96px;
+        height: 96px;
+        flex: none;
+      }
+      .ring svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      .ring .bg {
+        stroke: #e3ded5;
+      }
+      .ring .fg {
+        stroke: var(--brass);
+        stroke-linecap: round;
+        transform: rotate(-90deg);
+        transform-origin: 48px 48px;
+        transition: stroke-dashoffset 180ms ease;
+      }
+      .ring text {
         font-family: var(--sans);
+        font-weight: 700;
+        fill: var(--navy);
       }
-      .stat .sub {
-        font-size: 11.5px;
+      .score-copy .t1 {
+        font-family: var(--serif);
+        font-size: 20px;
+        line-height: 1.2;
+        color: var(--ink);
+      }
+      .score-copy .t2 {
         color: var(--slate);
+        font-size: 13px;
         margin-top: 4px;
       }
-      .stat.compass {
-        border-top-color: var(--brass);
-        background: var(--warm-box);
+      .metric-list {
+        display: grid;
       }
-      @media (min-width: 980px) {
-        .snapshot-col .dash {
-          grid-template-columns: 1fr 1fr;
-          gap: 10px;
-          margin-bottom: 14px;
+      .metric {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: baseline;
+        gap: 12px;
+        border-bottom: 1px solid var(--tan);
+        padding: 13px 0;
+      }
+      .metric:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .metric .k {
+        font-size: 13px;
+        color: var(--slate);
+      }
+      .metric .v {
+        font-family: var(--serif);
+        font-size: 20px;
+        color: var(--navy);
+        font-weight: 600;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+      .metric .v small {
+        font-family: var(--sans);
+        font-size: 12px;
+        color: var(--slate);
+        font-weight: 400;
+      }
+      .metric-band {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 6px;
+        padding: 3px 8px;
+        margin-left: 6px;
+        background: var(--warm-box);
+        color: var(--brass);
+        font-family: var(--sans);
+        font-size: 11px;
+        letter-spacing: 0.02em;
+      }
+      .metric-band.green {
+        background: var(--green-fill);
+        color: var(--green);
+      }
+      .metric-band.yellow {
+        background: var(--yellow-fill);
+        color: #8a6a17;
+      }
+      .metric-band.red {
+        background: var(--red-fill);
+        color: var(--red);
+      }
+      @media (max-width: 420px) {
+        .snapshot-panel {
+          padding: 20px;
         }
-        .snapshot-col .stat {
-          grid-column: auto;
-          padding: 12px;
-          border-radius: 8px;
+        .score-ring {
+          align-items: flex-start;
+          gap: 14px;
         }
-        .snapshot-col .stat.compass {
-          grid-column: 1 / -1;
+        .ring {
+          width: 84px;
+          height: 84px;
         }
-        .snapshot-col .stat .v {
-          font-size: 22px;
+        .score-copy .t1 {
+          font-size: 18px;
         }
-        .snapshot-col .stat .sub {
-          font-size: 11px;
+        .metric .v {
+          font-size: 18px;
         }
       }
 
@@ -876,53 +934,72 @@
 
         <!-- RESULTS -->
         <section class="snapshot-col">
-          <div class="sec-h">
-            <span class="n">ii.</span>
-            <h2>Your snapshot</h2>
-          </div>
-          <div class="dash">
-            <div class="stat">
-              <div class="k">Freedom Delta</div>
-              <div class="v" id="d-delta">–</div>
-              <div class="sub">carried by clinical labor each month</div>
+          <div class="snapshot-panel">
+            <div class="panel-label">Your snapshot</div>
+            <div class="score-ring">
+              <div class="ring" aria-hidden="true">
+                <svg viewBox="0 0 96 96">
+                  <circle
+                    class="bg"
+                    cx="48"
+                    cy="48"
+                    r="41"
+                    fill="none"
+                    stroke-width="9"
+                  />
+                  <circle
+                    class="fg"
+                    id="d-ring-fg"
+                    cx="48"
+                    cy="48"
+                    r="41"
+                    fill="none"
+                    stroke-width="9"
+                    stroke-dasharray="257.6"
+                    stroke-dashoffset="257.6"
+                  />
+                  <text
+                    id="d-ring-text"
+                    x="48"
+                    y="53"
+                    text-anchor="middle"
+                    font-size="17"
+                  >
+                    0%
+                  </text>
+                </svg>
+              </div>
+              <div class="score-copy">
+                <div class="t1">Progress to your<br />Freedom Number</div>
+                <div class="t2" id="d-progress-line">–</div>
+              </div>
             </div>
-            <div class="stat">
-              <div class="k">Runway</div>
-              <div class="v" id="d-runway">–</div>
-              <div class="sub">months without clinical income</div>
-            </div>
-            <div class="stat">
-              <div class="k">Core covered</div>
-              <div class="v" id="d-pct">–</div>
-              <div class="sub">by reliable non-clinical income</div>
-            </div>
-            <div class="stat compass">
-              <div class="k">Freedom Number Compass</div>
-              <div class="v" id="d-compass">–</div>
-              <div class="sub">a compass, not a guarantee</div>
-            </div>
-            <div class="stat compass">
-              <div class="k">Progress to Freedom Number</div>
-              <div class="v" id="d-progress">–</div>
-              <div class="sub">ownership assets vs. compass</div>
-            </div>
-          </div>
-          <div class="quickscore">
-            <div class="qs g">
-              <div class="c" id="q-g">0</div>
-              <div class="l">Green</div>
-            </div>
-            <div class="qs y">
-              <div class="c" id="q-y">0</div>
-              <div class="l">Yellow</div>
-            </div>
-            <div class="qs r">
-              <div class="c" id="q-r">0</div>
-              <div class="l">Red</div>
-            </div>
-            <div class="qs n">
-              <div class="c" id="q-n">11</div>
-              <div class="l">Not assessed</div>
+            <div class="metric-list">
+              <div class="metric">
+                <span class="k">Freedom Number <small>(300 Rule)</small></span>
+                <span class="v" id="d-compass">–</span>
+              </div>
+              <div class="metric">
+                <span class="k">Freedom Delta</span>
+                <span class="v" id="d-delta">–</span>
+              </div>
+              <div class="metric">
+                <span class="k">Runway <span class="metric-band" id="b-runway">–</span></span>
+                <span class="v" id="d-runway">–</span>
+              </div>
+              <div class="metric">
+                <span class="k">Core covered <span class="metric-band" id="b-pct">–</span></span>
+                <span class="v" id="d-pct">–</span>
+              </div>
+              <div class="metric">
+                <span class="k">Status scan</span>
+                <span class="v" id="d-status-scan"
+                  ><span id="q-g">0</span>G /
+                  <span id="q-y">0</span>Y /
+                  <span id="q-r">0</span>R</span
+                >
+                <span id="q-n" hidden>11</span>
+              </div>
             </div>
           </div>
           <div class="action">
@@ -1178,6 +1255,7 @@
       /* ================= UI ================= */
       const $ = (id) => document.getElementById(id);
       const money = (n) => "$" + Math.round(n).toLocaleString("en-US");
+      const pctText = (n) => (n === null ? "–" : (n * 100).toFixed(1) + "%");
       const plainNumber = (value) => {
         const raw = String(value || "").replace(/[^0-9.]/g, "");
         return raw === "" ? "" : parseFloat(raw);
@@ -1329,6 +1407,12 @@
           el.dataset.v = status;
         });
       }
+      function setBand(id, status, label) {
+        const el = $(id);
+        if (!el) return;
+        el.className = `metric-band ${status}`;
+        el.textContent = label;
+      }
       function snapshotRead(v, o, counts) {
         const core = +v.core || 0;
         const covered =
@@ -1376,16 +1460,39 @@
             : o.runway.toFixed(1) + " <small>months</small>";
         $("row-pct").innerHTML =
           o.pct === null ? "–" : (o.pct * 100).toFixed(1) + "<small>%</small>";
-        $("d-delta").textContent = money(o.delta);
+        $("d-delta").textContent =
+          o.delta === 0 ? "Reached" : `${money(o.delta)} /mo`;
         $("d-runway").innerHTML =
           o.runway === null ? "–" : o.runway.toFixed(1) + " <small>mo</small>";
-        $("d-pct").innerHTML =
-          o.pct === null ? "–" : (o.pct * 100).toFixed(1) + "<small>%</small>";
+        $("d-pct").innerHTML = pctText(o.pct);
         $("d-compass").textContent = money(o.compass);
-        $("d-progress").innerHTML =
+        const progressPct =
+          o.progress === null ? 100 : Math.max(0, Math.min(o.progress * 100, 100));
+        const ringOffset = 257.6 - (257.6 * progressPct) / 100;
+        $("d-ring-fg").style.strokeDashoffset = ringOffset.toFixed(1);
+        $("d-ring-text").textContent = `${Math.round(progressPct)}%`;
+        $("d-progress-line").textContent =
           o.progress === null
-            ? "Reached"
-            : (o.progress * 100).toFixed(1) + "<small>%</small>";
+            ? "Freedom Number reached"
+            : `${money(state.vals.ownership || 0)} of ${money(o.compass)}`;
+        if (o.runway === null) {
+          setBand("b-runway", "red", "unknown");
+        } else if (o.runway >= 6) {
+          setBand("b-runway", "green", "solid");
+        } else if (o.runway >= 3) {
+          setBand("b-runway", "yellow", "attention");
+        } else {
+          setBand("b-runway", "red", "urgent");
+        }
+        if (o.pct === null) {
+          setBand("b-pct", "red", "unknown");
+        } else if (o.pct >= 0.5) {
+          setBand("b-pct", "green", "strong");
+        } else if (o.pct >= 0.1) {
+          setBand("b-pct", "yellow", "partial");
+        } else {
+          setBand("b-pct", "red", "thin");
+        }
 
         // tally across all 11 status rows
         const counts = { green: 0, yellow: 0, red: 0, na: 0 };
