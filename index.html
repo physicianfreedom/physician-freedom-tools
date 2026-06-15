@@ -49,7 +49,7 @@
         --navy: #0a1b24;
         --serif: "Source Serif 4", Georgia, serif;
         --sans: "Source Sans 3", "Aptos", Arial, sans-serif;
-        --maxw: 880px;
+        --maxw: 1120px;
       }
       * {
         box-sizing: border-box;
@@ -181,6 +181,23 @@
       section {
         padding: 20px 0;
       }
+      .workspace {
+        display: grid;
+        gap: 22px;
+        align-items: start;
+      }
+      @media (min-width: 980px) {
+        .workspace {
+          grid-template-columns: minmax(0, 1fr) 365px;
+        }
+        .workspace section {
+          padding-bottom: 12px;
+        }
+        .snapshot-col {
+          position: sticky;
+          top: 14px;
+        }
+      }
       .sec-h {
         display: flex;
         align-items: baseline;
@@ -217,9 +234,17 @@
       }
       .row {
         display: grid;
-        grid-template-columns: 1.5fr 150px 150px;
+        grid-template-columns: minmax(0, 1fr) 132px;
         gap: 0;
         border-top: 1px solid var(--tan);
+      }
+      @media (min-width: 980px) {
+        .workspace .row {
+          grid-template-columns: minmax(0, 1fr) 118px;
+        }
+      }
+      .row .cell.srccell {
+        display: none;
       }
       .row:first-child {
         border-top: none;
@@ -255,6 +280,10 @@
         font-size: 11.5px;
         color: var(--slate);
         margin-top: 2px;
+      }
+      .cell .src.inline-src {
+        display: block;
+        max-width: 62ch;
       }
       .cell input[type="text"] {
         font-family: var(--sans);
@@ -306,7 +335,7 @@
         background: #fff;
         border: 1px solid var(--tan);
         border-radius: 7px;
-        padding: 9px 11px;
+        padding: 9px 8px;
         font-size: 13.5px;
         color: var(--ink);
         cursor: pointer;
@@ -352,13 +381,7 @@
       }
       @media (max-width: 640px) {
         .row {
-          grid-template-columns: 1fr 1fr;
-        }
-        .row .cell.srccell {
-          display: none;
-        }
-        .row.head .cell.srccell {
-          display: none;
+          grid-template-columns: minmax(0, 1fr) 126px;
         }
         .cell:first-child {
           grid-column: 1/-1;
@@ -432,12 +455,52 @@
         border-top-color: var(--brass);
         background: var(--warm-box);
       }
+      @media (min-width: 980px) {
+        .snapshot-col .dash {
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+          margin-bottom: 14px;
+        }
+        .snapshot-col .stat {
+          grid-column: auto;
+          padding: 12px;
+          border-radius: 8px;
+        }
+        .snapshot-col .stat.compass {
+          grid-column: 1 / -1;
+        }
+        .snapshot-col .stat .v {
+          font-size: 22px;
+        }
+        .snapshot-col .stat .sub {
+          font-size: 11px;
+        }
+      }
 
       .quickscore {
         display: flex;
         gap: 10px;
         flex-wrap: wrap;
         margin-bottom: 18px;
+      }
+      @media (min-width: 980px) {
+        .snapshot-col .quickscore {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 7px;
+          margin-bottom: 14px;
+        }
+        .snapshot-col .qs {
+          min-width: 0;
+          padding: 9px 7px;
+          border-radius: 8px;
+        }
+        .snapshot-col .qs .c {
+          font-size: 20px;
+        }
+        .snapshot-col .qs .l {
+          font-size: 9.5px;
+        }
       }
       .qs {
         flex: 1;
@@ -551,6 +614,22 @@
         outline: none;
         border-color: var(--gold);
         box-shadow: 0 0 0 3px var(--gold-fill);
+      }
+      @media (min-width: 980px) {
+        .snapshot-col .action {
+          grid-template-columns: 1fr;
+          gap: 14px;
+          padding: 15px;
+        }
+        .snapshot-col .snapshot-read {
+          border-right: none;
+          border-bottom: 1px solid var(--tan);
+          padding-right: 0;
+          padding-bottom: 12px;
+        }
+        .snapshot-col .action textarea {
+          min-height: 78px;
+        }
       }
 
       /* email capture */
@@ -777,92 +856,94 @@
         choose to provide.
       </div>
 
-      <!-- INPUTS + STATUS -->
-      <section>
-        <div class="sec-h">
-          <span class="n">i.</span>
-          <h2>Your numbers</h2>
-          <span class="hint">cream = you enter | gold = calculated</span>
-        </div>
-        <div class="rows" id="rows">
-          <div class="row head">
-            <div class="cell">Metric</div>
-            <div class="cell srccell">Source</div>
-            <div class="cell">Status</div>
+      <div class="workspace">
+        <!-- INPUTS + STATUS -->
+        <section class="numbers-col">
+          <div class="sec-h">
+            <span class="n">i.</span>
+            <h2>Your numbers</h2>
+            <span class="hint">cream = you enter | gold = calculated</span>
           </div>
-          <!-- input + calc rows injected by JS -->
-        </div>
-      </section>
+          <div class="rows" id="rows">
+            <div class="row head">
+              <div class="cell">Metric</div>
+              <div class="cell srccell">Source</div>
+              <div class="cell">Status</div>
+            </div>
+            <!-- input + calc rows injected by JS -->
+          </div>
+        </section>
 
-      <!-- RESULTS -->
-      <section>
-        <div class="sec-h">
-          <span class="n">ii.</span>
-          <h2>Your snapshot</h2>
-        </div>
-        <div class="dash">
-          <div class="stat">
-            <div class="k">Freedom Delta</div>
-            <div class="v" id="d-delta">–</div>
-            <div class="sub">carried by clinical labor each month</div>
+        <!-- RESULTS -->
+        <section class="snapshot-col">
+          <div class="sec-h">
+            <span class="n">ii.</span>
+            <h2>Your snapshot</h2>
           </div>
-          <div class="stat">
-            <div class="k">Runway</div>
-            <div class="v" id="d-runway">–</div>
-            <div class="sub">months without clinical income</div>
+          <div class="dash">
+            <div class="stat">
+              <div class="k">Freedom Delta</div>
+              <div class="v" id="d-delta">–</div>
+              <div class="sub">carried by clinical labor each month</div>
+            </div>
+            <div class="stat">
+              <div class="k">Runway</div>
+              <div class="v" id="d-runway">–</div>
+              <div class="sub">months without clinical income</div>
+            </div>
+            <div class="stat">
+              <div class="k">Core covered</div>
+              <div class="v" id="d-pct">–</div>
+              <div class="sub">by reliable non-clinical income</div>
+            </div>
+            <div class="stat compass">
+              <div class="k">Freedom Number Compass</div>
+              <div class="v" id="d-compass">–</div>
+              <div class="sub">a compass, not a guarantee</div>
+            </div>
+            <div class="stat compass">
+              <div class="k">Progress to Freedom Number</div>
+              <div class="v" id="d-progress">–</div>
+              <div class="sub">ownership assets vs. compass</div>
+            </div>
           </div>
-          <div class="stat">
-            <div class="k">Core covered</div>
-            <div class="v" id="d-pct">–</div>
-            <div class="sub">by reliable non-clinical income</div>
+          <div class="quickscore">
+            <div class="qs g">
+              <div class="c" id="q-g">0</div>
+              <div class="l">Green</div>
+            </div>
+            <div class="qs y">
+              <div class="c" id="q-y">0</div>
+              <div class="l">Yellow</div>
+            </div>
+            <div class="qs r">
+              <div class="c" id="q-r">0</div>
+              <div class="l">Red</div>
+            </div>
+            <div class="qs n">
+              <div class="c" id="q-n">11</div>
+              <div class="l">Not assessed</div>
+            </div>
           </div>
-          <div class="stat compass">
-            <div class="k">Freedom Number Compass</div>
-            <div class="v" id="d-compass">–</div>
-            <div class="sub">a compass, not a guarantee</div>
+          <div class="action">
+            <div class="snapshot-read">
+              <h3>What this means</h3>
+              <div class="read-body" id="snapshot-read"></div>
+            </div>
+            <div class="action-edit">
+              <h3>First action this week</h3>
+              <p class="why" id="action-why">
+                Mark your rows above and the weakest one suggests your first
+                move. You can edit or replace it.
+              </p>
+              <textarea
+                id="action-text"
+                placeholder="Your first action this week..."
+              ></textarea>
+            </div>
           </div>
-          <div class="stat compass">
-            <div class="k">Progress to Freedom Number</div>
-            <div class="v" id="d-progress">–</div>
-            <div class="sub">ownership assets vs. compass</div>
-          </div>
-        </div>
-        <div class="quickscore">
-          <div class="qs g">
-            <div class="c" id="q-g">0</div>
-            <div class="l">Green</div>
-          </div>
-          <div class="qs y">
-            <div class="c" id="q-y">0</div>
-            <div class="l">Yellow</div>
-          </div>
-          <div class="qs r">
-            <div class="c" id="q-r">0</div>
-            <div class="l">Red</div>
-          </div>
-          <div class="qs n">
-            <div class="c" id="q-n">11</div>
-            <div class="l">Not assessed</div>
-          </div>
-        </div>
-        <div class="action">
-          <div class="snapshot-read">
-            <h3>What this means</h3>
-            <div class="read-body" id="snapshot-read"></div>
-          </div>
-          <div class="action-edit">
-            <h3>First action this week</h3>
-            <p class="why" id="action-why">
-              Mark your rows above and the weakest one suggests your first
-              move. You can edit or replace it.
-            </p>
-            <textarea
-              id="action-text"
-              placeholder="Your first action this week..."
-            ></textarea>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       <!-- EMAIL CAPTURE (Kajabi-wired in production) -->
       <div class="capture">
@@ -1137,7 +1218,7 @@
           const div = document.createElement("div");
           div.className = "row";
           div.innerHTML = `
-	      <div class="cell"><span class="lab">${inp.label}</span>
+	      <div class="cell"><span class="lab">${inp.label}</span><span class="src inline-src">${inp.src}</span>
 	        ${inp.money ? moneyControl(inp) : `<span class="src">Status only</span>`}</div>
 	      <div class="cell srccell"><span class="src">${inp.src}</span></div>
 	      <div class="cell">${gyrSelect(inp.id)}</div>`;
