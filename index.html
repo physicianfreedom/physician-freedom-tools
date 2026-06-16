@@ -379,6 +379,64 @@
         color: var(--slate);
         margin-top: 3px;
       }
+      .assessment {
+        margin-top: 10px;
+        border: 1px solid var(--tan);
+        border-radius: 8px;
+        background: var(--warm-white);
+      }
+      .assessment summary {
+        cursor: pointer;
+        padding: 8px 10px;
+        font-size: 12.5px;
+        color: var(--brass);
+        font-weight: 600;
+      }
+      .assessment-body {
+        border-top: 1px solid var(--tan);
+        padding: 10px;
+        display: grid;
+        gap: 10px;
+      }
+      .assessment-q {
+        display: grid;
+        gap: 7px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(215, 204, 188, 0.7);
+      }
+      .assessment-q:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .assessment-q .q {
+        font-size: 12.5px;
+        color: var(--ink);
+        font-weight: 600;
+      }
+      .assessment-choices {
+        display: grid;
+        gap: 6px;
+      }
+      .assessment-choices label {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 7px;
+        align-items: start;
+        font-size: 12px;
+        color: var(--charcoal);
+        line-height: 1.35;
+      }
+      .assessment-choices input {
+        margin-top: 2px;
+        accent-color: var(--brass);
+      }
+      .assessment-choices b {
+        font-weight: 600;
+      }
+      .assessment-note {
+        font-size: 11.5px;
+        color: var(--slate);
+      }
       @media (max-width: 640px) {
         .row {
           grid-template-columns: minmax(0, 1fr) 126px;
@@ -1213,6 +1271,86 @@
             formula: "non-clinical income divided by core spending",
           },
         ],
+        assessments: {
+          calendar: [
+            {
+              q: "Can you review an actual current calendar/call schedule for the next 30 days?",
+              green: "Current, visible, specific calendar/call schedule.",
+              yellow:
+                "Schedule exists but is incomplete, changing, or not fully updated.",
+              red: "Answer is mostly from memory, assumptions, or last-minute notifications.",
+            },
+            {
+              q: "Does your calendar protect recovery, family time, faith/personal priorities, or non-clinical time in a way that is visible on the schedule?",
+              green: "Protected time is blocked and usually honored.",
+              yellow:
+                "Some time is protected but informal or often negotiable.",
+              red: "Calendar regularly absorbs the time that matters most.",
+            },
+            {
+              q: "Are nights, weekends, call, and urgent work disruptions predictable enough that your household can plan around them?",
+              green: "Disruptions are known, bounded, and planned for.",
+              yellow:
+                "Some patterns are predictable, but surprises still create strain.",
+              red: "Work frequently disrupts family/recovery time without reliable warning or boundaries.",
+            },
+            {
+              q: "When staffing fails, call surges, or coverage changes, is there a written or reliable system for who absorbs the strain?",
+              green: "Coverage/back-up rules are written or clearly documented.",
+              yellow:
+                "There is a usual pattern, but it is not fully written or reliable.",
+              red: "The physician or family absorbs the strain by default.",
+            },
+            {
+              q: "Over the last 30 days, did your family actually feel the benefit of your income through your presence, recovery, or protected time?",
+              green: "Calendar shows presence and recovery.",
+              yellow:
+                "Some protected moments exist, but work still dominates.",
+              red: "Calendar shows work still owns the household rhythm.",
+            },
+          ],
+          family: [
+            {
+              q: "Does a family access folder or document map exist?",
+              green:
+                "Exists, current, and a trusted person knows where it is.",
+              yellow:
+                "Some documents are gathered, but folder is incomplete or outdated.",
+              red: "Documents are scattered, unknown, or only the physician knows where they are.",
+            },
+            {
+              q: "Could your trusted person find key financial accounts, insurance policies, estate documents, and professional contacts without you in the room?",
+              green: "Locations and contacts are documented and accessible.",
+              yellow:
+                "Some items are findable, but important pieces are missing or unclear.",
+              red: "They would have to search, guess, or call around during a crisis.",
+            },
+            {
+              q: "Are estate documents current and signed where applicable?",
+              green:
+                "Will/trust, POA, healthcare directive, guardianship if relevant, and related documents are current and stored.",
+              yellow:
+                "Some documents exist but are outdated, unsigned, not reviewed, or not shared.",
+              red: "Documents are missing, unknown, unsigned, or not locatable.",
+            },
+            {
+              q: "Are beneficiary designations and insurance documents reviewed and aligned with the current family situation?",
+              green:
+                "Beneficiaries and policy documents are current and documented.",
+              yellow:
+                "Some are reviewed, but not all accounts/policies are current or confirmed.",
+              red: "Beneficiary status is unknown, outdated, conflicting, or not documented.",
+            },
+            {
+              q: "Is there a written emergency contact sequence for what to do first if the physician is hospitalized, disabled, or gone?",
+              green:
+                "First calls, key professionals, and next steps are written and shared.",
+              yellow:
+                "Some names are known, but sequence is incomplete or not shared.",
+              red: "Family would not know who to call or what to do first.",
+            },
+          ],
+        },
         // weakest-first-action suggestions, keyed by metric id, used when that row is the weakest Red/Yellow
         actions: {
           income:
@@ -1260,7 +1398,7 @@
         const raw = String(value || "").replace(/[^0-9.]/g, "");
         return raw === "" ? "" : parseFloat(raw);
       };
-      const state = { vals: {}, status: {}, overridden: {} };
+      const state = { vals: {}, status: {}, overridden: {}, assessment: {} };
 
       const GYR = [
         ["na", "Not assessed"],
@@ -1286,6 +1424,35 @@
           `</select>`
         );
       }
+      function assessmentControl(inp) {
+        const questions = CONFIG.assessments[inp.id];
+        if (!questions) return `<span class="src">Status only</span>`;
+        return `<details class="assessment">
+          <summary>Guided status check</summary>
+          <div class="assessment-body">
+            <div class="assessment-note">Optional: answer these to suggest the row status. You can still change the final dropdown.</div>
+            ${questions
+              .map(
+                (item, idx) => `
+              <div class="assessment-q">
+                <div class="q">${idx + 1}. ${item.q}</div>
+                <div class="assessment-choices">
+                  ${["green", "yellow", "red"]
+                    .map(
+                      (value) => `
+                    <label>
+                      <input type="radio" name="assess-${inp.id}-${idx}" data-assessment="${inp.id}" data-assessment-index="${idx}" value="${value}">
+                      <span><b>${value[0].toUpperCase() + value.slice(1)}:</b> ${item[value]}</span>
+                    </label>`,
+                    )
+                    .join("")}
+                </div>
+              </div>`,
+              )
+              .join("")}
+          </div>
+        </details>`;
+      }
 
       function buildRows() {
         const rows = $("rows");
@@ -1293,11 +1460,13 @@
         CONFIG.inputs.forEach((inp) => {
           state.status[inp.id] = "na";
           if (inp.money) state.vals[inp.id] = Number(inp.value || 0);
+          if (CONFIG.assessments[inp.id])
+            state.assessment[inp.id] = CONFIG.assessments[inp.id].map(() => "");
           const div = document.createElement("div");
           div.className = "row";
           div.innerHTML = `
 	      <div class="cell"><span class="lab">${inp.label}</span><span class="src inline-src">${inp.src}</span>
-	        ${inp.money ? moneyControl(inp) : `<span class="src">Status only</span>`}</div>
+	        ${inp.money ? moneyControl(inp) : assessmentControl(inp)}</div>
 	      <div class="cell srccell"><span class="src">${inp.src}</span></div>
 	      <div class="cell">${gyrSelect(inp.id)}</div>`;
           rows.appendChild(div);
@@ -1315,6 +1484,7 @@
         });
         rows.addEventListener("input", onInput);
         rows.addEventListener("change", onStatus);
+        rows.addEventListener("change", onAssessment);
         rows.addEventListener("blur", onMoneyBlur, true);
       }
 
@@ -1358,6 +1528,31 @@
         state.overridden[el.dataset.row] = true;
         el.dataset.v = el.value;
         state.status[el.dataset.row] = el.value;
+        render();
+      }
+      function scoreAssessment(values) {
+        if (!values || values.some((value) => !value)) return "na";
+        if (values.includes("red")) return "red";
+        if (values.includes("yellow")) return "yellow";
+        return "green";
+      }
+      function applyAssessmentStatus(id) {
+        const status = scoreAssessment(state.assessment[id]);
+        if (state.overridden[id]) return;
+        state.status[id] = status;
+        const el = document.querySelector(`.gyr[data-row="${id}"]`);
+        if (!el) return;
+        el.value = status;
+        el.dataset.v = status;
+      }
+      function onAssessment(e) {
+        const el = e.target.closest("[data-assessment]");
+        if (!el) return;
+        const id = el.dataset.assessment;
+        const index = Number(el.dataset.assessmentIndex);
+        if (!state.assessment[id]) return;
+        state.assessment[id][index] = el.value;
+        applyAssessmentStatus(id);
         render();
       }
 
@@ -1640,6 +1835,40 @@
         const tr = document.createElement("tr");
         tr.innerHTML = `<td><b>G/Y/R tally</b></td><td>11-row count</td><td>6 / 3 / 2 = 11</td><td>${tally.green} / ${tally.yellow} / ${tally.red} = ${tally.green + tally.yellow + tally.red}</td><td class="${tallyOk ? "pass" : "fail"}">${tallyOk ? "PASS" : "FAIL"}</td>`;
         tb.appendChild(tr);
+        [
+          {
+            name: "Guided status",
+            metric: "Any Red wins",
+            input: ["green", "red", "yellow", "green", "green"],
+            exp: "red",
+          },
+          {
+            name: "Guided status",
+            metric: "Yellow if no Red",
+            input: ["green", "green", "yellow", "green", "green"],
+            exp: "yellow",
+          },
+          {
+            name: "Guided status",
+            metric: "All Green",
+            input: ["green", "green", "green", "green", "green"],
+            exp: "green",
+          },
+          {
+            name: "Guided status",
+            metric: "Incomplete",
+            input: ["green", "", "green", "green", "green"],
+            exp: "na",
+          },
+        ].forEach((tc) => {
+          total++;
+          const got = scoreAssessment(tc.input);
+          const ok = got === tc.exp;
+          if (ok) pass++;
+          const tr = document.createElement("tr");
+          tr.innerHTML = `<td><b>${tc.name}</b></td><td>${tc.metric}</td><td>${tc.exp}</td><td>${got}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td>`;
+          tb.appendChild(tr);
+        });
         const s = $("qa-summary");
         s.textContent =
           pass === total
