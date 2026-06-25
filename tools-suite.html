@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Physician Freedom Snapshot</title>
+    <title>Physician Freedom Tools Suite</title>
     <meta
       name="description"
-      content="A one-page diagnostic: see your current financial structure before you try to improve it. Physician Freedom System."
+      content="Paid Physician Freedom Tools Suite calculators for the Physician Freedom System."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -748,68 +748,179 @@
         }
       }
 
-      /* paid suite teaser */
-      .paid-teaser {
-        margin-top: 22px;
-        border: 1px solid var(--tan);
-        border-radius: 10px;
-        background: #fff;
-        padding: 20px;
+      /* Milestone 2 calculator suite */
+      .m2-suite {
+        padding: 28px 0 8px;
       }
-      .paid-teaser h2 {
-        font-size: 19px;
+      .suite-head {
+        border-top: 1px solid var(--tan);
+        padding-top: 24px;
+        margin-bottom: 16px;
+      }
+      .suite-head h2 {
+        font-size: 22px;
         font-weight: 600;
-        color: var(--navy);
       }
-      .paid-teaser .teaser-intro {
-        margin-top: 5px;
+      .suite-head p {
+        max-width: 72ch;
+        margin-top: 6px;
         color: var(--slate);
-        font-size: 13.5px;
-        max-width: 70ch;
+        font-size: 14px;
       }
-      .teaser-grid {
+      .tool-grid {
         display: grid;
-        gap: 12px;
-        margin-top: 15px;
+        gap: 18px;
       }
-      @media (min-width: 760px) {
-        .teaser-grid {
+      @media (min-width: 980px) {
+        .tool-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
-      .teaser-card {
+      .tool-card {
+        background: #fff;
         border: 1px solid var(--tan);
-        border-left: 4px solid var(--brass);
         border-radius: 8px;
-        background: var(--warm-white);
-        padding: 14px 15px;
+        overflow: hidden;
       }
-      .teaser-card .eyebrow {
-        color: var(--brass);
-        font-size: 10.5px;
+      .tool-card header {
+        padding: 17px 18px 14px;
+        background: var(--warm-box);
+        border-bottom: 1px solid var(--tan);
+      }
+      .tool-card h3 {
+        font-size: 18px;
         font-weight: 600;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
+        color: var(--navy);
       }
-      .teaser-card h3 {
-        margin-top: 3px;
-        font-size: 16px;
-        font-weight: 600;
-      }
-      .teaser-card p {
+      .tool-card header p {
         margin-top: 5px;
-        color: var(--charcoal);
+        color: var(--slate);
         font-size: 12.5px;
       }
-      .teaser-card .locked {
-        display: inline-flex;
-        margin-top: 10px;
-        border-radius: 999px;
-        background: var(--gold-fill);
-        color: var(--navy);
-        padding: 4px 10px;
-        font-size: 11.5px;
+      .tool-body {
+        padding: 16px 18px 18px;
+        display: grid;
+        gap: 16px;
+      }
+      .tool-fields {
+        display: grid;
+        gap: 10px;
+      }
+      .tool-field {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 145px;
+        gap: 10px;
+        align-items: center;
+      }
+      .tool-field label {
+        font-size: 13px;
         font-weight: 600;
+        color: var(--ink);
+      }
+      .tool-field small {
+        display: block;
+        margin-top: 1px;
+        color: var(--slate);
+        font-size: 11.2px;
+        font-weight: 400;
+      }
+      .tool-field input {
+        width: 100%;
+        background: var(--cream-input);
+        border: 1px solid var(--tan);
+        border-radius: 7px;
+        padding: 8px 9px;
+        font-family: var(--sans);
+        font-size: 13.5px;
+        color: var(--ink);
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+      .tool-field input:focus {
+        outline: none;
+        border-color: var(--gold);
+        box-shadow: 0 0 0 3px var(--gold-fill);
+      }
+      .tool-results {
+        border-top: 1px solid var(--tan);
+        display: grid;
+      }
+      .tool-result {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 12px;
+        align-items: baseline;
+        border-bottom: 1px solid var(--warm-box);
+        padding: 10px 0;
+      }
+      .tool-result:last-child {
+        border-bottom: none;
+      }
+      .tool-result .k {
+        color: var(--slate);
+        font-size: 12.5px;
+      }
+      .tool-result .v {
+        color: var(--navy);
+        font-family: var(--serif);
+        font-size: 18px;
+        font-weight: 600;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+      .tool-result .v small {
+        font-family: var(--sans);
+        font-size: 11px;
+        color: var(--slate);
+        font-weight: 400;
+      }
+      .tool-status {
+        display: inline-flex;
+        justify-self: start;
+        align-items: center;
+        border-radius: 6px;
+        padding: 5px 9px;
+        background: var(--warm-box);
+        color: var(--slate);
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .tool-status.green {
+        background: var(--green-fill);
+        color: var(--green);
+      }
+      .tool-status.yellow {
+        background: var(--yellow-fill);
+        color: #8a6a17;
+      }
+      .tool-status.red {
+        background: var(--red-fill);
+        color: var(--red);
+      }
+      .tool-status.na {
+        background: var(--warm-white);
+        color: var(--slate);
+      }
+      .tool-read {
+        background: var(--warm-white);
+        border-left: 3px solid var(--brass);
+        padding: 11px 12px;
+        color: var(--charcoal);
+        font-size: 12.5px;
+        line-height: 1.45;
+      }
+      .tool-read b {
+        color: var(--ink);
+        font-weight: 600;
+      }
+      @media (max-width: 520px) {
+        .tool-field {
+          grid-template-columns: 1fr;
+          gap: 5px;
+        }
+        .tool-field input {
+          text-align: left;
+        }
       }
 
       /* email capture */
@@ -1015,11 +1126,11 @@
 
     <main class="wrap">
       <div class="intro">
-        <h1>Freedom Snapshot</h1>
+        <h1>Physician Freedom Tools Suite</h1>
         <p class="lede">
-          A one-page diagnostic: see your current structure before you try to
-          improve it. Enter your real, document-based numbers, then mark each
-          row Green, Yellow, or Red using the guidance shown.
+          Start with the Snapshot, then use the paid calculators below to
+          pressure-test emergency cash and off-ramp runway using the same
+          document-based numbers.
         </p>
         <div class="meta">
           <span class="pill">Takes about 5 minutes</span>
@@ -1144,32 +1255,221 @@
         </section>
       </div>
 
-      <section class="paid-teaser" aria-label="Paid calculator suite preview">
-        <h2>Continue inside the paid Tools Suite</h2>
-        <p class="teaser-intro">
-          The free Snapshot shows your starting point. The paid Physician
-          Freedom Tools Suite adds deeper calculators for cash protection,
-          off-ramp planning, and the full workflow.
-        </p>
-        <div class="teaser-grid">
-          <div class="teaser-card">
-            <div class="eyebrow">Paid calculator</div>
-            <h3>Emergency Cash Target</h3>
-            <p>
-              Calculates target emergency reserves, current runway, cash gap,
-              and the monthly path to a protected reserve.
-            </p>
-            <span class="locked">Available in the paid suite</span>
-          </div>
-          <div class="teaser-card">
-            <div class="eyebrow">Paid calculator</div>
-            <h3>Off-Ramp Runway</h3>
-            <p>
-              Protects emergency cash first, then estimates how much runway is
-              available for a planned reduction in clinical work.
-            </p>
-            <span class="locked">Available in the paid suite</span>
-          </div>
+      <section class="m2-suite" id="top-3-calculators">
+        <div class="suite-head">
+          <h2>Top 3 calculators</h2>
+          <p>
+            These two tools build from the Snapshot numbers. Shared fields
+            prefill from the Snapshot and stay synced until you edit them here.
+          </p>
+        </div>
+        <div class="tool-grid">
+          <article class="tool-card" id="emergency-tool">
+            <header>
+              <h3>Emergency Cash Target</h3>
+              <p>
+                Protect core spending first, then show the target, gap, and
+                monthly path to a 6-month reserve.
+              </p>
+            </header>
+            <div class="tool-body">
+              <div class="tool-fields">
+                <div class="tool-field">
+                  <label for="em-core"
+                    >Core monthly spending
+                    <small>Prefills from Snapshot</small></label
+                  >
+                  <input id="em-core" data-m2="emCore" data-m2-type="money" />
+                </div>
+                <div class="tool-field">
+                  <label for="em-fixed"
+                    >Fixed monthly obligations
+                    <small>Context only; not part of the target</small></label
+                  >
+                  <input id="em-fixed" data-m2="emFixed" data-m2-type="money" />
+                </div>
+                <div class="tool-field">
+                  <label for="em-liquid"
+                    >Current liquid reserves
+                    <small>Prefills from Snapshot</small></label
+                  >
+                  <input id="em-liquid" data-m2="emLiquid" data-m2-type="money" />
+                </div>
+                <div class="tool-field">
+                  <label for="em-contrib"
+                    >Monthly reserve contribution
+                    <small>Used for months-to-target</small></label
+                  >
+                  <input id="em-contrib" data-m2="emContrib" data-m2-type="money" />
+                </div>
+                <div class="tool-field">
+                  <label for="em-target-months"
+                    >Target reserve months
+                    <small>Approved default: 6 months</small></label
+                  >
+                  <input
+                    id="em-target-months"
+                    type="number"
+                    min="0"
+                    step="1"
+                    data-m2="emTargetMonths"
+                    data-m2-type="months"
+                  />
+                </div>
+              </div>
+              <div class="tool-results">
+                <div class="tool-result">
+                  <span class="k">Current runway</span>
+                  <span class="v" id="em-runway">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">Emergency cash target</span>
+                  <span class="v" id="em-target">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">Emergency cash gap</span>
+                  <span class="v" id="em-gap">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">Reserve surplus</span>
+                  <span class="v" id="em-surplus">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">Months to target</span>
+                  <span class="v" id="em-months">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">12-month helper</span>
+                  <span class="v" id="em-suggested">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">Suggested status</span>
+                  <span class="tool-status na" id="em-status">Not assessed</span>
+                </div>
+              </div>
+              <div class="tool-read" id="em-read"></div>
+            </div>
+          </article>
+
+          <article class="tool-card" id="offramp-tool">
+            <header>
+              <h3>Off-Ramp Runway</h3>
+              <p>
+                Protect the emergency reserve before counting cash toward a
+                planned reduction in clinical work.
+              </p>
+            </header>
+            <div class="tool-body">
+              <div class="tool-fields">
+                <div class="tool-field">
+                  <label for="off-core"
+                    >Core spending during off-ramp
+                    <small>Prefills from Snapshot</small></label
+                  >
+                  <input id="off-core" data-m2="offCore" data-m2-type="money" />
+                </div>
+                <div class="tool-field">
+                  <label for="off-liquid"
+                    >Total liquid reserves
+                    <small>Emergency reserve is protected first</small></label
+                  >
+                  <input id="off-liquid" data-m2="offLiquid" data-m2-type="money" />
+                </div>
+                <div class="tool-field">
+                  <label for="off-nonclin"
+                    >Reliable non-clinical income
+                    <small>Prefills from Snapshot</small></label
+                  >
+                  <input
+                    id="off-nonclin"
+                    data-m2="offNonclin"
+                    data-m2-type="money"
+                  />
+                </div>
+                <div class="tool-field">
+                  <label for="off-clinical"
+                    >Expected clinical income
+                    <small>During the off-ramp period</small></label
+                  >
+                  <input
+                    id="off-clinical"
+                    data-m2="offClinical"
+                    data-m2-type="money"
+                  />
+                </div>
+                <div class="tool-field">
+                  <label for="off-costs"
+                    >One-time transition costs
+                    <small>Paid from cash above emergency reserve</small></label
+                  >
+                  <input id="off-costs" data-m2="offCosts" data-m2-type="money" />
+                </div>
+                <div class="tool-field">
+                  <label for="off-em-months"
+                    >Emergency reserve months
+                    <small>Approved default: 6 months</small></label
+                  >
+                  <input
+                    id="off-em-months"
+                    type="number"
+                    min="0"
+                    step="1"
+                    data-m2="offEmergencyMonths"
+                    data-m2-type="months"
+                  />
+                </div>
+                <div class="tool-field">
+                  <label for="off-planned"
+                    >Planned off-ramp length
+                    <small>Approved default: 12 months</small></label
+                  >
+                  <input
+                    id="off-planned"
+                    type="number"
+                    min="0"
+                    step="1"
+                    data-m2="offPlannedMonths"
+                    data-m2-type="months"
+                  />
+                </div>
+              </div>
+              <div class="tool-results">
+                <div class="tool-result">
+                  <span class="k">Protected emergency reserve</span>
+                  <span class="v" id="off-protected">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">Off-ramp reserve base</span>
+                  <span class="v" id="off-base">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">Monthly reserve burn</span>
+                  <span class="v" id="off-burn">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">Reserves after transition costs</span>
+                  <span class="v" id="off-after">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">Off-ramp runway</span>
+                  <span class="v" id="off-runway">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">Required reserves</span>
+                  <span class="v" id="off-required">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">Surplus / shortfall</span>
+                  <span class="v" id="off-shortfall">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">Suggested status</span>
+                  <span class="tool-status na" id="off-status">Not assessed</span>
+                </div>
+              </div>
+              <div class="tool-read" id="off-read"></div>
+            </div>
+          </article>
         </div>
       </section>
 
@@ -1483,15 +1783,106 @@
         return { delta, runway, pct, compass, progress };
       }
 
+      function computeEmergency(v) {
+        const core = Number(v.emCore || 0);
+        const liquid = Number(v.emLiquid || 0);
+        const contribution = Number(v.emContrib || 0);
+        const targetMonths = Number(v.emTargetMonths || 0);
+        const currentRunway = core > 0 ? liquid / core : null;
+        const target = core * targetMonths;
+        const gap = Math.max(target - liquid, 0);
+        const surplus = Math.max(liquid - target, 0);
+        const monthsToTarget =
+          gap === 0 ? null : contribution > 0 ? gap / contribution : Infinity;
+        const suggestedMonthly = gap > 0 ? gap / 12 : null;
+        let status = "na";
+        if (core > 0) {
+          if (currentRunway >= targetMonths) status = "green";
+          else if (currentRunway >= 3) status = "yellow";
+          else status = "red";
+        }
+        return {
+          currentRunway,
+          target,
+          gap,
+          surplus,
+          monthsToTarget,
+          suggestedMonthly,
+          status,
+        };
+      }
+
+      function computeOffRamp(v) {
+        const core = Number(v.offCore || 0);
+        const liquid = Number(v.offLiquid || 0);
+        const nonclin = Number(v.offNonclin || 0);
+        const clinical = Number(v.offClinical || 0);
+        const costs = Number(v.offCosts || 0);
+        const emergencyMonths = Number(v.offEmergencyMonths || 0);
+        const plannedMonths = Number(v.offPlannedMonths || 0);
+        const protectedReserve = core * emergencyMonths;
+        const reserveBase = Math.max(liquid - protectedReserve, 0);
+        const transitionCostsInvadeEmergency = reserveBase < costs;
+        const afterCosts = Math.max(reserveBase - costs, 0);
+        const monthlyIncome = nonclin + clinical;
+        const burn = Math.max(core - monthlyIncome, 0);
+        const runway = burn > 0 ? afterCosts / burn : null;
+        const required = costs + burn * plannedMonths;
+        const surplusShortfall = reserveBase - required;
+        const percentFunded =
+          burn > 0 && plannedMonths > 0
+            ? afterCosts / (burn * plannedMonths)
+            : null;
+        let status = "na";
+        if (plannedMonths > 0 && core > 0) {
+          if (transitionCostsInvadeEmergency) status = "red";
+          else if (burn === 0) status = "green";
+          else if (runway < plannedMonths) status = "red";
+          else if (runway >= plannedMonths + 3) status = "green";
+          else status = "yellow";
+        }
+        return {
+          protectedReserve,
+          reserveBase,
+          transitionCostsInvadeEmergency,
+          afterCosts,
+          monthlyIncome,
+          burn,
+          runway,
+          required,
+          surplusShortfall,
+          percentFunded,
+          status,
+        };
+      }
+
       /* ================= UI ================= */
       const $ = (id) => document.getElementById(id);
-      const money = (n) => "$" + Math.round(n).toLocaleString("en-US");
+      const money = (n) => {
+        const rounded = Math.round(n);
+        const prefix = rounded < 0 ? "-$" : "$";
+        return prefix + Math.abs(rounded).toLocaleString("en-US");
+      };
       const pctText = (n) => (n === null ? "–" : (n * 100).toFixed(1) + "%");
       const plainNumber = (value) => {
         const raw = String(value || "").replace(/[^0-9.]/g, "");
         return raw === "" ? "" : parseFloat(raw);
       };
-      const state = { vals: {}, status: {}, overridden: {}, assessment: {} };
+      const state = {
+        vals: {},
+        status: {},
+        overridden: {},
+        assessment: {},
+        m2: {
+          emContrib: 3000,
+          emTargetMonths: 6,
+          offClinical: 0,
+          offCosts: 0,
+          offEmergencyMonths: 6,
+          offPlannedMonths: 12,
+        },
+        m2Touched: {},
+      };
 
       const GYR = [
         ["na", "Not assessed"],
@@ -1608,6 +1999,131 @@
           range.value = n;
         const text = document.querySelector(`[data-in="${id}"]`);
         if (text && fromRange) text.value = money(n);
+      }
+      const M2_PREFILLS = {
+        emCore: "core",
+        emFixed: "fixed",
+        emLiquid: "liquid",
+        offCore: "core",
+        offLiquid: "liquid",
+        offNonclin: "nonclin",
+      };
+      function m2Value(key) {
+        const value = state.m2[key];
+        return value === "" || value === null || Number.isNaN(Number(value))
+          ? 0
+          : Number(value);
+      }
+      function formatM2Value(value, type) {
+        if (value === "" || value === null || Number.isNaN(Number(value)))
+          return "";
+        const n = Number(value);
+        return type === "money" ? money(n) : String(n);
+      }
+      function syncM2FromSnapshot() {
+        Object.entries(M2_PREFILLS).forEach(([key, src]) => {
+          if (state.m2Touched[key]) return;
+          state.m2[key] = Number(state.vals[src] || 0);
+        });
+        document.querySelectorAll("[data-m2]").forEach((el) => {
+          if (document.activeElement === el) return;
+          const key = el.dataset.m2;
+          el.value = formatM2Value(state.m2[key], el.dataset.m2Type);
+        });
+      }
+      function initM2() {
+        syncM2FromSnapshot();
+        document.querySelectorAll("[data-m2]").forEach((el) => {
+          const key = el.dataset.m2;
+          if (!(key in state.m2)) state.m2[key] = plainNumber(el.value) || 0;
+          el.addEventListener("input", (event) => {
+            const target = event.currentTarget;
+            const next =
+              target.dataset.m2Type === "money"
+                ? plainNumber(target.value)
+                : target.value === ""
+                  ? ""
+                  : Number(target.value);
+            state.m2Touched[target.dataset.m2] = true;
+            state.m2[target.dataset.m2] = next;
+            render();
+          });
+          el.addEventListener("blur", (event) => {
+            const target = event.currentTarget;
+            target.value = formatM2Value(
+              state.m2[target.dataset.m2],
+              target.dataset.m2Type,
+            );
+          });
+        });
+      }
+      const monthsText = (n) =>
+        n === null || !Number.isFinite(n)
+          ? "–"
+          : `${n.toFixed(1)} <small>mo</small>`;
+      const maybeMoney = (n) =>
+        n === null || !Number.isFinite(n) ? "–" : money(n);
+      function setToolStatus(id, status) {
+        const el = $(id);
+        if (!el) return;
+        const labels = {
+          green: "Green",
+          yellow: "Yellow",
+          red: "Red",
+          na: "Not assessed",
+        };
+        el.className = `tool-status ${status}`;
+        el.textContent = labels[status] || labels.na;
+      }
+      function emergencyRead(o) {
+        if (o.status === "na")
+          return "<b>Not assessed.</b> Add core monthly spending to calculate an emergency cash target.";
+        if (o.status === "green")
+          return "<b>Reserve target is covered.</b> The current liquid reserve meets or exceeds the target months of core spending. Keep it accessible and separate from long-term investment risk.";
+        if (o.status === "yellow")
+          return "<b>Partial reserve is in place.</b> Current cash covers at least three months but not the full target, so the next move is a specific monthly contribution until the gap closes.";
+        return "<b>Reserve is thin.</b> Current cash is below three months of core spending. Build emergency protection before adding complexity.";
+      }
+      function offRampRead(o) {
+        if (o.status === "na")
+          return "<b>Not assessed.</b> Add core spending and a planned off-ramp length to calculate transition runway.";
+        if (o.transitionCostsInvadeEmergency)
+          return "<b>Protected emergency cash is being invaded.</b> Transition costs exceed cash available above the protected reserve, so the plan needs more cash, lower costs, or a smaller first move.";
+        if (o.status === "green")
+          return "<b>Off-ramp is funded with room.</b> Cash above the protected emergency reserve covers the planned transition with the approved cushion, or there is no monthly reserve burn.";
+        if (o.status === "yellow")
+          return "<b>Plan covers the basics, but the margin is tight.</b> The runway reaches the planned off-ramp length but does not yet include the full three-month cushion.";
+        return "<b>Off-ramp is underfunded.</b> Available cash above the protected emergency reserve does not cover the planned transition period.";
+      }
+      function renderM2() {
+        const em = computeEmergency(state.m2);
+        $("em-runway").innerHTML =
+          em.currentRunway === null ? "–" : `${em.currentRunway.toFixed(1)} <small>mo</small>`;
+        $("em-target").textContent = money(em.target);
+        $("em-gap").textContent = money(em.gap);
+        $("em-surplus").textContent = money(em.surplus);
+        $("em-months").innerHTML =
+          em.monthsToTarget === Infinity
+            ? "No current contribution"
+            : em.monthsToTarget === null
+              ? "Target reached"
+              : monthsText(em.monthsToTarget);
+        $("em-suggested").textContent =
+          em.suggestedMonthly === null ? "–" : `${money(em.suggestedMonthly)} /mo`;
+        setToolStatus("em-status", em.status);
+        $("em-read").innerHTML = emergencyRead(em);
+
+        const off = computeOffRamp(state.m2);
+        $("off-protected").textContent = money(off.protectedReserve);
+        $("off-base").textContent = money(off.reserveBase);
+        $("off-burn").textContent = money(off.burn);
+        $("off-after").textContent = money(off.afterCosts);
+        $("off-runway").innerHTML =
+          off.runway === null ? "No monthly reserve burn" : monthsText(off.runway);
+        $("off-required").textContent = money(off.required);
+        $("off-shortfall").textContent = money(off.surplusShortfall);
+        setToolStatus("off-status", off.status);
+        $("off-read").innerHTML = offRampRead(off);
       }
       function onMoneyBlur(e) {
         const el = e.target.closest("[data-in]");
@@ -1741,6 +2257,7 @@
       function render() {
         const o = compute(state.vals);
         applySuggestedStatuses(o);
+        syncM2FromSnapshot();
         $("row-delta").innerHTML = money(o.delta);
         $("row-runway").innerHTML =
           o.runway === null
@@ -1812,12 +2329,14 @@
           why.textContent =
             "Mark your rows above and the weakest one suggests your first move. You can edit or replace it.";
         }
+        renderM2();
       }
       $("action-text").addEventListener("input", (e) => {
         e.target.dataset.touched = "1";
       });
 
       buildRows();
+      initM2();
       render();
 
       /* ================= QA HARNESS ================= */
@@ -1961,6 +2480,252 @@
           const tr = document.createElement("tr");
           tr.innerHTML = `<td><b>${tc.name}</b></td><td>${tc.metric}</td><td>${tc.exp}</td><td>${got}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td>`;
           tb.appendChild(tr);
+        });
+        [
+          {
+            name: "Emergency Cash A",
+            in: {
+              emCore: 18000,
+              emLiquid: 90000,
+              emContrib: 3000,
+              emTargetMonths: 6,
+            },
+            exp: {
+              currentRunway: "5.0",
+              target: "$108,000",
+              gap: "$18,000",
+              monthsToTarget: "6.0",
+              status: "yellow",
+            },
+          },
+          {
+            name: "Emergency Cash B",
+            in: {
+              emCore: 12000,
+              emLiquid: 24000,
+              emContrib: 2000,
+              emTargetMonths: 6,
+            },
+            exp: {
+              currentRunway: "2.0",
+              target: "$72,000",
+              gap: "$48,000",
+              monthsToTarget: "24.0",
+              status: "red",
+            },
+          },
+          {
+            name: "Emergency Cash C",
+            in: {
+              emCore: 15000,
+              emLiquid: 120000,
+              emContrib: 1000,
+              emTargetMonths: 6,
+            },
+            exp: {
+              currentRunway: "8.0",
+              target: "$90,000",
+              gap: "$0",
+              monthsToTarget: "Target reached",
+              status: "green",
+            },
+          },
+          {
+            name: "Emergency Cash D",
+            in: {
+              emCore: 0,
+              emLiquid: 50000,
+              emContrib: 1000,
+              emTargetMonths: 6,
+            },
+            exp: {
+              currentRunway: "blank",
+              target: "$0",
+              gap: "$0",
+              monthsToTarget: "Target reached",
+              status: "na",
+            },
+          },
+          {
+            name: "Emergency Cash E",
+            in: {
+              emCore: 10000,
+              emLiquid: 30000,
+              emContrib: 0,
+              emTargetMonths: 6,
+            },
+            exp: {
+              currentRunway: "3.0",
+              target: "$60,000",
+              gap: "$30,000",
+              monthsToTarget: "No current contribution",
+              status: "yellow",
+            },
+          },
+        ].forEach((tc) => {
+          const gotRaw = computeEmergency(tc.in);
+          const got = {
+            currentRunway:
+              gotRaw.currentRunway === null
+                ? "blank"
+                : gotRaw.currentRunway.toFixed(1),
+            target: money(gotRaw.target),
+            gap: money(gotRaw.gap),
+            monthsToTarget:
+              gotRaw.monthsToTarget === Infinity
+                ? "No current contribution"
+                : gotRaw.monthsToTarget === null
+                  ? "Target reached"
+                  : gotRaw.monthsToTarget.toFixed(1),
+            status: gotRaw.status,
+          };
+          Object.entries(tc.exp).forEach(([metric, expected], i) => {
+            total++;
+            const ok = got[metric] === expected;
+            if (ok) pass++;
+            const tr = document.createElement("tr");
+            tr.innerHTML =
+              (i === 0 ? `<td rowspan="5"><b>${tc.name}</b></td>` : "") +
+              `<td>${metric}</td><td>${expected}</td><td>${got[metric]}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td>`;
+            tb.appendChild(tr);
+          });
+        });
+        [
+          {
+            name: "Off-Ramp A",
+            in: {
+              offCore: 18000,
+              offLiquid: 300000,
+              offNonclin: 3000,
+              offClinical: 5000,
+              offCosts: 20000,
+              offEmergencyMonths: 6,
+              offPlannedMonths: 12,
+            },
+            exp: {
+              protectedReserve: "$108,000",
+              reserveBase: "$192,000",
+              burn: "$10,000",
+              afterCosts: "$172,000",
+              runway: "17.2",
+              required: "$140,000",
+              surplusShortfall: "$52,000",
+              status: "green",
+            },
+          },
+          {
+            name: "Off-Ramp B",
+            in: {
+              offCore: 20000,
+              offLiquid: 270000,
+              offNonclin: 4000,
+              offClinical: 6000,
+              offCosts: 20000,
+              offEmergencyMonths: 6,
+              offPlannedMonths: 12,
+            },
+            exp: {
+              protectedReserve: "$120,000",
+              reserveBase: "$150,000",
+              burn: "$10,000",
+              afterCosts: "$130,000",
+              runway: "13.0",
+              required: "$140,000",
+              surplusShortfall: "$10,000",
+              status: "yellow",
+            },
+          },
+          {
+            name: "Off-Ramp C",
+            in: {
+              offCore: 18000,
+              offLiquid: 80000,
+              offNonclin: 2000,
+              offClinical: 4000,
+              offCosts: 10000,
+              offEmergencyMonths: 6,
+              offPlannedMonths: 12,
+            },
+            exp: {
+              protectedReserve: "$108,000",
+              reserveBase: "$0",
+              burn: "$12,000",
+              afterCosts: "$0",
+              runway: "0.0",
+              required: "$154,000",
+              surplusShortfall: "-$154,000",
+              status: "red",
+            },
+          },
+          {
+            name: "Off-Ramp D",
+            in: {
+              offCore: 15000,
+              offLiquid: 120000,
+              offNonclin: 10000,
+              offClinical: 5000,
+              offCosts: 5000,
+              offEmergencyMonths: 6,
+              offPlannedMonths: 12,
+            },
+            exp: {
+              protectedReserve: "$90,000",
+              reserveBase: "$30,000",
+              burn: "$0",
+              afterCosts: "$25,000",
+              runway: "No monthly reserve burn",
+              required: "$5,000",
+              surplusShortfall: "$25,000",
+              status: "green",
+            },
+          },
+          {
+            name: "Off-Ramp E",
+            in: {
+              offCore: 15000,
+              offLiquid: 50000,
+              offNonclin: 0,
+              offClinical: 0,
+              offCosts: 5000,
+              offEmergencyMonths: 6,
+              offPlannedMonths: 0,
+            },
+            exp: {
+              protectedReserve: "$90,000",
+              reserveBase: "$0",
+              burn: "$15,000",
+              afterCosts: "$0",
+              runway: "0.0",
+              required: "$5,000",
+              surplusShortfall: "-$5,000",
+              status: "na",
+            },
+          },
+        ].forEach((tc) => {
+          const gotRaw = computeOffRamp(tc.in);
+          const got = {
+            protectedReserve: money(gotRaw.protectedReserve),
+            reserveBase: money(gotRaw.reserveBase),
+            burn: money(gotRaw.burn),
+            afterCosts: money(gotRaw.afterCosts),
+            runway:
+              gotRaw.runway === null
+                ? "No monthly reserve burn"
+                : gotRaw.runway.toFixed(1),
+            required: money(gotRaw.required),
+            surplusShortfall: money(gotRaw.surplusShortfall),
+            status: gotRaw.status,
+          };
+          Object.entries(tc.exp).forEach(([metric, expected], i) => {
+            total++;
+            const ok = got[metric] === expected;
+            if (ok) pass++;
+            const tr = document.createElement("tr");
+            tr.innerHTML =
+              (i === 0 ? `<td rowspan="8"><b>${tc.name}</b></td>` : "") +
+              `<td>${metric}</td><td>${expected}</td><td>${got[metric]}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td>`;
+            tb.appendChild(tr);
+          });
         });
         const s = $("qa-summary");
         s.textContent =

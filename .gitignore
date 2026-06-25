@@ -4,4 +4,5 @@
 # Client-safe deploy artifact.
 !/.gitignore
 !/index.html
+!/tools-suite.html
 !/README.md
