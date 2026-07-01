@@ -178,8 +178,151 @@
         font-weight: 600;
       }
 
+      .suite-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+        align-items: start;
+        min-width: 0;
+      }
+      @media (min-width: 1080px) {
+        .suite-layout {
+          grid-template-columns: 238px minmax(0, 1fr);
+        }
+      }
+      .suite-nav {
+        z-index: 3;
+        min-width: 0;
+      }
+      @media (min-width: 1080px) {
+        .suite-nav {
+          position: sticky;
+          top: 14px;
+        }
+      }
+      .suite-nav-card {
+        background: #fff;
+        border: 1px solid var(--tan);
+        border-radius: 8px;
+        box-shadow: 0 1px 2px rgba(10, 27, 36, 0.04);
+        overflow: hidden;
+        max-width: 100%;
+        min-width: 0;
+      }
+      .suite-nav-head {
+        padding: 14px 15px;
+        background: var(--warm-box);
+        border-bottom: 1px solid var(--tan);
+      }
+      .suite-nav-head .eyebrow {
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--slate);
+        font-weight: 700;
+      }
+      .suite-nav-head strong {
+        display: block;
+        margin-top: 2px;
+        font-family: var(--serif);
+        color: var(--navy);
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+      .suite-nav-groups {
+        display: grid;
+        gap: 12px;
+        padding: 12px;
+        min-width: 0;
+      }
+      .nav-group {
+        display: grid;
+        gap: 5px;
+      }
+      .nav-group-title {
+        padding: 0 3px;
+        color: var(--brass);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .suite-nav a {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        min-height: 36px;
+        border-radius: 7px;
+        padding: 8px 9px;
+        color: var(--charcoal);
+        text-decoration: none;
+        font-size: 13px;
+        line-height: 1.25;
+      }
+      .suite-nav a:hover,
+      .suite-nav a:focus-visible,
+      .suite-nav a.active {
+        background: var(--gold-fill);
+        color: var(--navy);
+        outline: none;
+      }
+      .suite-nav .badge {
+        flex: none;
+        border: 1px solid var(--tan);
+        border-radius: 999px;
+        padding: 1px 7px 2px;
+        color: var(--slate);
+        font-size: 10.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      .suite-content {
+        min-width: 0;
+      }
+      @media (max-width: 1079px) {
+        .suite-nav {
+          position: sticky;
+          top: 0;
+          margin: 0 -22px;
+          background: rgba(251, 249, 245, 0.96);
+          border-bottom: 1px solid var(--tan);
+          padding: 10px 22px;
+          backdrop-filter: blur(8px);
+        }
+        .suite-nav-card {
+          border-radius: 8px;
+        }
+        .suite-nav-head {
+          display: none;
+        }
+        .suite-nav-groups {
+          display: flex;
+          gap: 10px;
+          overflow-x: auto;
+          padding: 10px;
+          scroll-snap-type: x proximity;
+          width: 100%;
+        }
+        .nav-group {
+          min-width: 210px;
+          scroll-snap-align: start;
+        }
+      }
+
       section {
+        scroll-margin-top: 20px;
         padding: 20px 0;
+      }
+      article.tool-card {
+        scroll-margin-top: 20px;
+      }
+      @media (max-width: 1079px) {
+        section,
+        article.tool-card {
+          scroll-margin-top: 128px;
+        }
       }
       .workspace {
         display: grid;
@@ -1147,123 +1290,161 @@
         choose to provide.
       </div>
 
-      <div class="workspace">
-        <!-- INPUTS + STATUS -->
-        <section class="numbers-col">
-          <div class="sec-h">
-            <span class="n">i.</span>
-            <h2>Your numbers</h2>
-            <span class="hint">cream = you enter | gold = calculated</span>
-          </div>
-          <div class="rows" id="rows">
-            <div class="row head">
-              <div class="cell">Metric</div>
-              <div class="cell srccell">Source</div>
-              <div class="cell">Status</div>
+      <div class="suite-layout">
+        <nav class="suite-nav" aria-label="Tools Suite navigation">
+          <div class="suite-nav-card">
+            <div class="suite-nav-head">
+              <div class="eyebrow">Tools Suite</div>
+              <strong>Jump to a tool</strong>
             </div>
-            <!-- input + calc rows injected by JS -->
+            <div class="suite-nav-groups">
+              <div class="nav-group" aria-label="Snapshot">
+                <div class="nav-group-title">Snapshot</div>
+                <a href="#snapshot-workspace" data-suite-nav>
+                  <span>Paid Snapshot</span>
+                  <span class="badge">Live</span>
+                </a>
+              </div>
+              <div class="nav-group" aria-label="Cash, runway, and risk">
+                <div class="nav-group-title">Cash & runway</div>
+                <a href="#emergency-tool" data-suite-nav>
+                  <span>Emergency Cash Target</span>
+                  <span class="badge">Live</span>
+                </a>
+                <a href="#offramp-tool" data-suite-nav>
+                  <span>Off-Ramp Runway</span>
+                  <span class="badge">Live</span>
+                </a>
+              </div>
+              <div class="nav-group" aria-label="Quality assurance">
+                <div class="nav-group-title">Review</div>
+                <a href="#qa" data-suite-nav>
+                  <span>QA checks</span>
+                  <span class="badge">90</span>
+                </a>
+              </div>
+            </div>
           </div>
-        </section>
+        </nav>
 
-        <!-- RESULTS -->
-        <section class="snapshot-col">
-          <div class="snapshot-panel">
-            <div class="panel-label">Your snapshot</div>
-            <div class="score-ring">
-              <div class="ring" aria-hidden="true">
-                <svg viewBox="0 0 96 96">
-                  <circle
-                    class="bg"
-                    cx="48"
-                    cy="48"
-                    r="41"
-                    fill="none"
-                    stroke-width="9"
-                  />
-                  <circle
-                    class="fg"
-                    id="d-ring-fg"
-                    cx="48"
-                    cy="48"
-                    r="41"
-                    fill="none"
-                    stroke-width="9"
-                    stroke-dasharray="257.6"
-                    stroke-dashoffset="257.6"
-                  />
-                  <text
-                    id="d-ring-text"
-                    x="48"
-                    y="53"
-                    text-anchor="middle"
-                    font-size="17"
-                  >
-                    0%
-                  </text>
-                </svg>
+        <div class="suite-content">
+          <div class="workspace" id="snapshot-workspace">
+            <!-- INPUTS + STATUS -->
+            <section class="numbers-col">
+              <div class="sec-h">
+                <span class="n">i.</span>
+                <h2>Your numbers</h2>
+                <span class="hint">cream = you enter | gold = calculated</span>
               </div>
-              <div class="score-copy">
-                <div class="t1">Progress to your<br />Freedom Number</div>
-                <div class="t2" id="d-progress-line">–</div>
+              <div class="rows" id="rows">
+                <div class="row head">
+                  <div class="cell">Metric</div>
+                  <div class="cell srccell">Source</div>
+                  <div class="cell">Status</div>
+                </div>
+                <!-- input + calc rows injected by JS -->
               </div>
-            </div>
-            <div class="metric-list">
-              <div class="metric">
-                <span class="k">Freedom Number <small>(300 Rule)</small></span>
-                <span class="v" id="d-compass">–</span>
+            </section>
+
+            <!-- RESULTS -->
+            <section class="snapshot-col">
+              <div class="snapshot-panel">
+                <div class="panel-label">Your snapshot</div>
+                <div class="score-ring">
+                  <div class="ring" aria-hidden="true">
+                    <svg viewBox="0 0 96 96">
+                      <circle
+                        class="bg"
+                        cx="48"
+                        cy="48"
+                        r="41"
+                        fill="none"
+                        stroke-width="9"
+                      />
+                      <circle
+                        class="fg"
+                        id="d-ring-fg"
+                        cx="48"
+                        cy="48"
+                        r="41"
+                        fill="none"
+                        stroke-width="9"
+                        stroke-dasharray="257.6"
+                        stroke-dashoffset="257.6"
+                      />
+                      <text
+                        id="d-ring-text"
+                        x="48"
+                        y="53"
+                        text-anchor="middle"
+                        font-size="17"
+                      >
+                        0%
+                      </text>
+                    </svg>
+                  </div>
+                  <div class="score-copy">
+                    <div class="t1">Progress to your<br />Freedom Number</div>
+                    <div class="t2" id="d-progress-line">–</div>
+                  </div>
+                </div>
+                <div class="metric-list">
+                  <div class="metric">
+                    <span class="k">Freedom Number <small>(300 Rule)</small></span>
+                    <span class="v" id="d-compass">–</span>
+                  </div>
+                  <div class="metric">
+                    <span class="k">Freedom Delta</span>
+                    <span class="v" id="d-delta">–</span>
+                  </div>
+                  <div class="metric">
+                    <span class="k">Runway <span class="metric-band" id="b-runway">–</span></span>
+                    <span class="v" id="d-runway">–</span>
+                  </div>
+                  <div class="metric">
+                    <span class="k">Core covered <span class="metric-band" id="b-pct">–</span></span>
+                    <span class="v" id="d-pct">–</span>
+                  </div>
+                  <div class="metric">
+                    <span class="k">Status scan</span>
+                    <span class="v" id="d-status-scan"
+                      ><span id="q-g">0</span>G /
+                      <span id="q-y">0</span>Y /
+                      <span id="q-r">0</span>R</span
+                    >
+                    <span id="q-n" hidden>11</span>
+                  </div>
+                </div>
               </div>
-              <div class="metric">
-                <span class="k">Freedom Delta</span>
-                <span class="v" id="d-delta">–</span>
+              <div class="action">
+                <div class="snapshot-read">
+                  <h3>What this means</h3>
+                  <div class="read-body" id="snapshot-read"></div>
+                </div>
+                <div class="action-edit">
+                  <h3>First action this week</h3>
+                  <p class="why" id="action-why">
+                    Mark your rows above and the weakest one suggests your first
+                    move. You can edit or replace it.
+                  </p>
+                  <textarea
+                    id="action-text"
+                    placeholder="Your first action this week..."
+                  ></textarea>
+                </div>
               </div>
-              <div class="metric">
-                <span class="k">Runway <span class="metric-band" id="b-runway">–</span></span>
-                <span class="v" id="d-runway">–</span>
-              </div>
-              <div class="metric">
-                <span class="k">Core covered <span class="metric-band" id="b-pct">–</span></span>
-                <span class="v" id="d-pct">–</span>
-              </div>
-              <div class="metric">
-                <span class="k">Status scan</span>
-                <span class="v" id="d-status-scan"
-                  ><span id="q-g">0</span>G /
-                  <span id="q-y">0</span>Y /
-                  <span id="q-r">0</span>R</span
-                >
-                <span id="q-n" hidden>11</span>
-              </div>
-            </div>
+            </section>
           </div>
-          <div class="action">
-            <div class="snapshot-read">
-              <h3>What this means</h3>
-              <div class="read-body" id="snapshot-read"></div>
-            </div>
-            <div class="action-edit">
-              <h3>First action this week</h3>
-              <p class="why" id="action-why">
-                Mark your rows above and the weakest one suggests your first
-                move. You can edit or replace it.
+
+          <section class="m2-suite" id="top-3-calculators">
+            <div class="suite-head">
+              <h2>Cash & runway tools</h2>
+              <p>
+                These tools build from the Snapshot numbers. Shared fields
+                prefill from the Snapshot and stay synced until you edit them here.
               </p>
-              <textarea
-                id="action-text"
-                placeholder="Your first action this week..."
-              ></textarea>
             </div>
-          </div>
-        </section>
-      </div>
-
-      <section class="m2-suite" id="top-3-calculators">
-        <div class="suite-head">
-          <h2>Top 3 calculators</h2>
-          <p>
-            These two tools build from the Snapshot numbers. Shared fields
-            prefill from the Snapshot and stay synced until you edit them here.
-          </p>
-        </div>
-        <div class="tool-grid">
+            <div class="tool-grid">
           <article class="tool-card" id="emergency-tool">
             <header>
               <h3>Emergency Cash Target</h3>
@@ -1470,61 +1651,63 @@
               <div class="tool-read" id="off-read"></div>
             </div>
           </article>
-        </div>
-      </section>
+            </div>
+          </section>
 
-      <!-- EMAIL CAPTURE (Kajabi-wired in production) -->
-      <div class="capture">
-        <b>Get your Snapshot summary</b>
-        <p>
-          Enter your email to save a copy of your results and your first action.
-        </p>
-        <form
-          id="capture-form"
-          onsubmit="
-            event.preventDefault();
-            this.querySelector('button').textContent = 'Sent ✓';
-          "
-        >
-          <input
-            type="email"
-            placeholder="you@example.com"
-            required
-            aria-label="Email address"
-          />
-          <button type="submit">Email my Snapshot</button>
-          <div class="note">
-            In production this connects to the Physician Freedom System list in
-            Kajabi. No financial numbers are sent, only your email and the
-            summary you approve.
+          <!-- EMAIL CAPTURE (Kajabi-wired in production) -->
+          <div class="capture">
+            <b>Get your Snapshot summary</b>
+            <p>
+              Enter your email to save a copy of your results and your first action.
+            </p>
+            <form
+              id="capture-form"
+              onsubmit="
+                event.preventDefault();
+                this.querySelector('button').textContent = 'Sent ✓';
+              "
+            >
+              <input
+                type="email"
+                placeholder="you@example.com"
+                required
+                aria-label="Email address"
+              />
+              <button type="submit">Email my Snapshot</button>
+              <div class="note">
+                In production this connects to the Physician Freedom System list in
+                Kajabi. No financial numbers are sent, only your email and the
+                summary you approve.
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
 
-      <!-- QA HARNESS -->
-      <div class="qa" id="qa">
-        <h3>
-          QA harness | formulas verified against the approved workbook samples
-        </h3>
-        <p>
-          Computed live on this page. Every row must pass before the calculator
-          is considered complete.
-        </p>
-        <div class="qa-scroll">
-          <table id="qa-table">
-            <thead>
-              <tr>
-                <th>Test</th>
-                <th>Metric</th>
-                <th>Expected</th>
-                <th>Computed</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+          <!-- QA HARNESS -->
+          <div class="qa" id="qa">
+            <h3>
+              QA harness | formulas verified against the approved workbook samples
+            </h3>
+            <p>
+              Computed live on this page. Every row must pass before the calculator
+              is considered complete.
+            </p>
+            <div class="qa-scroll">
+              <table id="qa-table">
+                <thead>
+                  <tr>
+                    <th>Test</th>
+                    <th>Metric</th>
+                    <th>Expected</th>
+                    <th>Computed</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div class="summary" id="qa-summary"></div>
+          </div>
         </div>
-        <div class="summary" id="qa-summary"></div>
       </div>
     </main>
 
@@ -2335,8 +2518,46 @@
         e.target.dataset.touched = "1";
       });
 
+      function initSuiteNav() {
+        const links = [...document.querySelectorAll("[data-suite-nav]")];
+        if (!links.length) return;
+        let manualNavUntil = 0;
+        const targets = links
+          .map((link) => ({
+            link,
+            target: document.querySelector(link.getAttribute("href")),
+          }))
+          .filter((item) => item.target);
+        const setActive = (id) => {
+          links.forEach((link) => {
+            link.classList.toggle("active", link.getAttribute("href") === `#${id}`);
+          });
+        };
+        links.forEach((link) => {
+          link.addEventListener("click", () => {
+            const id = link.getAttribute("href").slice(1);
+            manualNavUntil = Date.now() + 900;
+            setActive(id);
+          });
+        });
+        setActive(targets[0].target.id);
+        if (!("IntersectionObserver" in window)) return;
+        const observer = new IntersectionObserver(
+          (entries) => {
+            if (Date.now() < manualNavUntil) return;
+            const visible = entries
+              .filter((entry) => entry.isIntersecting)
+              .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+            if (visible) setActive(visible.target.id);
+          },
+          { rootMargin: "-20% 0px -65% 0px", threshold: [0.1, 0.4, 0.75] },
+        );
+        targets.forEach(({ target }) => observer.observe(target));
+      }
+
       buildRows();
       initM2();
+      initSuiteNav();
       render();
 
       /* ================= QA HARNESS ================= */
