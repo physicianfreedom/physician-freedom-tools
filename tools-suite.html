@@ -967,7 +967,9 @@
         font-size: 11.2px;
         font-weight: 400;
       }
-      .tool-field input {
+      .tool-field input,
+      .tool-field select,
+      .tool-field textarea {
         width: 100%;
         background: var(--cream-input);
         border: 1px solid var(--tan);
@@ -976,13 +978,28 @@
         font-family: var(--sans);
         font-size: 13.5px;
         color: var(--ink);
-        text-align: right;
         font-variant-numeric: tabular-nums;
       }
-      .tool-field input:focus {
+      .tool-field input {
+        text-align: right;
+      }
+      .tool-field textarea {
+        min-height: 58px;
+        resize: vertical;
+        text-align: left;
+      }
+      .tool-field select {
+        cursor: pointer;
+      }
+      .tool-field input:focus,
+      .tool-field select:focus,
+      .tool-field textarea:focus {
         outline: none;
         border-color: var(--gold);
         box-shadow: 0 0 0 3px var(--gold-fill);
+      }
+      .tool-field.full {
+        grid-template-columns: 1fr;
       }
       .tool-results {
         border-top: 1px solid var(--tan);
@@ -1125,6 +1142,9 @@
         border-radius: 10px;
         padding: 18px;
         background: #fff;
+      }
+      .qa[hidden] {
+        display: none;
       }
       .qa h3 {
         font-size: 13px;
@@ -1305,10 +1325,33 @@
                   <span class="badge">Live</span>
                 </a>
               </div>
+              <div class="nav-group" aria-label="Snapshot and first moves">
+                <div class="nav-group-title">First moves</div>
+                <a href="#five-minute-tool" data-suite-nav>
+                  <span>Five-Minute Check</span>
+                  <span class="badge">Live</span>
+                </a>
+                <a href="#scorecard-tool" data-suite-nav>
+                  <span>System Scorecard</span>
+                  <span class="badge">Live</span>
+                </a>
+                <a href="#moves-tool" data-suite-nav>
+                  <span>First Three Moves</span>
+                  <span class="badge">Live</span>
+                </a>
+              </div>
               <div class="nav-group" aria-label="Cash, runway, and risk">
                 <div class="nav-group-title">Cash & runway</div>
                 <a href="#emergency-tool" data-suite-nav>
                   <span>Emergency Cash Target</span>
+                  <span class="badge">Live</span>
+                </a>
+                <a href="#stress-tool" data-suite-nav>
+                  <span>Ninety-Day Stress Test</span>
+                  <span class="badge">Live</span>
+                </a>
+                <a href="#disability-tool" data-suite-nav>
+                  <span>Disability Reality Check</span>
                   <span class="badge">Live</span>
                 </a>
                 <a href="#offramp-tool" data-suite-nav>
@@ -1316,11 +1359,11 @@
                   <span class="badge">Live</span>
                 </a>
               </div>
-              <div class="nav-group" aria-label="Quality assurance">
+              <div class="nav-group" aria-label="Quality assurance" data-review-only>
                 <div class="nav-group-title">Review</div>
                 <a href="#qa" data-suite-nav>
                   <span>QA checks</span>
-                  <span class="badge">90</span>
+                  <span class="badge">154</span>
                 </a>
               </div>
             </div>
@@ -1436,6 +1479,230 @@
             </section>
           </div>
 
+          <section class="m2-suite" id="first-moves-suite">
+            <div class="suite-head">
+              <h2>Snapshot & first moves</h2>
+              <p>
+                These paid tools turn the Snapshot into a quick diagnostic,
+                an eight-domain scorecard, and three concrete next actions.
+              </p>
+            </div>
+            <div class="tool-grid">
+              <article class="tool-card" id="five-minute-tool">
+                <header>
+                  <h3>Five-Minute Freedom Check</h3>
+                  <p>
+                    A fast, document-aware read of Freedom Delta and the 300
+                    Rule compass. Fixed obligations are context only.
+                  </p>
+                </header>
+                <div class="tool-body">
+                  <div class="tool-fields">
+                    <div class="tool-field">
+                      <label for="fm-core"
+                        >True monthly core spending
+                        <small>Prefills from Snapshot</small></label
+                      >
+                      <input id="fm-core" data-m3="fmCore" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="fm-fixed"
+                        >Fixed monthly obligations
+                        <small>Context only; not added again</small></label
+                      >
+                      <input id="fm-fixed" data-m3="fmFixed" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="fm-income"
+                        >Actual after-tax monthly income
+                        <small>Paystub, deposit, or tax return</small></label
+                      >
+                      <input id="fm-income" data-m3="fmIncome" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="fm-nonclin"
+                        >Reliable non-clinical monthly income
+                        <small>Recurring income trusted in a bad month</small></label
+                      >
+                      <input id="fm-nonclin" data-m3="fmNonclin" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="fm-source"
+                        >Source quality
+                        <small>Current documents are required for Green</small></label
+                      >
+                      <select id="fm-source" data-m3="fmSource">
+                        <option value="documents">Current documents</option>
+                        <option value="estimated">Partly estimated</option>
+                        <option value="guessed">Mostly guessed</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="tool-results">
+                    <div class="tool-result">
+                      <span class="k">Freedom Delta</span>
+                      <span class="v" id="fm-delta">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">300 Rule compass</span>
+                      <span class="v" id="fm-compass">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">Core covered</span>
+                      <span class="v" id="fm-covered">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">Suggested status</span>
+                      <span class="tool-status na" id="fm-status">Not assessed</span>
+                    </div>
+                  </div>
+                  <div class="tool-read" id="fm-read"></div>
+                </div>
+              </article>
+
+              <article class="tool-card" id="scorecard-tool">
+                <header>
+                  <h3>Freedom System Scorecard</h3>
+                  <p>
+                    Scores the eight core domains and surfaces the highest-risk
+                    red/yellow priority.
+                  </p>
+                </header>
+                <div class="tool-body">
+                  <div class="tool-fields">
+                    <div class="tool-field">
+                      <label for="sc-trap">See the trap</label>
+                      <select id="sc-trap" data-m3-score="trap"></select>
+                    </div>
+                    <div class="tool-field">
+                      <label for="sc-income">Price real income</label>
+                      <select id="sc-income" data-m3-score="income"></select>
+                    </div>
+                    <div class="tool-field">
+                      <label for="sc-moat">Build the moat</label>
+                      <select id="sc-moat" data-m3-score="moat"></select>
+                    </div>
+                    <div class="tool-field">
+                      <label for="sc-ownership">Convert income into ownership</label>
+                      <select id="sc-ownership" data-m3-score="ownership"></select>
+                    </div>
+                    <div class="tool-field">
+                      <label for="sc-optionality">Add optionality income</label>
+                      <select id="sc-optionality" data-m3-score="optionality"></select>
+                    </div>
+                    <div class="tool-field">
+                      <label for="sc-calendar">Reclaim the calendar</label>
+                      <select id="sc-calendar" data-m3-score="calendar"></select>
+                    </div>
+                    <div class="tool-field">
+                      <label for="sc-family">Protect family clarity</label>
+                      <select id="sc-family" data-m3-score="family"></select>
+                    </div>
+                    <div class="tool-field">
+                      <label for="sc-review">Review annually</label>
+                      <select id="sc-review" data-m3-score="review"></select>
+                    </div>
+                    <div class="tool-field full">
+                      <label for="sc-evidence"
+                        >Evidence note
+                        <small>Memory alone cannot qualify as Green</small></label
+                      >
+                      <textarea id="sc-evidence" data-m3="scEvidence"></textarea>
+                    </div>
+                  </div>
+                  <div class="tool-results">
+                    <div class="tool-result">
+                      <span class="k">Green / Yellow / Red</span>
+                      <span class="v" id="sc-counts">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">Highest-risk domain</span>
+                      <span class="v" id="sc-risk">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">Top priorities</span>
+                      <span class="v" id="sc-priorities">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">Suggested status</span>
+                      <span class="tool-status na" id="sc-status">Not assessed</span>
+                    </div>
+                  </div>
+                  <div class="tool-read" id="sc-read"></div>
+                </div>
+              </article>
+
+              <article class="tool-card" id="moves-tool">
+                <header>
+                  <h3>First Three Moves Generator</h3>
+                  <p>
+                    Converts weak domains into three dated actions with owner,
+                    evidence marker, and professional-review flag.
+                  </p>
+                </header>
+                <div class="tool-body">
+                  <div class="tool-fields">
+                    <div class="tool-field full">
+                      <label for="mv-1">Move 1</label>
+                      <textarea id="mv-1" data-m3-move="1"></textarea>
+                    </div>
+                    <div class="tool-field full">
+                      <label for="mv-2">Move 2</label>
+                      <textarea id="mv-2" data-m3-move="2"></textarea>
+                    </div>
+                    <div class="tool-field full">
+                      <label for="mv-3">Move 3</label>
+                      <textarea id="mv-3" data-m3-move="3"></textarea>
+                    </div>
+                    <div class="tool-field">
+                      <label for="mv-owners">Owners assigned</label>
+                      <select id="mv-owners" data-m3="mvOwners">
+                        <option value="yes">Yes</option>
+                        <option value="partial">Partial</option>
+                        <option value="no">No</option>
+                      </select>
+                    </div>
+                    <div class="tool-field">
+                      <label for="mv-dates">Due dates assigned</label>
+                      <select id="mv-dates" data-m3="mvDates">
+                        <option value="yes">Yes</option>
+                        <option value="partial">Partial</option>
+                        <option value="no">No</option>
+                      </select>
+                    </div>
+                    <div class="tool-field">
+                      <label for="mv-evidence">Evidence markers named</label>
+                      <select id="mv-evidence" data-m3="mvEvidence">
+                        <option value="yes">Yes</option>
+                        <option value="partial">Partial</option>
+                        <option value="no">No</option>
+                      </select>
+                    </div>
+                    <div class="tool-field">
+                      <label for="mv-pro">Professional review marked</label>
+                      <select id="mv-pro" data-m3="mvProfessional">
+                        <option value="yes">Where relevant</option>
+                        <option value="partial">Not sure</option>
+                        <option value="no">No</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="tool-results">
+                    <div class="tool-result">
+                      <span class="k">Move completeness</span>
+                      <span class="v" id="mv-complete">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">Suggested status</span>
+                      <span class="tool-status na" id="mv-status">Not assessed</span>
+                    </div>
+                  </div>
+                  <div class="tool-read" id="mv-read"></div>
+                </div>
+              </article>
+            </div>
+          </section>
+
           <section class="m2-suite" id="top-3-calculators">
             <div class="suite-head">
               <h2>Cash & runway tools</h2>
@@ -1445,6 +1712,204 @@
               </p>
             </div>
             <div class="tool-grid">
+          <article class="tool-card" id="stress-tool">
+            <header>
+              <h3>Ninety-Day Stress Test</h3>
+              <p>
+                Calculates the 90-day household minimum and runway using cash
+                that is truly available, then applies Umar’s revised G/Y/R rule.
+              </p>
+            </header>
+            <div class="tool-body">
+              <div class="tool-fields">
+                <div class="tool-field">
+                  <label for="st-housing">Housing minimum</label>
+                  <input id="st-housing" data-m3="stHousing" data-m3-type="money" />
+                </div>
+                <div class="tool-field">
+                  <label for="st-essentials">Essentials</label>
+                  <input id="st-essentials" data-m3="stEssentials" data-m3-type="money" />
+                </div>
+                <div class="tool-field">
+                  <label for="st-insurance">Insurance / benefits</label>
+                  <input id="st-insurance" data-m3="stInsurance" data-m3-type="money" />
+                </div>
+                <div class="tool-field">
+                  <label for="st-childcare">Childcare / school</label>
+                  <input id="st-childcare" data-m3="stChildcare" data-m3-type="money" />
+                </div>
+                <div class="tool-field">
+                  <label for="st-transport">Transportation</label>
+                  <input id="st-transport" data-m3="stTransport" data-m3-type="money" />
+                </div>
+                <div class="tool-field">
+                  <label for="st-debt">Debt minimums</label>
+                  <input id="st-debt" data-m3="stDebt" data-m3-type="money" />
+                </div>
+                <div class="tool-field">
+                  <label for="st-taxes">Tax / legal / medical reserve</label>
+                  <input id="st-taxes" data-m3="stTaxes" data-m3-type="money" />
+                </div>
+                <div class="tool-field">
+                  <label for="st-other">Other required cost</label>
+                  <input id="st-other" data-m3="stOther" data-m3-type="money" />
+                </div>
+                <div class="tool-field">
+                  <label for="st-liquid"
+                    >Liquid reserves today
+                    <small>Prefills from Snapshot</small></label
+                  >
+                  <input id="st-liquid" data-m3="stLiquid" data-m3-type="money" />
+                </div>
+                <div class="tool-field">
+                  <label for="st-continuation">Income continuation</label>
+                  <select id="st-continuation" data-m3="stContinuation">
+                    <option value="documented">Documented</option>
+                    <option value="partial">Partly documented</option>
+                    <option value="unknown">Unknown</option>
+                  </select>
+                </div>
+                <div class="tool-field">
+                  <label for="st-cash-plan">Clear cash plan if assumptions fail</label>
+                  <select id="st-cash-plan" data-m3="stCashPlan">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                  </select>
+                </div>
+              </div>
+              <div class="tool-results">
+                <div class="tool-result">
+                  <span class="k">Monthly minimum burn</span>
+                  <span class="v" id="st-monthly">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">90-day minimum</span>
+                  <span class="v" id="st-target">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">Reserve surplus / shortfall</span>
+                  <span class="v" id="st-gap">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">Runway</span>
+                  <span class="v" id="st-runway">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">Suggested status</span>
+                  <span class="tool-status na" id="st-status">Not assessed</span>
+                </div>
+              </div>
+              <div class="tool-read" id="st-read"></div>
+            </div>
+          </article>
+
+          <article class="tool-card" id="disability-tool">
+            <header>
+              <h3>Disability Benefit Reality Check</h3>
+              <p>
+                Separates benefit shortfall and surplus, and blocks Green when
+                taxability or actual policy language is not verified.
+              </p>
+            </header>
+            <div class="tool-body">
+              <div class="tool-fields">
+                <div class="tool-field">
+                  <label for="db-core"
+                    >Core monthly burn to protect
+                    <small>Prefills from Snapshot</small></label
+                  >
+                  <input id="db-core" data-m3="dbCore" data-m3-type="money" />
+                </div>
+                <div class="tool-field">
+                  <label for="db-group">Group disability benefit</label>
+                  <input id="db-group" data-m3="dbGroup" data-m3-type="money" />
+                </div>
+                <div class="tool-field">
+                  <label for="db-group-tax">Group taxable?</label>
+                  <select id="db-group-tax" data-m3="dbGroupTaxable">
+                    <option value="unknown">Unknown</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                  </select>
+                </div>
+                <div class="tool-field">
+                  <label for="db-individual">Individual disability benefit</label>
+                  <input id="db-individual" data-m3="dbIndividual" data-m3-type="money" />
+                </div>
+                <div class="tool-field">
+                  <label for="db-individual-tax">Individual taxable?</label>
+                  <select id="db-individual-tax" data-m3="dbIndividualTaxable">
+                    <option value="unknown">Unknown</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                  </select>
+                </div>
+                <div class="tool-field">
+                  <label for="db-other">Other reliable monthly income</label>
+                  <input id="db-other" data-m3="dbOther" data-m3-type="money" />
+                </div>
+                <div class="tool-field">
+                  <label for="db-tax">Tax haircut on taxable benefits %</label>
+                  <input id="db-tax" type="number" min="0" max="100" step="1" data-m3="dbTaxHaircut" />
+                </div>
+                <div class="tool-field">
+                  <label for="db-elim-days">Elimination period days</label>
+                  <input id="db-elim-days" type="number" min="0" step="1" data-m3="dbElimDays" />
+                </div>
+                <div class="tool-field">
+                  <label for="db-cash">Emergency cash available</label>
+                  <input id="db-cash" data-m3="dbCash" data-m3-type="money" />
+                </div>
+                <div class="tool-field">
+                  <label for="db-policy-source">Policy language source</label>
+                  <select id="db-policy-source" data-m3="dbPolicySource">
+                    <option value="actual">Actual policy language verified</option>
+                    <option value="brochure">Brochure / benefits summary only</option>
+                    <option value="unknown">Unknown / not reviewed</option>
+                  </select>
+                </div>
+                <div class="tool-field">
+                  <label for="db-zero-confirm">Blank benefits confirmed zero?</label>
+                  <select id="db-zero-confirm" data-m3="dbZeroConfirmed">
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                  </select>
+                </div>
+              </div>
+              <div class="tool-results">
+                <div class="tool-result">
+                  <span class="k">Group after-tax benefit</span>
+                  <span class="v" id="db-group-after">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">Individual after-tax benefit</span>
+                  <span class="v" id="db-ind-after">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">Total monthly continuation</span>
+                  <span class="v" id="db-total">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">Monthly benefit shortfall</span>
+                  <span class="v" id="db-shortfall">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">Monthly benefit surplus</span>
+                  <span class="v" id="db-surplus">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">Elimination-period reserve gap</span>
+                  <span class="v" id="db-elim-gap">-</span>
+                </div>
+                <div class="tool-result">
+                  <span class="k">Suggested status</span>
+                  <span class="tool-status na" id="db-status">Not assessed</span>
+                </div>
+              </div>
+              <div class="tool-read" id="db-read"></div>
+            </div>
+          </article>
+
           <article class="tool-card" id="emergency-tool">
             <header>
               <h3>Emergency Cash Target</h3>
@@ -1683,7 +2148,7 @@
           </div>
 
           <!-- QA HARNESS -->
-          <div class="qa" id="qa">
+          <div class="qa" id="qa" data-review-only>
             <h3>
               QA harness | formulas verified against the approved workbook samples
             </h3>
@@ -2039,6 +2504,172 @@
         };
       }
 
+      function computeFiveMinute(v) {
+        const core = Number(v.fmCore || 0);
+        const fixed = Number(v.fmFixed || 0);
+        const income = Number(v.fmIncome || 0);
+        const nonclin = Number(v.fmNonclin || 0);
+        const source = v.fmSource || "documents";
+        const delta = Math.max(core - nonclin, 0);
+        const compass = delta * CONFIG.rule_multiplier;
+        const covered = core > 0 ? nonclin / core : null;
+        const fixedWarning = core > 0 && fixed > core;
+        let status = "na";
+        if (core > 0) {
+          if (source === "guessed" || fixedWarning || income <= 0) status = "red";
+          else if (source === "estimated") status = "yellow";
+          else status = "green";
+        }
+        return { core, fixed, income, nonclin, delta, compass, covered, fixedWarning, source, status };
+      }
+
+      const SCORE_DOMAINS = [
+        ["trap", "See the trap"],
+        ["income", "Price real income"],
+        ["moat", "Build the moat"],
+        ["ownership", "Convert income into ownership"],
+        ["optionality", "Add optionality income"],
+        ["calendar", "Reclaim the calendar"],
+        ["family", "Protect family clarity"],
+        ["review", "Review annually"],
+      ];
+
+      function computeScorecard(scores, evidence) {
+        const values = SCORE_DOMAINS.map(([key]) => scores[key] || "na");
+        const counts = {
+          green: values.filter((value) => value === "green").length,
+          yellow: values.filter((value) => value === "yellow").length,
+          red: values.filter((value) => value === "red").length,
+          na: values.filter((value) => value === "na").length,
+        };
+        const firstRisk =
+          SCORE_DOMAINS.find(([key]) => scores[key] === "red") ||
+          SCORE_DOMAINS.find(([key]) => scores[key] === "yellow") ||
+          null;
+        const priorities = SCORE_DOMAINS.filter(
+          ([key]) => scores[key] === "red" || scores[key] === "yellow",
+        )
+          .slice(0, 3)
+          .map(([, label]) => label);
+        const hasEvidence = String(evidence || "").trim().length > 0;
+        let status = "na";
+        if (counts.na === 0) {
+          if (counts.red > 0) status = "red";
+          else if (!hasEvidence || counts.yellow > 0) status = "yellow";
+          else status = "green";
+        }
+        return { counts, firstRisk, priorities, hasEvidence, status };
+      }
+
+      function computeFirstMoves(moves, controls) {
+        const filled = moves.filter((move) => String(move || "").trim()).length;
+        const complete = filled === 3;
+        const weak =
+          controls.mvOwners !== "yes" ||
+          controls.mvDates !== "yes" ||
+          controls.mvEvidence !== "yes" ||
+          controls.mvProfessional !== "yes";
+        let status = "na";
+        if (filled > 0) {
+          if (!complete || controls.mvOwners === "no" || controls.mvDates === "no") {
+            status = "red";
+          } else if (weak) {
+            status = "yellow";
+          } else {
+            status = "green";
+          }
+        }
+        return { filled, complete, weak, status };
+      }
+
+      function computeStressTest(v) {
+        const monthly =
+          Number(v.stHousing || 0) +
+          Number(v.stEssentials || 0) +
+          Number(v.stInsurance || 0) +
+          Number(v.stChildcare || 0) +
+          Number(v.stTransport || 0) +
+          Number(v.stDebt || 0) +
+          Number(v.stTaxes || 0) +
+          Number(v.stOther || 0);
+        const liquid = Number(v.stLiquid || 0);
+        const target = monthly * 3;
+        const surplusShortfall = liquid - target;
+        const runway = monthly > 0 ? liquid / monthly : null;
+        const continuation = v.stContinuation || "documented";
+        const cashPlan = v.stCashPlan || "yes";
+        let status = "na";
+        if (monthly > 0) {
+          if (
+            runway < 2 ||
+            continuation === "unknown" ||
+            cashPlan !== "yes"
+          ) {
+            status = "red";
+          } else if (runway < 3 || continuation === "partial") {
+            status = "yellow";
+          } else {
+            status = "green";
+          }
+        }
+        return { monthly, liquid, target, surplusShortfall, runway, continuation, cashPlan, status };
+      }
+
+      function adjustedBenefit(value, taxable, taxHaircut) {
+        const benefit = Number(value || 0);
+        if (taxable === "yes") return benefit * (1 - taxHaircut);
+        return benefit;
+      }
+
+      function computeDisability(v) {
+        const core = Number(v.dbCore || 0);
+        const taxHaircut = Math.max(0, Math.min(Number(v.dbTaxHaircut || 0), 100)) / 100;
+        const groupBlank = v.dbGroup === "" || v.dbGroup === undefined || v.dbGroup === null;
+        const individualBlank =
+          v.dbIndividual === "" || v.dbIndividual === undefined || v.dbIndividual === null;
+        const zeroConfirmed = v.dbZeroConfirmed === "yes";
+        const missingBenefits = (groupBlank || individualBlank) && !zeroConfirmed;
+        const groupAfter = adjustedBenefit(v.dbGroup, v.dbGroupTaxable, taxHaircut);
+        const individualAfter = adjustedBenefit(
+          v.dbIndividual,
+          v.dbIndividualTaxable,
+          taxHaircut,
+        );
+        const other = Number(v.dbOther || 0);
+        const totalContinuation = groupAfter + individualAfter + other;
+        const shortfall = Math.max(core - totalContinuation, 0);
+        const surplus = Math.max(totalContinuation - core, 0);
+        const elimDays = Number(v.dbElimDays || 0);
+        const cash = Number(v.dbCash || 0);
+        const elimNeed = (core / 30) * elimDays;
+        const elimGap = Math.max(elimNeed - cash, 0);
+        const taxUnknown =
+          v.dbGroupTaxable === "unknown" || v.dbIndividualTaxable === "unknown";
+        const policyWeak = v.dbPolicySource !== "actual";
+        let status = "na";
+        if (core > 0 && !missingBenefits) {
+          if (taxUnknown || policyWeak || shortfall > 0 || elimGap > 0) {
+            status = "red";
+          } else {
+            status = "green";
+          }
+        }
+        return {
+          core,
+          groupAfter,
+          individualAfter,
+          totalContinuation,
+          shortfall,
+          surplus,
+          elimNeed,
+          elimGap,
+          missingBenefits,
+          taxUnknown,
+          policyWeak,
+          status,
+        };
+      }
+
       /* ================= UI ================= */
       const $ = (id) => document.getElementById(id);
       const money = (n) => {
@@ -2065,6 +2696,42 @@
           offPlannedMonths: 12,
         },
         m2Touched: {},
+        m3: {
+          fmSource: "documents",
+          scEvidence: "",
+          mvOwners: "yes",
+          mvDates: "yes",
+          mvEvidence: "yes",
+          mvProfessional: "yes",
+          stHousing: 6000,
+          stEssentials: 3000,
+          stInsurance: 1200,
+          stChildcare: 0,
+          stTransport: 900,
+          stDebt: 1500,
+          stTaxes: 600,
+          stOther: 0,
+          stContinuation: "documented",
+          stCashPlan: "yes",
+          dbGroupTaxable: "unknown",
+          dbIndividualTaxable: "unknown",
+          dbTaxHaircut: 30,
+          dbElimDays: 90,
+          dbPolicySource: "actual",
+          dbZeroConfirmed: "no",
+        },
+        m3Touched: {},
+        m3Scores: {
+          trap: "na",
+          income: "na",
+          moat: "na",
+          ownership: "na",
+          optionality: "na",
+          calendar: "na",
+          family: "na",
+          review: "na",
+        },
+        m3MovesTouched: {},
       };
 
       const GYR = [
@@ -2240,6 +2907,77 @@
           });
         });
       }
+      const M3_PREFILLS = {
+        fmCore: "core",
+        fmFixed: "fixed",
+        fmIncome: "income",
+        fmNonclin: "nonclin",
+        stLiquid: "liquid",
+        dbCore: "core",
+        dbCash: "liquid",
+      };
+      function syncM3FromSnapshot() {
+        Object.entries(M3_PREFILLS).forEach(([key, src]) => {
+          if (state.m3Touched[key]) return;
+          state.m3[key] = Number(state.vals[src] || 0);
+        });
+        document.querySelectorAll("[data-m3]").forEach((el) => {
+          if (document.activeElement === el) return;
+          const key = el.dataset.m3;
+          if (el.tagName === "TEXTAREA") {
+            el.value = state.m3[key] || "";
+          } else {
+            el.value = formatM2Value(state.m3[key], el.dataset.m3Type);
+          }
+        });
+      }
+      function initM3() {
+        const scoreOptions = GYR.map(
+          ([value, label]) => `<option value="${value}">${label}</option>`,
+        ).join("");
+        document.querySelectorAll("[data-m3-score]").forEach((el) => {
+          el.innerHTML = scoreOptions;
+          el.value = state.m3Scores[el.dataset.m3Score] || "na";
+          el.addEventListener("change", (event) => {
+            state.m3Scores[event.currentTarget.dataset.m3Score] =
+              event.currentTarget.value;
+            render();
+          });
+        });
+        syncM3FromSnapshot();
+        document.querySelectorAll("[data-m3]").forEach((el) => {
+          const key = el.dataset.m3;
+          el.addEventListener("input", (event) => {
+            const target = event.currentTarget;
+            const next =
+              target.dataset.m3Type === "money"
+                ? plainNumber(target.value)
+                : target.value;
+            state.m3Touched[target.dataset.m3] = true;
+            state.m3[target.dataset.m3] = next;
+            render();
+          });
+          el.addEventListener("change", (event) => {
+            state.m3Touched[event.currentTarget.dataset.m3] = true;
+            state.m3[event.currentTarget.dataset.m3] = event.currentTarget.value;
+            render();
+          });
+          el.addEventListener("blur", (event) => {
+            const target = event.currentTarget;
+            if (target.dataset.m3Type !== "money") return;
+            target.value = formatM2Value(
+              state.m3[target.dataset.m3],
+              target.dataset.m3Type,
+            );
+          });
+        });
+        document.querySelectorAll("[data-m3-move]").forEach((el) => {
+          el.addEventListener("input", (event) => {
+            state.m3MovesTouched[event.currentTarget.dataset.m3Move] = true;
+            render();
+          });
+        });
+      }
       const monthsText = (n) =>
         n === null || !Number.isFinite(n)
           ? "–"
@@ -2307,6 +3045,136 @@
         $("off-shortfall").textContent = money(off.surplusShortfall);
         setToolStatus("off-status", off.status);
         $("off-read").innerHTML = offRampRead(off);
+      }
+      function fiveMinuteRead(o) {
+        if (o.status === "na")
+          return "<b>Not assessed.</b> Add core monthly spending to calculate the quick check.";
+        if (o.fixedWarning)
+          return "<b>Core spending may be understated.</b> Fixed obligations are higher than the core spending entered here. Fixed obligations are not added again, but this should be reconciled before relying on the result.";
+        if (o.source === "guessed")
+          return "<b>Document check needed.</b> The quick math is only useful once the core inputs come from current documents instead of memory.";
+        if (o.status === "yellow")
+          return "<b>Directionally useful, not final.</b> One or more inputs are estimated. Use this as a short diagnostic, then replace estimates with current source documents.";
+        return "<b>Quick check is document-based.</b> The Freedom Delta and 300 Rule compass can be used as the starting point for the next tools.";
+      }
+      function scorecardRead(o) {
+        if (o.status === "na")
+          return "<b>Not assessed.</b> Score all eight domains to see the system-level priority.";
+        if (!o.hasEvidence)
+          return "<b>Evidence is missing.</b> Memory alone cannot qualify as Green; add a current source note, review date, or completion evidence.";
+        if (o.status === "red")
+          return "<b>Start with the first Red domain.</b> The scorecard is doing its job by naming where risk is concentrated.";
+        if (o.status === "yellow")
+          return "<b>No Red domains, but the system is not fully current.</b> Tighten the Yellow rows and attach evidence before treating the scorecard as Green.";
+        return "<b>Scorecard is current.</b> All eight domains are Green with an evidence note attached.";
+      }
+      function moveSuggestionFor(label) {
+        const map = {
+          "See the trap": "Name the one compensation or lifestyle trap most likely to distort your next decision.",
+          "Price real income": "Confirm actual take-home income from a current paystub, deposit, or tax return.",
+          "Build the moat": "Set one dated action to strengthen emergency cash, disability protection, or tax reserves.",
+          "Convert income into ownership": "Choose one automatic ownership contribution or reserve transfer to verify.",
+          "Add optionality income": "Identify one reliable non-clinical income path to validate with numbers.",
+          "Reclaim the calendar": "Review the next 30 days of actual calendar/call schedule and block one protected recovery or family window.",
+          "Protect family clarity": "Confirm the family access folder location with the trusted person.",
+          "Review annually": "Schedule the next Freedom review date and name the evidence required for it.",
+        };
+        return map[label] || "Choose one concrete action with owner, due date, and evidence marker.";
+      }
+      function stressRead(o) {
+        if (o.status === "na")
+          return "<b>Not assessed.</b> Enter monthly minimum costs to calculate the 90-day minimum and runway.";
+        if (o.status === "green")
+          return "<b>Ninety-day baseline is covered.</b> Runway is at least 3.0 months and continuation sources are documented.";
+        if (o.status === "yellow")
+          return "<b>Close, but not fully documented.</b> Either runway is 2.0-2.9 months or benefit/continuation timing needs better documentation.";
+        return "<b>Stress plan needs attention.</b> Runway is below 2.0 months, continuation assumptions are unknown, or there is no clear cash plan if assumptions fail.";
+      }
+      function disabilityRead(o) {
+        if (o.status === "na") {
+          if (o.missingBenefits)
+            return "<b>Not assessed.</b> Blank benefit fields are treated as missing unless zero coverage is explicitly confirmed.";
+          return "<b>Not assessed.</b> Add core monthly burn and benefit details to check disability protection.";
+        }
+        if (o.taxUnknown)
+          return "<b>Taxability needs verification.</b> Unknown tax treatment prevents a Green status until actual policy details are reviewed.";
+        if (o.policyWeak)
+          return "<b>Policy source is not strong enough.</b> Brochure-only or unknown policy language prevents Green.";
+        if (o.shortfall > 0 || o.elimGap > 0)
+          return "<b>Coverage gap remains.</b> The monthly benefit shortfall or elimination-period reserve gap needs a cash or policy review path.";
+        return "<b>Benefit protection covers the entered burn.</b> Monthly continuation meets the core burn and elimination-period cash is covered from current reserves.";
+      }
+      function renderM3() {
+        const fm = computeFiveMinute(state.m3);
+        $("fm-delta").textContent = money(fm.delta);
+        $("fm-compass").textContent = money(fm.compass);
+        $("fm-covered").innerHTML =
+          fm.covered === null ? "–" : `${(fm.covered * 100).toFixed(1)}<small>%</small>`;
+        setToolStatus("fm-status", fm.status);
+        $("fm-read").innerHTML = fiveMinuteRead(fm);
+
+        const sc = computeScorecard(state.m3Scores, state.m3.scEvidence);
+        $("sc-counts").textContent = `${sc.counts.green} / ${sc.counts.yellow} / ${sc.counts.red}`;
+        $("sc-risk").textContent = sc.firstRisk ? sc.firstRisk[1] : sc.counts.na ? "Incomplete" : "None";
+        $("sc-priorities").textContent = sc.priorities.length
+          ? sc.priorities.join("; ")
+          : sc.counts.na
+            ? "Complete the scorecard"
+            : "No red/yellow priorities";
+        setToolStatus("sc-status", sc.status);
+        $("sc-read").innerHTML = scorecardRead(sc);
+
+        const priorityLabels = sc.priorities.length
+          ? sc.priorities
+          : [
+              "Build the moat",
+              "Price real income",
+              "Convert income into ownership",
+            ];
+        [1, 2, 3].forEach((n, idx) => {
+          const el = document.querySelector(`[data-m3-move="${n}"]`);
+          if (!el || state.m3MovesTouched[String(n)]) return;
+          el.value = moveSuggestionFor(priorityLabels[idx] || priorityLabels[0]);
+        });
+        const moves = [1, 2, 3].map((n) => {
+          const el = document.querySelector(`[data-m3-move="${n}"]`);
+          return el ? el.value : "";
+        });
+        const mv = computeFirstMoves(moves, state.m3);
+        $("mv-complete").textContent = `${mv.filled} of 3 moves named`;
+        setToolStatus("mv-status", mv.status);
+        if (mv.status === "na") {
+          $("mv-read").innerHTML =
+            "<b>Not assessed.</b> Generate or write three moves from the weakest domains.";
+        } else if (mv.status === "red") {
+          $("mv-read").innerHTML =
+            "<b>Moves are not actionable yet.</b> Each move needs concrete text, owner, due date, and evidence marker.";
+        } else if (mv.status === "yellow") {
+          $("mv-read").innerHTML =
+            "<b>Moves exist, but one support field is incomplete.</b> Confirm owner/date/evidence and professional review where relevant.";
+        } else {
+          $("mv-read").innerHTML =
+            "<b>Moves are ready for review.</b> They are named, dated, owned, and tied to evidence markers.";
+        }
+
+        const st = computeStressTest(state.m3);
+        $("st-monthly").textContent = money(st.monthly);
+        $("st-target").textContent = money(st.target);
+        $("st-gap").textContent = money(st.surplusShortfall);
+        $("st-runway").innerHTML =
+          st.runway === null ? "–" : `${st.runway.toFixed(1)} <small>mo</small>`;
+        setToolStatus("st-status", st.status);
+        $("st-read").innerHTML = stressRead(st);
+
+        const db = computeDisability(state.m3);
+        $("db-group-after").textContent = money(db.groupAfter);
+        $("db-ind-after").textContent = money(db.individualAfter);
+        $("db-total").textContent = money(db.totalContinuation);
+        $("db-shortfall").textContent = money(db.shortfall);
+        $("db-surplus").textContent = money(db.surplus);
+        $("db-elim-gap").textContent = money(db.elimGap);
+        setToolStatus("db-status", db.status);
+        $("db-read").innerHTML = disabilityRead(db);
       }
       function onMoneyBlur(e) {
         const el = e.target.closest("[data-in]");
@@ -2441,6 +3309,7 @@
         const o = compute(state.vals);
         applySuggestedStatuses(o);
         syncM2FromSnapshot();
+        syncM3FromSnapshot();
         $("row-delta").innerHTML = money(o.delta);
         $("row-runway").innerHTML =
           o.runway === null
@@ -2513,10 +3382,22 @@
             "Mark your rows above and the weakest one suggests your first move. You can edit or replace it.";
         }
         renderM2();
+        renderM3();
       }
       $("action-text").addEventListener("input", (e) => {
         e.target.dataset.touched = "1";
       });
+
+      function initReviewMode() {
+        const params = new URLSearchParams(window.location.search);
+        const enabled =
+          params.get("review") === "1" ||
+          params.get("qa") === "1" ||
+          window.location.hash === "#qa";
+        document.querySelectorAll("[data-review-only]").forEach((el) => {
+          el.hidden = !enabled;
+        });
+      }
 
       function initSuiteNav() {
         const links = [...document.querySelectorAll("[data-suite-nav]")];
@@ -2556,7 +3437,9 @@
       }
 
       buildRows();
+      initReviewMode();
       initM2();
+      initM3();
       initSuiteNav();
       render();
 
@@ -2701,6 +3584,378 @@
           const tr = document.createElement("tr");
           tr.innerHTML = `<td><b>${tc.name}</b></td><td>${tc.metric}</td><td>${tc.exp}</td><td>${got}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td>`;
           tb.appendChild(tr);
+        });
+        [
+          {
+            name: "Five-Minute A",
+            in: {
+              fmCore: 14900,
+              fmFixed: 10200,
+              fmIncome: 20700,
+              fmNonclin: 750,
+              fmSource: "estimated",
+            },
+            exp: {
+              delta: "$14,150",
+              compass: "$4,245,000",
+              covered: "5.0%",
+              status: "yellow",
+            },
+          },
+          {
+            name: "Five-Minute B",
+            in: {
+              fmCore: 12000,
+              fmFixed: 14000,
+              fmIncome: 24000,
+              fmNonclin: 12000,
+              fmSource: "documents",
+            },
+            exp: {
+              delta: "$0",
+              compass: "$0",
+              covered: "100.0%",
+              status: "red",
+            },
+          },
+        ].forEach((tc) => {
+          const gotRaw = computeFiveMinute(tc.in);
+          const got = {
+            delta: money(gotRaw.delta),
+            compass: money(gotRaw.compass),
+            covered:
+              gotRaw.covered === null
+                ? "blank"
+                : (gotRaw.covered * 100).toFixed(1) + "%",
+            status: gotRaw.status,
+          };
+          Object.entries(tc.exp).forEach(([metric, expected], i) => {
+            total++;
+            const ok = got[metric] === expected;
+            if (ok) pass++;
+            const tr = document.createElement("tr");
+            tr.innerHTML =
+              (i === 0 ? `<td rowspan="4"><b>${tc.name}</b></td>` : "") +
+              `<td>${metric}</td><td>${expected}</td><td>${got[metric]}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td>`;
+            tb.appendChild(tr);
+          });
+        });
+        [
+          {
+            name: "Scorecard A",
+            scores: {
+              trap: "green",
+              income: "green",
+              moat: "green",
+              ownership: "green",
+              optionality: "green",
+              calendar: "green",
+              family: "yellow",
+              review: "yellow",
+            },
+            evidence: "Current worksheet and review notes.",
+            exp: { counts: "6/2/0/0", risk: "Protect family clarity", status: "yellow" },
+          },
+          {
+            name: "Scorecard B",
+            scores: {
+              trap: "green",
+              income: "green",
+              moat: "green",
+              ownership: "green",
+              optionality: "green",
+              calendar: "green",
+              family: "green",
+              review: "green",
+            },
+            evidence: "",
+            exp: { counts: "8/0/0/0", risk: "none", status: "yellow" },
+          },
+        ].forEach((tc) => {
+          const gotRaw = computeScorecard(tc.scores, tc.evidence);
+          const got = {
+            counts: `${gotRaw.counts.green}/${gotRaw.counts.yellow}/${gotRaw.counts.red}/${gotRaw.counts.na}`,
+            risk: gotRaw.firstRisk ? gotRaw.firstRisk[1] : "none",
+            status: gotRaw.status,
+          };
+          Object.entries(tc.exp).forEach(([metric, expected], i) => {
+            total++;
+            const ok = got[metric] === expected;
+            if (ok) pass++;
+            const tr = document.createElement("tr");
+            tr.innerHTML =
+              (i === 0 ? `<td rowspan="3"><b>${tc.name}</b></td>` : "") +
+              `<td>${metric}</td><td>${expected}</td><td>${got[metric]}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td>`;
+            tb.appendChild(tr);
+          });
+        });
+        [
+          {
+            name: "First Moves A",
+            moves: ["Review disability policy", "Transfer reserve cash", "Schedule contract review"],
+            controls: {
+              mvOwners: "yes",
+              mvDates: "yes",
+              mvEvidence: "yes",
+              mvProfessional: "yes",
+            },
+            exp: "green",
+          },
+          {
+            name: "First Moves B",
+            moves: ["Review disability policy", "", "Schedule contract review"],
+            controls: {
+              mvOwners: "yes",
+              mvDates: "yes",
+              mvEvidence: "yes",
+              mvProfessional: "yes",
+            },
+            exp: "red",
+          },
+        ].forEach((tc) => {
+          total++;
+          const got = computeFirstMoves(tc.moves, tc.controls).status;
+          const ok = got === tc.exp;
+          if (ok) pass++;
+          const tr = document.createElement("tr");
+          tr.innerHTML = `<td><b>${tc.name}</b></td><td>status</td><td>${tc.exp}</td><td>${got}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td>`;
+          tb.appendChild(tr);
+        });
+        [
+          {
+            name: "Ninety-Day A",
+            in: {
+              stHousing: 6000,
+              stEssentials: 3000,
+              stInsurance: 1200,
+              stChildcare: 0,
+              stTransport: 900,
+              stDebt: 1500,
+              stTaxes: 600,
+              stOther: 0,
+              stLiquid: 31000,
+              stContinuation: "documented",
+              stCashPlan: "yes",
+            },
+            exp: {
+              monthly: "$13,200",
+              target: "$39,600",
+              surplusShortfall: "-$8,600",
+              runway: "2.3",
+              status: "yellow",
+            },
+          },
+          {
+            name: "Ninety-Day B",
+            in: {
+              stHousing: 6000,
+              stEssentials: 3000,
+              stInsurance: 1200,
+              stChildcare: 0,
+              stTransport: 900,
+              stDebt: 900,
+              stTaxes: 0,
+              stOther: 0,
+              stLiquid: 48000,
+              stContinuation: "documented",
+              stCashPlan: "yes",
+            },
+            exp: {
+              monthly: "$12,000",
+              target: "$36,000",
+              surplusShortfall: "$12,000",
+              runway: "4.0",
+              status: "green",
+            },
+          },
+          {
+            name: "Ninety-Day C",
+            in: {
+              stHousing: 6000,
+              stEssentials: 3000,
+              stInsurance: 1000,
+              stChildcare: 0,
+              stTransport: 0,
+              stDebt: 0,
+              stTaxes: 0,
+              stOther: 0,
+              stLiquid: 15000,
+              stContinuation: "documented",
+              stCashPlan: "yes",
+            },
+            exp: {
+              monthly: "$10,000",
+              target: "$30,000",
+              surplusShortfall: "-$15,000",
+              runway: "1.5",
+              status: "red",
+            },
+          },
+          {
+            name: "Ninety-Day D",
+            in: {
+              stHousing: 6000,
+              stEssentials: 3000,
+              stInsurance: 1000,
+              stChildcare: 0,
+              stTransport: 0,
+              stDebt: 0,
+              stTaxes: 0,
+              stOther: 0,
+              stLiquid: 50000,
+              stContinuation: "unknown",
+              stCashPlan: "no",
+            },
+            exp: {
+              monthly: "$10,000",
+              target: "$30,000",
+              surplusShortfall: "$20,000",
+              runway: "5.0",
+              status: "red",
+            },
+          },
+        ].forEach((tc) => {
+          const gotRaw = computeStressTest(tc.in);
+          const got = {
+            monthly: money(gotRaw.monthly),
+            target: money(gotRaw.target),
+            surplusShortfall: money(gotRaw.surplusShortfall),
+            runway: gotRaw.runway === null ? "blank" : gotRaw.runway.toFixed(1),
+            status: gotRaw.status,
+          };
+          Object.entries(tc.exp).forEach(([metric, expected], i) => {
+            total++;
+            const ok = got[metric] === expected;
+            if (ok) pass++;
+            const tr = document.createElement("tr");
+            tr.innerHTML =
+              (i === 0 ? `<td rowspan="5"><b>${tc.name}</b></td>` : "") +
+              `<td>${metric}</td><td>${expected}</td><td>${got[metric]}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td>`;
+            tb.appendChild(tr);
+          });
+        });
+        [
+          {
+            name: "Disability A",
+            in: {
+              dbCore: 18000,
+              dbGroup: 10000,
+              dbGroupTaxable: "yes",
+              dbIndividual: 5000,
+              dbIndividualTaxable: "no",
+              dbOther: 1000,
+              dbTaxHaircut: 30,
+              dbElimDays: 90,
+              dbCash: 60000,
+              dbPolicySource: "actual",
+              dbZeroConfirmed: "no",
+            },
+            exp: {
+              groupAfter: "$7,000",
+              individualAfter: "$5,000",
+              totalContinuation: "$13,000",
+              shortfall: "$5,000",
+              surplus: "$0",
+              elimGap: "$0",
+              status: "red",
+            },
+          },
+          {
+            name: "Disability B",
+            in: {
+              dbCore: 15000,
+              dbGroup: 8000,
+              dbGroupTaxable: "no",
+              dbIndividual: 7000,
+              dbIndividualTaxable: "no",
+              dbOther: 1000,
+              dbTaxHaircut: 30,
+              dbElimDays: 30,
+              dbCash: 20000,
+              dbPolicySource: "actual",
+              dbZeroConfirmed: "no",
+            },
+            exp: {
+              groupAfter: "$8,000",
+              individualAfter: "$7,000",
+              totalContinuation: "$16,000",
+              shortfall: "$0",
+              surplus: "$1,000",
+              elimGap: "$0",
+              status: "green",
+            },
+          },
+          {
+            name: "Disability C",
+            in: {
+              dbCore: 15000,
+              dbGroup: 8000,
+              dbGroupTaxable: "unknown",
+              dbIndividual: 7000,
+              dbIndividualTaxable: "no",
+              dbOther: 1000,
+              dbTaxHaircut: 30,
+              dbElimDays: 30,
+              dbCash: 20000,
+              dbPolicySource: "actual",
+              dbZeroConfirmed: "no",
+            },
+            exp: {
+              groupAfter: "$8,000",
+              individualAfter: "$7,000",
+              totalContinuation: "$16,000",
+              shortfall: "$0",
+              surplus: "$1,000",
+              elimGap: "$0",
+              status: "red",
+            },
+          },
+          {
+            name: "Disability D",
+            in: {
+              dbCore: 15000,
+              dbGroup: "",
+              dbGroupTaxable: "no",
+              dbIndividual: "",
+              dbIndividualTaxable: "no",
+              dbOther: 0,
+              dbTaxHaircut: 30,
+              dbElimDays: 30,
+              dbCash: 20000,
+              dbPolicySource: "actual",
+              dbZeroConfirmed: "no",
+            },
+            exp: {
+              groupAfter: "$0",
+              individualAfter: "$0",
+              totalContinuation: "$0",
+              shortfall: "$15,000",
+              surplus: "$0",
+              elimGap: "$0",
+              status: "na",
+            },
+          },
+        ].forEach((tc) => {
+          const gotRaw = computeDisability(tc.in);
+          const got = {
+            groupAfter: money(gotRaw.groupAfter),
+            individualAfter: money(gotRaw.individualAfter),
+            totalContinuation: money(gotRaw.totalContinuation),
+            shortfall: money(gotRaw.shortfall),
+            surplus: money(gotRaw.surplus),
+            elimGap: money(gotRaw.elimGap),
+            status: gotRaw.status,
+          };
+          Object.entries(tc.exp).forEach(([metric, expected], i) => {
+            total++;
+            const ok = got[metric] === expected;
+            if (ok) pass++;
+            const tr = document.createElement("tr");
+            tr.innerHTML =
+              (i === 0 ? `<td rowspan="7"><b>${tc.name}</b></td>` : "") +
+              `<td>${metric}</td><td>${expected}</td><td>${got[metric]}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td>`;
+            tb.appendChild(tr);
+          });
         });
         [
           {
