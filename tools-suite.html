@@ -8,6 +8,7 @@
       name="description"
       content="Paid Physician Freedom Tools Suite calculators for the Physician Freedom System."
     />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23a67c2d'/%3E%3Cpath d='M4 4h8v2H6v2h5v2H6v3H4z' fill='%23fff8ec'/%3E%3C/svg%3E" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -1340,6 +1341,55 @@
                   <span class="badge">Live</span>
                 </a>
               </div>
+              <div class="nav-group" aria-label="Freedom math">
+                <div class="nav-group-title">Freedom math</div>
+                <a href="#freedom-delta-tool" data-suite-nav>
+                  <span>Freedom Delta / 300 Rule</span>
+                  <span class="badge">Live</span>
+                </a>
+                <a href="#retention-tool" data-suite-nav>
+                  <span>Retention Stack</span>
+                  <span class="badge">Live</span>
+                </a>
+                <a href="#fee-drag-tool" data-suite-nav>
+                  <span>Fee Drag</span>
+                  <span class="badge">Live</span>
+                </a>
+                <a href="#tax-reserve-tool" data-suite-nav>
+                  <span>Tax Reserve</span>
+                  <span class="badge">Live</span>
+                </a>
+              </div>
+              <div class="nav-group" aria-label="Assets and contracts">
+                <div class="nav-group-title">Assets & contracts</div>
+                <a href="#real-estate-tool" data-suite-nav>
+                  <span>Real Estate Cash Flow</span>
+                  <span class="badge">Live</span>
+                </a>
+                <a href="#contract-tool" data-suite-nav>
+                  <span>7-Clause Contract Scan</span>
+                  <span class="badge">Live</span>
+                </a>
+              </div>
+              <div class="nav-group" aria-label="Family and action plan">
+                <div class="nav-group-title">Action plan</div>
+                <a href="#family-folder-tool" data-suite-nav>
+                  <span>Family Access Folder</span>
+                  <span class="badge">Live</span>
+                </a>
+                <a href="#master-action-tool" data-suite-nav>
+                  <span>Master Action Plan</span>
+                  <span class="badge">Live</span>
+                </a>
+                <a href="#progress-tool" data-suite-nav>
+                  <span>Progress Tracker</span>
+                  <span class="badge">Live</span>
+                </a>
+                <a href="#annual-review-tool" data-suite-nav>
+                  <span>Annual Review</span>
+                  <span class="badge">Live</span>
+                </a>
+              </div>
               <div class="nav-group" aria-label="Cash, runway, and risk">
                 <div class="nav-group-title">Cash & runway</div>
                 <a href="#emergency-tool" data-suite-nav>
@@ -1363,7 +1413,7 @@
                 <div class="nav-group-title">Review</div>
                 <a href="#qa" data-suite-nav>
                   <span>QA checks</span>
-                  <span class="badge">154</span>
+                  <span class="badge">289</span>
                 </a>
               </div>
             </div>
@@ -1698,6 +1748,519 @@
                     </div>
                   </div>
                   <div class="tool-read" id="mv-read"></div>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="m2-suite" id="freedom-math-suite">
+            <div class="suite-head">
+              <h2>Freedom math</h2>
+              <p>
+                These tools convert the Snapshot into the core formula layer:
+                Delta, retained capacity, fee drag, and tax reserves.
+              </p>
+            </div>
+            <div class="tool-grid">
+              <article class="tool-card" id="freedom-delta-tool">
+                <header>
+                  <h3>Freedom Delta / 300 Rule</h3>
+                  <p>
+                    Measures how much of the current life is still carried by
+                    clinical labor and turns the gap into a rough 300 Rule compass.
+                  </p>
+                </header>
+                <div class="tool-body">
+                  <div class="tool-fields">
+                    <div class="tool-field">
+                      <label for="fd-core"
+                        >Core monthly spending
+                        <small>Prefills from Snapshot</small></label
+                      >
+                      <input id="fd-core" data-m3="fdCore" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="fd-nonclin"
+                        >Reliable non-clinical monthly income
+                        <small>Prefills from Snapshot</small></label
+                      >
+                      <input id="fd-nonclin" data-m3="fdNonclin" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="fd-assets"
+                        >Ownership assets allocated to freedom
+                        <small>Prefills from Snapshot</small></label
+                      >
+                      <input id="fd-assets" data-m3="fdAssets" data-m3-type="money" />
+                    </div>
+                  </div>
+                  <div class="tool-results">
+                    <div class="tool-result">
+                      <span class="k">Freedom Delta</span>
+                      <span class="v" id="fd-delta">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">Percent of core covered</span>
+                      <span class="v" id="fd-covered">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">300 Rule compass</span>
+                      <span class="v" id="fd-compass">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">Gap to compass</span>
+                      <span class="v" id="fd-gap">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">Suggested status</span>
+                      <span class="tool-status na" id="fd-status">Not assessed</span>
+                    </div>
+                  </div>
+                  <div class="tool-read" id="fd-read"></div>
+                </div>
+              </article>
+
+              <article class="tool-card" id="retention-tool">
+                <header>
+                  <h3>Retention Stack</h3>
+                  <p>
+                    Shows retained capacity before ownership assignment, then
+                    separates already assigned ownership/automation from surplus.
+                  </p>
+                </header>
+                <div class="tool-body">
+                  <div class="tool-fields">
+                    <div class="tool-field">
+                      <label for="rs-gross">Annual gross clinical income</label>
+                      <input id="rs-gross" data-m3="rsGross" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="rs-taxes">Actual / estimated taxes</label>
+                      <input id="rs-taxes" data-m3="rsTaxes" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="rs-deductions">Payroll / benefit deductions</label>
+                      <input id="rs-deductions" data-m3="rsDeductions" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="rs-fixed">Fixed obligations</label>
+                      <input id="rs-fixed" data-m3="rsFixed" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="rs-lifestyle">Lifestyle / flexible spending</label>
+                      <input id="rs-lifestyle" data-m3="rsLifestyle" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="rs-ownership">Already assigned to ownership / automation</label>
+                      <input id="rs-ownership" data-m3="rsOwnership" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="rs-source">Documentation quality</label>
+                      <select id="rs-source" data-m3="rsSource">
+                        <option value="documented">Current documents</option>
+                        <option value="partial">Partly estimated</option>
+                        <option value="unknown">Unknown / gross-income planning</option>
+                      </select>
+                    </div>
+                    <div class="tool-field">
+                      <label for="rs-assignment">Assignment quality</label>
+                      <select id="rs-assignment" data-m3="rsAssignment">
+                        <option value="clear">Intentional assignment</option>
+                        <option value="partial">Partly assigned</option>
+                        <option value="none">Not assigned yet</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="tool-results">
+                    <div class="tool-result">
+                      <span class="k">Retained capacity before assignment</span>
+                      <span class="v" id="rs-capacity">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">Retention rate</span>
+                      <span class="v" id="rs-rate">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">Already assigned</span>
+                      <span class="v" id="rs-assigned">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">Unassigned retained surplus</span>
+                      <span class="v" id="rs-surplus">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">Suggested status</span>
+                      <span class="tool-status na" id="rs-status">Not assessed</span>
+                    </div>
+                  </div>
+                  <div class="tool-read" id="rs-read"></div>
+                </div>
+              </article>
+
+              <article class="tool-card" id="fee-drag-tool">
+                <header>
+                  <h3>Fee Drag</h3>
+                  <p>
+                    Makes annual fee dollars visible. Compounding drag is optional
+                    and labeled as an educational estimate, not a forecast.
+                  </p>
+                </header>
+                <div class="tool-body">
+                  <div class="tool-fields">
+                    <div class="tool-field">
+                      <label for="fee-assets">Assets subject to fee</label>
+                      <input id="fee-assets" data-m3="feeAssets" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="fee-current">Current all-in annual fee %</label>
+                      <input id="fee-current" type="number" min="0" step="0.01" data-m3="feeCurrentPct" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="fee-alt">Alternative annual fee %</label>
+                      <input id="fee-alt" type="number" min="0" step="0.01" data-m3="feeAltPct" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="fee-return"
+                        >Optional expected annual return %
+                        <small>Leave blank to skip compounding estimate</small></label
+                      >
+                      <input id="fee-return" type="number" step="0.1" data-m3="feeReturnPct" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="fee-years">Years to compare</label>
+                      <input id="fee-years" type="number" min="0" step="1" data-m3="feeYears" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="fee-known">Fee / conflict knowledge</label>
+                      <select id="fee-known" data-m3="feeKnown">
+                        <option value="known">Known</option>
+                        <option value="partial">Partly known</option>
+                        <option value="unknown">Unknown</option>
+                      </select>
+                    </div>
+                    <div class="tool-field">
+                      <label for="fee-service">Service value clarity</label>
+                      <select id="fee-service" data-m3="feeService">
+                        <option value="clear">Clear</option>
+                        <option value="unclear">Unclear</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="tool-results">
+                    <div class="tool-result">
+                      <span class="k">Current annual fee dollars</span>
+                      <span class="v" id="fee-current-dollars">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">Alternative annual fee dollars</span>
+                      <span class="v" id="fee-alt-dollars">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">Annual fee difference</span>
+                      <span class="v" id="fee-diff">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">No-growth cumulative difference</span>
+                      <span class="v" id="fee-cumulative">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">Optional compounding drag</span>
+                      <span class="v" id="fee-compound">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">Suggested status</span>
+                      <span class="tool-status na" id="fee-status">Not assessed</span>
+                    </div>
+                  </div>
+                  <div class="tool-read" id="fee-read"></div>
+                </div>
+              </article>
+
+              <article class="tool-card" id="tax-reserve-tool">
+                <header>
+                  <h3>Tax Reserve</h3>
+                  <p>
+                    Sets aside cash for variable-income taxes using a user or
+                    professional-entered reserve percentage.
+                  </p>
+                </header>
+                <div class="tool-body">
+                  <div class="tool-fields">
+                    <div class="tool-field">
+                      <label for="tax-locums">Expected 1099 / locums / business income</label>
+                      <input id="tax-locums" data-m3="taxLocums" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="tax-rental">Expected rental / partnership income</label>
+                      <input id="tax-rental" data-m3="taxRental" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="tax-other">Other income requiring reserve</label>
+                      <input id="tax-other" data-m3="taxOther" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="tax-pct">Tax reserve percentage %</label>
+                      <input id="tax-pct" type="number" min="0" max="100" step="1" data-m3="taxReservePct" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="tax-current">Current tax reserve balance</label>
+                      <input id="tax-current" data-m3="taxCurrentReserve" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="tax-payments">Estimated payments already made</label>
+                      <input id="tax-payments" data-m3="taxPaymentsMade" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="tax-months">Months until payment / filing need</label>
+                      <input id="tax-months" type="number" min="0" step="1" data-m3="taxMonthsRemaining" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="tax-source">Reserve % source</label>
+                      <select id="tax-source" data-m3="taxSource">
+                        <option value="cpa">CPA / prior actuals</option>
+                        <option value="estimate">Rough estimate</option>
+                        <option value="unknown">Unknown</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="tool-results">
+                    <div class="tool-result">
+                      <span class="k">Total income needing reserve</span>
+                      <span class="v" id="tax-income">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">Target tax reserve</span>
+                      <span class="v" id="tax-target">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">Reserve gap</span>
+                      <span class="v" id="tax-gap">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">Suggested monthly set-aside</span>
+                      <span class="v" id="tax-monthly">-</span>
+                    </div>
+                    <div class="tool-result">
+                      <span class="k">Suggested status</span>
+                      <span class="tool-status na" id="tax-status">Not assessed</span>
+                    </div>
+                  </div>
+                  <div class="tool-read" id="tax-read"></div>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="m2-suite" id="assets-contracts-suite">
+            <div class="suite-head">
+              <h2>Assets & contracts</h2>
+              <p>
+                These tools test whether an asset or contract is improving
+                freedom without quietly adding fragility.
+              </p>
+            </div>
+            <div class="tool-grid">
+              <article class="tool-card" id="real-estate-tool">
+                <header>
+                  <h3>Real Estate Cash Flow</h3>
+                  <p>
+                    Tests base-case cash flow, cash-on-cash return, DSCR, and
+                    Sleep-Well answers before treating a property as freedom math.
+                  </p>
+                </header>
+                <div class="tool-body">
+                  <div class="tool-fields">
+                    <div class="tool-field">
+                      <label for="re-rent">Monthly rent</label>
+                      <input id="re-rent" data-m3="reRent" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="re-other">Other monthly income</label>
+                      <input id="re-other" data-m3="reOtherIncome" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="re-vacancy">Vacancy reserve %</label>
+                      <input id="re-vacancy" type="number" min="0" max="100" step="0.1" data-m3="reVacancyPct" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="re-ops">Operating costs before debt</label>
+                      <input id="re-ops" data-m3="reOperatingCosts" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="re-debt">Monthly debt service</label>
+                      <input id="re-debt" data-m3="reDebtService" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="re-cash">Cash invested</label>
+                      <input id="re-cash" data-m3="reCashInvested" data-m3-type="money" />
+                    </div>
+                    <div class="tool-field">
+                      <label for="re-sleep">Sleep-Well answers</label>
+                      <select id="re-sleep" data-m3="reSleepWell">
+                        <option value="green">Green</option>
+                        <option value="yellow">Yellow</option>
+                        <option value="red">Red</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="tool-results">
+                    <div class="tool-result"><span class="k">Gross monthly income</span><span class="v" id="re-gross">-</span></div>
+                    <div class="tool-result"><span class="k">Vacancy reserve</span><span class="v" id="re-vacancy-out">-</span></div>
+                    <div class="tool-result"><span class="k">NOI before debt</span><span class="v" id="re-noi">-</span></div>
+                    <div class="tool-result"><span class="k">Monthly cash flow</span><span class="v" id="re-cash-flow">-</span></div>
+                    <div class="tool-result"><span class="k">Cash-on-cash return</span><span class="v" id="re-coc">-</span></div>
+                    <div class="tool-result"><span class="k">DSCR</span><span class="v" id="re-dscr">-</span></div>
+                    <div class="tool-result"><span class="k">Suggested status</span><span class="tool-status na" id="re-status">Not assessed</span></div>
+                  </div>
+                  <div class="tool-read" id="re-read"></div>
+                </div>
+              </article>
+
+              <article class="tool-card" id="contract-tool">
+                <header>
+                  <h3>Contract Review / 7-Clause Scan</h3>
+                  <p>
+                    Issue-spotting and attorney preparation only. This does not
+                    interpret legal enforceability.
+                  </p>
+                </header>
+                <div class="tool-body">
+                  <div class="tool-fields">
+                    <div class="tool-field"><label for="ct-comp">Compensation</label><select id="ct-comp" data-m3-contract="compensation"></select></div>
+                    <div class="tool-field"><label for="ct-schedule">Schedule</label><select id="ct-schedule" data-m3-contract="schedule"></select></div>
+                    <div class="tool-field"><label for="ct-call">Call</label><select id="ct-call" data-m3-contract="call"></select></div>
+                    <div class="tool-field"><label for="ct-leave">Leave / disability</label><select id="ct-leave" data-m3-contract="leave"></select></div>
+                    <div class="tool-field"><label for="ct-restrictive">Restrictive terms</label><select id="ct-restrictive" data-m3-contract="restrictive"></select></div>
+                    <div class="tool-field"><label for="ct-exit">Cancellation / exit</label><select id="ct-exit" data-m3-contract="exit"></select></div>
+                    <div class="tool-field"><label for="ct-life">Sacred life priorities</label><select id="ct-life" data-m3-contract="life"></select></div>
+                    <div class="tool-field">
+                      <label for="ct-redflags">Unresolved red flags</label>
+                      <input id="ct-redflags" type="number" min="0" step="1" data-m3="ctRedFlags" />
+                    </div>
+                  </div>
+                  <div class="tool-results">
+                    <div class="tool-result"><span class="k">Green / Yellow / Red clauses</span><span class="v" id="ct-counts">-</span></div>
+                    <div class="tool-result"><span class="k">Professional review needed</span><span class="v" id="ct-review">-</span></div>
+                    <div class="tool-result"><span class="k">Review disposition</span><span class="v" id="ct-disposition">-</span></div>
+                    <div class="tool-result"><span class="k">Suggested status</span><span class="tool-status na" id="ct-status">Not assessed</span></div>
+                  </div>
+                  <div class="tool-read" id="ct-read"></div>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="m2-suite" id="family-action-suite">
+            <div class="suite-head">
+              <h2>Family & action plan</h2>
+              <p>
+                These tools turn the system into a maintained operating plan
+                with evidence, dates, owner clarity, and family access.
+              </p>
+            </div>
+            <div class="tool-grid">
+              <article class="tool-card" id="family-folder-tool">
+                <header>
+                  <h3>Family Access Folder Checklist</h3>
+                  <p>
+                    Checks whether loved ones can find what exists, where it is,
+                    and what to do first. Raw passwords are never collected.
+                  </p>
+                </header>
+                <div class="tool-body">
+                  <div class="tool-fields">
+                    <div class="tool-field"><label for="fa-folder">Folder exists and current</label><select id="fa-folder" data-m3="faFolder"><option value="yes">Yes</option><option value="partial">Partial</option><option value="no">No</option></select></div>
+                    <div class="tool-field"><label for="fa-trusted">Trusted person knows location</label><select id="fa-trusted" data-m3="faTrusted"><option value="yes">Yes</option><option value="partial">Partial</option><option value="no">No</option></select></div>
+                    <div class="tool-field"><label for="fa-accounts">Accounts / policies / contacts documented</label><select id="fa-accounts" data-m3="faAccounts"><option value="yes">Yes</option><option value="partial">Partial</option><option value="no">No</option></select></div>
+                    <div class="tool-field"><label for="fa-estate">Estate documents current and signed</label><select id="fa-estate" data-m3="faEstate"><option value="yes">Yes</option><option value="partial">Partial</option><option value="no">No</option></select></div>
+                    <div class="tool-field"><label for="fa-beneficiaries">Beneficiaries / insurance reviewed</label><select id="fa-beneficiaries" data-m3="faBeneficiaries"><option value="yes">Yes</option><option value="partial">Partial</option><option value="no">No</option></select></div>
+                    <div class="tool-field"><label for="fa-emergency">Emergency contact sequence shared</label><select id="fa-emergency" data-m3="faEmergency"><option value="yes">Yes</option><option value="partial">Partial</option><option value="no">No</option></select></div>
+                    <div class="tool-field"><label for="fa-password">Password-manager / sealed-instruction location known</label><select id="fa-password" data-m3="faPasswordLocation"><option value="yes">Yes</option><option value="partial">Partial</option><option value="no">No</option></select></div>
+                  </div>
+                  <div class="tool-results">
+                    <div class="tool-result"><span class="k">Completeness</span><span class="v" id="fa-complete">-</span></div>
+                    <div class="tool-result"><span class="k">Missing / partial items</span><span class="v" id="fa-missing">-</span></div>
+                    <div class="tool-result"><span class="k">Suggested status</span><span class="tool-status na" id="fa-status">Not assessed</span></div>
+                  </div>
+                  <div class="tool-read" id="fa-read"></div>
+                </div>
+              </article>
+
+              <article class="tool-card" id="master-action-tool">
+                <header>
+                  <h3>Master Action Plan Dashboard</h3>
+                  <p>
+                    Rolls action rows into a simple operating dashboard with
+                    owners, dates, evidence, and professional-review flags.
+                  </p>
+                </header>
+                <div class="tool-body">
+                  <div class="tool-fields">
+                    <div class="tool-field"><label for="ma-total">Total actions</label><input id="ma-total" type="number" min="0" step="1" data-m3="maTotal" /></div>
+                    <div class="tool-field"><label for="ma-done">Done</label><input id="ma-done" type="number" min="0" step="1" data-m3="maDone" /></div>
+                    <div class="tool-field"><label for="ma-progress">In progress / scheduled</label><input id="ma-progress" type="number" min="0" step="1" data-m3="maProgress" /></div>
+                    <div class="tool-field"><label for="ma-waiting">Waiting on professional</label><input id="ma-waiting" type="number" min="0" step="1" data-m3="maWaiting" /></div>
+                    <div class="tool-field"><label for="ma-deferred">Deferred</label><input id="ma-deferred" type="number" min="0" step="1" data-m3="maDeferred" /></div>
+                    <div class="tool-field"><label for="ma-p1-risk">P1 owner/date/evidence risk</label><select id="ma-p1-risk" data-m3="maP1Risk"><option value="none">None</option><option value="some">Some waiting/missing review dates</option><option value="red">Ownerless or overdue P1</option></select></div>
+                  </div>
+                  <div class="tool-results">
+                    <div class="tool-result"><span class="k">Completion</span><span class="v" id="ma-completion">-</span></div>
+                    <div class="tool-result"><span class="k">Active / waiting / deferred</span><span class="v" id="ma-active">-</span></div>
+                    <div class="tool-result"><span class="k">Suggested status</span><span class="tool-status na" id="ma-status">Not assessed</span></div>
+                  </div>
+                  <div class="tool-read" id="ma-read"></div>
+                </div>
+              </article>
+
+              <article class="tool-card" id="progress-tool">
+                <header>
+                  <h3>Progress Tracker</h3>
+                  <p>
+                    Shows completion at a glance, but the Green/Yellow/Red
+                    result and next priority matter more than completion alone.
+                  </p>
+                </header>
+                <div class="tool-body">
+                  <div class="tool-fields">
+                    <div class="tool-field"><label for="pr-total">Required sections</label><input id="pr-total" type="number" min="0" step="1" data-m3="prTotal" /></div>
+                    <div class="tool-field"><label for="pr-complete">Complete sections</label><input id="pr-complete" type="number" min="0" step="1" data-m3="prComplete" /></div>
+                    <div class="tool-field"><label for="pr-green">Green sections</label><input id="pr-green" type="number" min="0" step="1" data-m3="prGreen" /></div>
+                    <div class="tool-field"><label for="pr-yellow">Yellow sections</label><input id="pr-yellow" type="number" min="0" step="1" data-m3="prYellow" /></div>
+                    <div class="tool-field"><label for="pr-red">Red sections</label><input id="pr-red" type="number" min="0" step="1" data-m3="prRed" /></div>
+                    <div class="tool-field"><label for="pr-review-gaps">Review-date / evidence gaps</label><input id="pr-review-gaps" type="number" min="0" step="1" data-m3="prReviewGaps" /></div>
+                  </div>
+                  <div class="tool-results">
+                    <div class="tool-result"><span class="k">Completion</span><span class="v" id="pr-completion">-</span></div>
+                    <div class="tool-result"><span class="k">G / Y / R</span><span class="v" id="pr-counts">-</span></div>
+                    <div class="tool-result"><span class="k">Next priority</span><span class="v" id="pr-priority">-</span></div>
+                    <div class="tool-result"><span class="k">Suggested status</span><span class="tool-status na" id="pr-status">Not assessed</span></div>
+                  </div>
+                  <div class="tool-read" id="pr-read"></div>
+                </div>
+              </article>
+
+              <article class="tool-card" id="annual-review-tool">
+                <header>
+                  <h3>Annual Freedom Review Dashboard</h3>
+                  <p>
+                    Keeps the system alive annually by naming weak domains,
+                    evidence gaps, and the first 90-day priority.
+                  </p>
+                </header>
+                <div class="tool-body">
+                  <div class="tool-fields">
+                    <div class="tool-field"><label for="ar-green">Green annual domains</label><input id="ar-green" type="number" min="0" step="1" data-m3="arGreen" /></div>
+                    <div class="tool-field"><label for="ar-yellow">Yellow annual domains</label><input id="ar-yellow" type="number" min="0" step="1" data-m3="arYellow" /></div>
+                    <div class="tool-field"><label for="ar-red">Red annual domains</label><input id="ar-red" type="number" min="0" step="1" data-m3="arRed" /></div>
+                    <div class="tool-field"><label for="ar-evidence">Evidence / review dates current?</label><select id="ar-evidence" data-m3="arEvidence"><option value="yes">Yes</option><option value="partial">Partial</option><option value="no">No</option></select></div>
+                    <div class="tool-field"><label for="ar-action">Weakest-domain action scheduled?</label><select id="ar-action" data-m3="arAction"><option value="yes">Yes</option><option value="partial">Partial</option><option value="no">No</option></select></div>
+                  </div>
+                  <div class="tool-results">
+                    <div class="tool-result"><span class="k">Annual score counts</span><span class="v" id="ar-counts">-</span></div>
+                    <div class="tool-result"><span class="k">Weakest domain</span><span class="v" id="ar-weakest">-</span></div>
+                    <div class="tool-result"><span class="k">Suggested status</span><span class="tool-status na" id="ar-status">Not assessed</span></div>
+                  </div>
+                  <div class="tool-read" id="ar-read"></div>
                 </div>
               </article>
             </div>
@@ -2670,6 +3233,210 @@
         };
       }
 
+      function computeFreedomDeltaTool(v) {
+        const core = Number(v.fdCore || 0);
+        const nonclin = Number(v.fdNonclin || 0);
+        const assets = Number(v.fdAssets || 0);
+        const delta = Math.max(core - nonclin, 0);
+        const covered = core > 0 ? nonclin / core : null;
+        const compass = delta * CONFIG.rule_multiplier;
+        const gap = Math.max(compass - assets, 0);
+        const progress = compass > 0 ? assets / compass : null;
+        let status = "na";
+        if (core > 0) {
+          if (delta === 0 || gap === 0) status = "green";
+          else if ((covered !== null && covered >= 0.5) || (progress !== null && progress >= 0.5)) status = "yellow";
+          else status = "red";
+        }
+        return { core, nonclin, assets, delta, covered, compass, gap, progress, status };
+      }
+
+      function computeRetentionStack(v) {
+        const gross = Number(v.rsGross || 0);
+        const taxes = Number(v.rsTaxes || 0);
+        const deductions = Number(v.rsDeductions || 0);
+        const fixed = Number(v.rsFixed || 0);
+        const lifestyle = Number(v.rsLifestyle || 0);
+        const assigned = Number(v.rsOwnership || 0);
+        const capacityRaw = gross - taxes - deductions - fixed - lifestyle;
+        const capacity = Math.max(capacityRaw, 0);
+        const retentionRate = gross > 0 ? capacity / gross : null;
+        const unassigned = Math.max(capacity - assigned, 0);
+        const source = v.rsSource || "documented";
+        const assignment = v.rsAssignment || "clear";
+        let status = "na";
+        if (gross > 0) {
+          if (capacityRaw <= 0 || source === "unknown") status = "red";
+          else if (source === "documented" && assignment === "clear") status = "green";
+          else status = "yellow";
+        }
+        return { gross, taxes, deductions, fixed, lifestyle, assigned, capacity, capacityRaw, retentionRate, unassigned, source, assignment, status };
+      }
+
+      function computeFeeDrag(v) {
+        const assets = Number(v.feeAssets || 0);
+        const currentPct = Number(v.feeCurrentPct || 0) / 100;
+        const altPct = Number(v.feeAltPct || 0) / 100;
+        const yearsRaw = v.feeYears === "" || v.feeYears === undefined ? "" : Number(v.feeYears);
+        const returnBlank = v.feeReturnPct === "" || v.feeReturnPct === undefined || v.feeReturnPct === null;
+        const returnPct = returnBlank ? null : Number(v.feeReturnPct || 0) / 100;
+        const years = yearsRaw === "" ? null : yearsRaw;
+        const currentAnnual = assets * currentPct;
+        const altAnnual = assets * altPct;
+        const annualDiff = currentAnnual - altAnnual;
+        const cumulativeNoGrowth = years === null ? null : annualDiff * years;
+        const compoundingDrag =
+          returnPct === null || years === null
+            ? null
+            : assets * (Math.pow(1 + returnPct - altPct, years) - Math.pow(1 + returnPct - currentPct, years));
+        const known = v.feeKnown || "known";
+        const service = v.feeService || "clear";
+        let status = "na";
+        if (assets > 0 && currentPct > 0) {
+          if (known === "unknown") status = "red";
+          else if (known === "partial" || service !== "clear") status = "yellow";
+          else status = "green";
+        }
+        return { assets, currentPct, altPct, years, returnPct, currentAnnual, altAnnual, annualDiff, cumulativeNoGrowth, compoundingDrag, known, service, status };
+      }
+
+      function computeTaxReserve(v) {
+        const totalIncome =
+          Number(v.taxLocums || 0) +
+          Number(v.taxRental || 0) +
+          Number(v.taxOther || 0);
+        const reservePct = Number(v.taxReservePct || 0) / 100;
+        const currentReserve = Number(v.taxCurrentReserve || 0);
+        const paymentsMade = Number(v.taxPaymentsMade || 0);
+        const months = Number(v.taxMonthsRemaining || 0);
+        const target = totalIncome * reservePct;
+        const gap = Math.max(target - currentReserve - paymentsMade, 0);
+        const monthly = months > 0 ? gap / months : null;
+        const source = v.taxSource || "cpa";
+        let status = "na";
+        if (totalIncome > 0) {
+          if (source === "unknown" || reservePct <= 0 || (gap > 0 && months <= 0)) status = "red";
+          else if (gap > 0 || source === "estimate") status = "yellow";
+          else status = "green";
+        }
+        return { totalIncome, reservePct, currentReserve, paymentsMade, months, target, gap, monthly, source, status };
+      }
+
+      function computeRealEstate(v) {
+        const rent = Number(v.reRent || 0);
+        const other = Number(v.reOtherIncome || 0);
+        const vacancyPct = Number(v.reVacancyPct || 0) / 100;
+        const ops = Number(v.reOperatingCosts || 0);
+        const debt = Number(v.reDebtService || 0);
+        const cash = Number(v.reCashInvested || 0);
+        const sleep = v.reSleepWell || "green";
+        const gross = rent + other;
+        const vacancy = gross * vacancyPct;
+        const noi = gross - vacancy - ops;
+        const cashFlow = noi - debt;
+        const cashOnCash = cash > 0 ? (cashFlow * 12) / cash : null;
+        const dscr = debt > 0 ? noi / debt : null;
+        let status = "na";
+        if (gross > 0 || ops > 0 || debt > 0) {
+          if (sleep === "red" || cashFlow < 0 || (dscr !== null && dscr < 1)) status = "red";
+          else if (sleep === "yellow" || cashFlow === 0 || (dscr !== null && dscr < 1.2)) status = "yellow";
+          else status = "green";
+        }
+        return { gross, vacancy, noi, cashFlow, cashOnCash, dscr, sleep, status };
+      }
+
+      const CONTRACT_AREAS = ["compensation", "schedule", "call", "leave", "restrictive", "exit", "life"];
+      function computeContractScan(statuses, redFlags) {
+        const values = CONTRACT_AREAS.map((key) => statuses[key] || "na");
+        const counts = {
+          green: values.filter((value) => value === "green").length,
+          yellow: values.filter((value) => value === "yellow").length,
+          red: values.filter((value) => value === "red").length,
+          na: values.filter((value) => value === "na").length,
+        };
+        const flags = Number(redFlags || 0);
+        const reviewNeeded = counts.red > 0 || counts.yellow > 0 || flags > 0;
+        const disposition =
+          counts.na > 0
+            ? "Incomplete"
+            : reviewNeeded
+              ? "Attorney review"
+              : "Clear for next internal step";
+        let status = "na";
+        if (counts.na === 0) {
+          if (counts.red > 0 || flags > 0) status = "red";
+          else if (counts.yellow > 0) status = "yellow";
+          else status = "green";
+        }
+        return { counts, flags, reviewNeeded, disposition, status };
+      }
+
+      function computeFamilyAccess(v) {
+        const keys = ["faFolder", "faTrusted", "faAccounts", "faEstate", "faBeneficiaries", "faEmergency", "faPasswordLocation"];
+        const values = keys.map((key) => v[key] || "no");
+        const complete = values.filter((value) => value === "yes").length;
+        const partialOrMissing = values.length - complete;
+        let status = "na";
+        if (values.some(Boolean)) {
+          if (values.includes("no")) status = "red";
+          else if (values.includes("partial")) status = "yellow";
+          else status = "green";
+        }
+        return { complete, total: keys.length, partialOrMissing, status };
+      }
+
+      function computeMasterAction(v) {
+        const total = Number(v.maTotal || 0);
+        const done = Number(v.maDone || 0);
+        const progress = Number(v.maProgress || 0);
+        const waiting = Number(v.maWaiting || 0);
+        const deferred = Number(v.maDeferred || 0);
+        const p1Risk = v.maP1Risk || "none";
+        const completion = total > 0 ? done / total : null;
+        let status = "na";
+        if (total > 0) {
+          if (p1Risk === "red") status = "red";
+          else if (p1Risk === "some" || waiting > 0 || deferred > 0) status = "yellow";
+          else status = "green";
+        }
+        return { total, done, progress, waiting, deferred, completion, p1Risk, status };
+      }
+
+      function computeProgressTracker(v) {
+        const total = Number(v.prTotal || 0);
+        const complete = Number(v.prComplete || 0);
+        const green = Number(v.prGreen || 0);
+        const yellow = Number(v.prYellow || 0);
+        const red = Number(v.prRed || 0);
+        const reviewGaps = Number(v.prReviewGaps || 0);
+        const completion = total > 0 ? complete / total : null;
+        const priority = red > 0 ? "First Red section" : yellow > 0 ? "First Yellow section" : reviewGaps > 0 ? "Review gap" : total > complete ? "Next incomplete section" : "Maintain";
+        let status = "na";
+        if (total > 0) {
+          if (red > 0) status = "red";
+          else if (yellow > 0 || reviewGaps > 0 || complete < total) status = "yellow";
+          else status = "green";
+        }
+        return { total, complete, green, yellow, red, reviewGaps, completion, priority, status };
+      }
+
+      function computeAnnualReview(v) {
+        const green = Number(v.arGreen || 0);
+        const yellow = Number(v.arYellow || 0);
+        const red = Number(v.arRed || 0);
+        const evidence = v.arEvidence || "yes";
+        const action = v.arAction || "yes";
+        const total = green + yellow + red;
+        const weakest = red > 0 ? "First Red domain" : yellow > 0 ? "First Yellow domain" : "None";
+        let status = "na";
+        if (total > 0) {
+          if (red > 0 || evidence === "no" || action === "no") status = "red";
+          else if (yellow > 0 || evidence === "partial" || action === "partial") status = "yellow";
+          else status = "green";
+        }
+        return { green, yellow, red, evidence, action, total, weakest, status };
+      }
+
       /* ================= UI ================= */
       const $ = (id) => document.getElementById(id);
       const money = (n) => {
@@ -2719,6 +3486,70 @@
           dbElimDays: 90,
           dbPolicySource: "actual",
           dbZeroConfirmed: "no",
+          rsGross: 600000,
+          rsTaxes: 180000,
+          rsDeductions: 40000,
+          rsFixed: 180000,
+          rsLifestyle: 120000,
+          rsOwnership: 30000,
+          rsSource: "documented",
+          rsAssignment: "partial",
+          feeAssets: 1000000,
+          feeCurrentPct: 1,
+          feeAltPct: 0.25,
+          feeReturnPct: "",
+          feeYears: 10,
+          feeKnown: "known",
+          feeService: "clear",
+          taxLocums: 100000,
+          taxRental: 0,
+          taxOther: 0,
+          taxReservePct: 30,
+          taxCurrentReserve: 10000,
+          taxPaymentsMade: 5000,
+          taxMonthsRemaining: 5,
+          taxSource: "cpa",
+          reRent: 5000,
+          reOtherIncome: 200,
+          reVacancyPct: 5,
+          reOperatingCosts: 1500,
+          reDebtService: 2600,
+          reCashInvested: 120000,
+          reSleepWell: "green",
+          ctRedFlags: 0,
+          faFolder: "partial",
+          faTrusted: "partial",
+          faAccounts: "yes",
+          faEstate: "partial",
+          faBeneficiaries: "partial",
+          faEmergency: "partial",
+          faPasswordLocation: "partial",
+          maTotal: 5,
+          maDone: 2,
+          maProgress: 2,
+          maWaiting: 1,
+          maDeferred: 0,
+          maP1Risk: "some",
+          prTotal: 15,
+          prComplete: 10,
+          prGreen: 10,
+          prYellow: 3,
+          prRed: 2,
+          prReviewGaps: 0,
+          arGreen: 5,
+          arYellow: 2,
+          arRed: 0,
+          arEvidence: "partial",
+          arAction: "yes",
+        },
+        m3Contracts: {
+          compensation: "na",
+          schedule: "na",
+          call: "na",
+          leave: "na",
+          restrictive: "na",
+          exit: "na",
+          life: "na",
         },
         m3Touched: {},
         m3Scores: {
@@ -2915,6 +3746,9 @@
         stLiquid: "liquid",
         dbCore: "core",
         dbCash: "liquid",
+        fdCore: "core",
+        fdNonclin: "nonclin",
+        fdAssets: "ownership",
       };
       function syncM3FromSnapshot() {
         Object.entries(M3_PREFILLS).forEach(([key, src]) => {
@@ -2926,8 +3760,12 @@
           const key = el.dataset.m3;
           if (el.tagName === "TEXTAREA") {
             el.value = state.m3[key] || "";
-          } else {
+          } else if (el.tagName === "SELECT") {
+            el.value = state.m3[key] || "";
+          } else if (el.dataset.m3Type === "money") {
             el.value = formatM2Value(state.m3[key], el.dataset.m3Type);
+          } else {
+            el.value = state.m3[key] ?? "";
           }
         });
       }
@@ -2940,6 +3778,15 @@
           el.value = state.m3Scores[el.dataset.m3Score] || "na";
           el.addEventListener("change", (event) => {
             state.m3Scores[event.currentTarget.dataset.m3Score] =
+              event.currentTarget.value;
+            render();
+          });
+        });
+        document.querySelectorAll("[data-m3-contract]").forEach((el) => {
+          el.innerHTML = scoreOptions;
+          el.value = state.m3Contracts[el.dataset.m3Contract] || "na";
+          el.addEventListener("change", (event) => {
+            state.m3Contracts[event.currentTarget.dataset.m3Contract] =
               event.currentTarget.value;
             render();
           });
@@ -2958,8 +3805,13 @@
             render();
           });
           el.addEventListener("change", (event) => {
-            state.m3Touched[event.currentTarget.dataset.m3] = true;
-            state.m3[event.currentTarget.dataset.m3] = event.currentTarget.value;
+            const target = event.currentTarget;
+            const next =
+              target.dataset.m3Type === "money"
+                ? plainNumber(target.value)
+                : target.value;
+            state.m3Touched[target.dataset.m3] = true;
+            state.m3[target.dataset.m3] = next;
             render();
           });
           el.addEventListener("blur", (event) => {
@@ -3104,6 +3956,84 @@
           return "<b>Coverage gap remains.</b> The monthly benefit shortfall or elimination-period reserve gap needs a cash or policy review path.";
         return "<b>Benefit protection covers the entered burn.</b> Monthly continuation meets the core burn and elimination-period cash is covered from current reserves.";
       }
+      function freedomDeltaRead(o) {
+        if (o.status === "na")
+          return "<b>Not assessed.</b> Add core monthly spending to calculate the Delta and 300 Rule compass.";
+        if (o.delta === 0)
+          return "<b>Core spending is covered.</b> Reliable non-clinical income covers the entered core spending, so the Delta is zero.";
+        if (o.status === "green")
+          return "<b>Compass target is covered.</b> Current ownership assets meet or exceed the rough 300 Rule compass.";
+        if (o.status === "yellow")
+          return "<b>Meaningful progress is visible.</b> Either non-clinical income covers at least half of core spending or assets cover at least half of the compass.";
+        return "<b>The Delta is still doing most of the work.</b> The main levers are lower core spending, more reliable non-clinical income, or more ownership assets.";
+      }
+      function retentionRead(o) {
+        if (o.status === "na")
+          return "<b>Not assessed.</b> Add annual gross income to calculate retained capacity.";
+        if (o.capacityRaw <= 0)
+          return "<b>No retained capacity is visible.</b> The current stack consumes the entered gross income before ownership assignment.";
+        if (o.source === "unknown")
+          return "<b>Documentation is missing.</b> Gross-income planning or unknown layers prevent a reliable retained-income score.";
+        if (o.status === "green")
+          return "<b>Retained capacity is intentional.</b> The money left after taxes, deductions, fixed obligations, and lifestyle has a clear ownership/automation plan.";
+        return "<b>Retained capacity exists, but the assignment is incomplete.</b> Ownership automation improves the interpretation; it is not subtracted as lost spending.";
+      }
+      function feeRead(o) {
+        if (o.status === "na")
+          return "<b>Not assessed.</b> Add assets and the current all-in fee to see annual fee dollars.";
+        if (o.known === "unknown")
+          return "<b>Fee structure is not clear.</b> Unknown fees, conflicts, fiduciary status, or compensation prevent Green.";
+        if (o.status === "yellow")
+          return "<b>Fee dollars are visible, but value is not fully clear.</b> Clarify the service received and any conflicts before treating the structure as Green.";
+        return "<b>Fee structure is visible.</b> Annual fee dollars are known. Any compounding drag shown is only an educational estimate, not a forecast.";
+      }
+      function taxReserveRead(o) {
+        if (o.status === "na")
+          return "<b>Not assessed.</b> Add income that needs a tax reserve.";
+        if (o.source === "unknown" || o.reservePct <= 0)
+          return "<b>Reserve assumption needs a source.</b> Use a CPA estimate or prior actuals rather than guessing.";
+        if (o.gap > 0 && o.months <= 0)
+          return "<b>Reserve gap has no set-aside path.</b> A gap with zero months remaining needs immediate professional review.";
+        if (o.status === "green")
+          return "<b>Tax reserve target is covered.</b> Current reserve plus payments meets the target based on the entered reserve percentage.";
+        return "<b>Reserve gap is defined.</b> The monthly set-aside gives a concrete path if the reserve percentage source is reliable.";
+      }
+      function realEstateRead(o) {
+        if (o.status === "na") return "<b>Not assessed.</b> Add rent, costs, and debt service to test the property.";
+        if (o.sleep === "red") return "<b>Sleep-Well answers override the math.</b> A positive cash-flow result cannot make a Red risk profile Green.";
+        if (o.status === "red") return "<b>Base case is fragile.</b> Cash flow is negative or DSCR is below 1.0.";
+        if (o.status === "yellow") return "<b>Property is not cleanly Green.</b> Cash flow, DSCR, or management risk needs more margin.";
+        return "<b>Base case passes the entered tests.</b> Cash flow is positive, DSCR is at least 1.20, and Sleep-Well answers are Green.";
+      }
+      function contractRead(o) {
+        if (o.status === "na") return "<b>Not assessed.</b> Score all seven clause areas from the actual contract language.";
+        if (o.status === "red") return "<b>Attorney review is triggered.</b> This is issue-spotting only; do not treat this as legal interpretation.";
+        if (o.status === "yellow") return "<b>Questions remain.</b> Use the unclear clauses to prepare attorney or negotiation questions.";
+        return "<b>No unresolved red flags are marked.</b> Keep the exact clause language and review evidence attached.";
+      }
+      function familyAccessRead(o) {
+        if (o.status === "red") return "<b>Family access is not reliable yet.</b> A trusted person would still have to search, guess, or call around in a crisis.";
+        if (o.status === "yellow") return "<b>Some access exists, but it is incomplete.</b> Close the partial items and confirm the folder/password-manager location with the trusted person.";
+        return "<b>Family access is current.</b> The trusted person can locate the folder, documents, emergency sequence, and password-manager location.";
+      }
+      function masterActionRead(o) {
+        if (o.status === "na") return "<b>Not assessed.</b> Add action rows to roll up the dashboard.";
+        if (o.status === "red") return "<b>A priority action is unsafe.</b> A P1 item lacks owner/date/evidence or is overdue without a next step.";
+        if (o.status === "yellow") return "<b>Plan is active but not fully clean.</b> Waiting items, deferred items, or missing review dates need follow-up.";
+        return "<b>Action plan is operating cleanly.</b> Priority actions are owned, dated, evidenced, and active or done.";
+      }
+      function progressRead(o) {
+        if (o.status === "na") return "<b>Not assessed.</b> Add required sections to track progress.";
+        if (o.status === "red") return "<b>A Red section needs a path.</b> Completion alone does not make risk Green.";
+        if (o.status === "yellow") return "<b>Progress exists, but the system is not fully current.</b> Tighten Yellow sections, review dates, or incomplete sections.";
+        return "<b>Progress tracker is current.</b> Required sections are complete, Green, and review evidence is current.";
+      }
+      function annualReviewRead(o) {
+        if (o.status === "na") return "<b>Not assessed.</b> Add annual domain statuses to name the weakest domain.";
+        if (o.status === "red") return "<b>Annual review needs attention.</b> A Red domain, missing evidence, or unscheduled action prevents Green.";
+        if (o.status === "yellow") return "<b>Annual review is partly current.</b> Tighten Yellow domains, evidence, or the first 90-day action.";
+        return "<b>Annual review is current.</b> Domains are Green with evidence and the next review/action path is set.";
+      }
       function renderM3() {
         const fm = computeFiveMinute(state.m3);
         $("fm-delta").textContent = money(fm.delta);
@@ -3175,6 +4105,89 @@
         $("db-elim-gap").textContent = money(db.elimGap);
         setToolStatus("db-status", db.status);
         $("db-read").innerHTML = disabilityRead(db);
+
+        const fd = computeFreedomDeltaTool(state.m3);
+        $("fd-delta").textContent = money(fd.delta);
+        $("fd-covered").innerHTML =
+          fd.covered === null ? "–" : `${(fd.covered * 100).toFixed(1)}<small>%</small>`;
+        $("fd-compass").textContent = money(fd.compass);
+        $("fd-gap").textContent = money(fd.gap);
+        setToolStatus("fd-status", fd.status);
+        $("fd-read").innerHTML = freedomDeltaRead(fd);
+
+        const rs = computeRetentionStack(state.m3);
+        $("rs-capacity").textContent = money(rs.capacity);
+        $("rs-rate").innerHTML =
+          rs.retentionRate === null ? "–" : `${(rs.retentionRate * 100).toFixed(1)}<small>%</small>`;
+        $("rs-assigned").textContent = money(rs.assigned);
+        $("rs-surplus").textContent = money(rs.unassigned);
+        setToolStatus("rs-status", rs.status);
+        $("rs-read").innerHTML = retentionRead(rs);
+
+        const fee = computeFeeDrag(state.m3);
+        $("fee-current-dollars").textContent = money(fee.currentAnnual);
+        $("fee-alt-dollars").textContent = money(fee.altAnnual);
+        $("fee-diff").textContent = money(fee.annualDiff);
+        $("fee-cumulative").textContent =
+          fee.cumulativeNoGrowth === null ? "–" : money(fee.cumulativeNoGrowth);
+        $("fee-compound").textContent =
+          fee.compoundingDrag === null ? "Educational estimate skipped" : money(fee.compoundingDrag);
+        setToolStatus("fee-status", fee.status);
+        $("fee-read").innerHTML = feeRead(fee);
+
+        const tax = computeTaxReserve(state.m3);
+        $("tax-income").textContent = money(tax.totalIncome);
+        $("tax-target").textContent = money(tax.target);
+        $("tax-gap").textContent = money(tax.gap);
+        $("tax-monthly").textContent =
+          tax.monthly === null ? "–" : `${money(tax.monthly)} /mo`;
+        setToolStatus("tax-status", tax.status);
+        $("tax-read").innerHTML = taxReserveRead(tax);
+
+        const re = computeRealEstate(state.m3);
+        $("re-gross").textContent = money(re.gross);
+        $("re-vacancy-out").textContent = money(re.vacancy);
+        $("re-noi").textContent = money(re.noi);
+        $("re-cash-flow").textContent = money(re.cashFlow);
+        $("re-coc").innerHTML =
+          re.cashOnCash === null ? "–" : `${(re.cashOnCash * 100).toFixed(1)}<small>%</small>`;
+        $("re-dscr").textContent = re.dscr === null ? "–" : re.dscr.toFixed(2);
+        setToolStatus("re-status", re.status);
+        $("re-read").innerHTML = realEstateRead(re);
+
+        const ct = computeContractScan(state.m3Contracts, state.m3.ctRedFlags);
+        $("ct-counts").textContent = `${ct.counts.green} / ${ct.counts.yellow} / ${ct.counts.red}`;
+        $("ct-review").textContent = ct.reviewNeeded ? "Yes" : "No";
+        $("ct-disposition").textContent = ct.disposition;
+        setToolStatus("ct-status", ct.status);
+        $("ct-read").innerHTML = contractRead(ct);
+
+        const fa = computeFamilyAccess(state.m3);
+        $("fa-complete").textContent = `${fa.complete} of ${fa.total}`;
+        $("fa-missing").textContent = String(fa.partialOrMissing);
+        setToolStatus("fa-status", fa.status);
+        $("fa-read").innerHTML = familyAccessRead(fa);
+
+        const ma = computeMasterAction(state.m3);
+        $("ma-completion").innerHTML =
+          ma.completion === null ? "–" : `${(ma.completion * 100).toFixed(0)}<small>%</small>`;
+        $("ma-active").textContent = `${ma.progress} / ${ma.waiting} / ${ma.deferred}`;
+        setToolStatus("ma-status", ma.status);
+        $("ma-read").innerHTML = masterActionRead(ma);
+
+        const pr = computeProgressTracker(state.m3);
+        $("pr-completion").innerHTML =
+          pr.completion === null ? "–" : `${(pr.completion * 100).toFixed(0)}<small>%</small>`;
+        $("pr-counts").textContent = `${pr.green} / ${pr.yellow} / ${pr.red}`;
+        $("pr-priority").textContent = pr.priority;
+        setToolStatus("pr-status", pr.status);
+        $("pr-read").innerHTML = progressRead(pr);
+
+        const ar = computeAnnualReview(state.m3);
+        $("ar-counts").textContent = `${ar.green} / ${ar.yellow} / ${ar.red}`;
+        $("ar-weakest").textContent = ar.weakest;
+        setToolStatus("ar-status", ar.status);
+        $("ar-read").innerHTML = annualReviewRead(ar);
       }
       function onMoneyBlur(e) {
         const el = e.target.closest("[data-in]");
@@ -3415,10 +4428,15 @@
           });
         };
         links.forEach((link) => {
-          link.addEventListener("click", () => {
+          link.addEventListener("click", (event) => {
             const id = link.getAttribute("href").slice(1);
+            const target = document.getElementById(id);
+            if (!target) return;
+            event.preventDefault();
             manualNavUntil = Date.now() + 900;
             setActive(id);
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+            history.replaceState(null, "", `#${id}`);
           });
         });
         setActive(targets[0].target.id);
@@ -3953,6 +4971,477 @@
             const tr = document.createElement("tr");
             tr.innerHTML =
               (i === 0 ? `<td rowspan="7"><b>${tc.name}</b></td>` : "") +
+              `<td>${metric}</td><td>${expected}</td><td>${got[metric]}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td>`;
+            tb.appendChild(tr);
+          });
+        });
+        [
+          {
+            name: "Freedom Delta A",
+            in: { fdCore: 18000, fdNonclin: 3000, fdAssets: 900000 },
+            exp: {
+              delta: "$15,000",
+              covered: "16.7%",
+              compass: "$4,500,000",
+              gap: "$3,600,000",
+              status: "red",
+            },
+          },
+          {
+            name: "Freedom Delta B",
+            in: { fdCore: 12000, fdNonclin: 12000, fdAssets: 0 },
+            exp: {
+              delta: "$0",
+              covered: "100.0%",
+              compass: "$0",
+              gap: "$0",
+              status: "green",
+            },
+          },
+          {
+            name: "Freedom Delta C",
+            in: { fdCore: 10000, fdNonclin: 5000, fdAssets: 800000 },
+            exp: {
+              delta: "$5,000",
+              covered: "50.0%",
+              compass: "$1,500,000",
+              gap: "$700,000",
+              status: "yellow",
+            },
+          },
+        ].forEach((tc) => {
+          const gotRaw = computeFreedomDeltaTool(tc.in);
+          const got = {
+            delta: money(gotRaw.delta),
+            covered:
+              gotRaw.covered === null
+                ? "blank"
+                : (gotRaw.covered * 100).toFixed(1) + "%",
+            compass: money(gotRaw.compass),
+            gap: money(gotRaw.gap),
+            status: gotRaw.status,
+          };
+          Object.entries(tc.exp).forEach(([metric, expected], i) => {
+            total++;
+            const ok = got[metric] === expected;
+            if (ok) pass++;
+            const tr = document.createElement("tr");
+            tr.innerHTML =
+              (i === 0 ? `<td rowspan="5"><b>${tc.name}</b></td>` : "") +
+              `<td>${metric}</td><td>${expected}</td><td>${got[metric]}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td>`;
+            tb.appendChild(tr);
+          });
+        });
+        [
+          {
+            name: "Retention A",
+            in: {
+              rsGross: 600000,
+              rsTaxes: 180000,
+              rsDeductions: 40000,
+              rsFixed: 180000,
+              rsLifestyle: 120000,
+              rsOwnership: 30000,
+              rsSource: "documented",
+              rsAssignment: "partial",
+            },
+            exp: {
+              capacity: "$80,000",
+              rate: "13.3%",
+              assigned: "$30,000",
+              unassigned: "$50,000",
+              status: "yellow",
+            },
+          },
+          {
+            name: "Retention B",
+            in: {
+              rsGross: 500000,
+              rsTaxes: 120000,
+              rsDeductions: 30000,
+              rsFixed: 120000,
+              rsLifestyle: 80000,
+              rsOwnership: 100000,
+              rsSource: "documented",
+              rsAssignment: "clear",
+            },
+            exp: {
+              capacity: "$150,000",
+              rate: "30.0%",
+              assigned: "$100,000",
+              unassigned: "$50,000",
+              status: "green",
+            },
+          },
+          {
+            name: "Retention C",
+            in: {
+              rsGross: 300000,
+              rsTaxes: 100000,
+              rsDeductions: 50000,
+              rsFixed: 100000,
+              rsLifestyle: 70000,
+              rsOwnership: 0,
+              rsSource: "documented",
+              rsAssignment: "none",
+            },
+            exp: {
+              capacity: "$0",
+              rate: "0.0%",
+              assigned: "$0",
+              unassigned: "$0",
+              status: "red",
+            },
+          },
+        ].forEach((tc) => {
+          const gotRaw = computeRetentionStack(tc.in);
+          const got = {
+            capacity: money(gotRaw.capacity),
+            rate:
+              gotRaw.retentionRate === null
+                ? "blank"
+                : (gotRaw.retentionRate * 100).toFixed(1) + "%",
+            assigned: money(gotRaw.assigned),
+            unassigned: money(gotRaw.unassigned),
+            status: gotRaw.status,
+          };
+          Object.entries(tc.exp).forEach(([metric, expected], i) => {
+            total++;
+            const ok = got[metric] === expected;
+            if (ok) pass++;
+            const tr = document.createElement("tr");
+            tr.innerHTML =
+              (i === 0 ? `<td rowspan="5"><b>${tc.name}</b></td>` : "") +
+              `<td>${metric}</td><td>${expected}</td><td>${got[metric]}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td>`;
+            tb.appendChild(tr);
+          });
+        });
+        [
+          {
+            name: "Fee Drag A",
+            in: {
+              feeAssets: 1000000,
+              feeCurrentPct: 1,
+              feeAltPct: 0.25,
+              feeReturnPct: "",
+              feeYears: 10,
+              feeKnown: "known",
+              feeService: "clear",
+            },
+            exp: {
+              currentAnnual: "$10,000",
+              altAnnual: "$2,500",
+              annualDiff: "$7,500",
+              cumulativeNoGrowth: "$75,000",
+              compoundingDrag: "blank",
+              status: "green",
+            },
+          },
+          {
+            name: "Fee Drag B",
+            in: {
+              feeAssets: 1000000,
+              feeCurrentPct: 1,
+              feeAltPct: 0.25,
+              feeReturnPct: 6,
+              feeYears: 10,
+              feeKnown: "partial",
+              feeService: "clear",
+            },
+            exp: {
+              currentAnnual: "$10,000",
+              altAnnual: "$2,500",
+              annualDiff: "$7,500",
+              cumulativeNoGrowth: "$75,000",
+              compoundingDrag: "$120,162",
+              status: "yellow",
+            },
+          },
+          {
+            name: "Fee Drag C",
+            in: {
+              feeAssets: 500000,
+              feeCurrentPct: 0,
+              feeAltPct: 0.25,
+              feeReturnPct: "",
+              feeYears: 5,
+              feeKnown: "unknown",
+              feeService: "unclear",
+            },
+            exp: {
+              currentAnnual: "$0",
+              altAnnual: "$1,250",
+              annualDiff: "-$1,250",
+              cumulativeNoGrowth: "-$6,250",
+              compoundingDrag: "blank",
+              status: "na",
+            },
+          },
+        ].forEach((tc) => {
+          const gotRaw = computeFeeDrag(tc.in);
+          const got = {
+            currentAnnual: money(gotRaw.currentAnnual),
+            altAnnual: money(gotRaw.altAnnual),
+            annualDiff: money(gotRaw.annualDiff),
+            cumulativeNoGrowth:
+              gotRaw.cumulativeNoGrowth === null ? "blank" : money(gotRaw.cumulativeNoGrowth),
+            compoundingDrag:
+              gotRaw.compoundingDrag === null ? "blank" : money(gotRaw.compoundingDrag),
+            status: gotRaw.status,
+          };
+          Object.entries(tc.exp).forEach(([metric, expected], i) => {
+            total++;
+            const ok = got[metric] === expected;
+            if (ok) pass++;
+            const tr = document.createElement("tr");
+            tr.innerHTML =
+              (i === 0 ? `<td rowspan="6"><b>${tc.name}</b></td>` : "") +
+              `<td>${metric}</td><td>${expected}</td><td>${got[metric]}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td>`;
+            tb.appendChild(tr);
+          });
+        });
+        [
+          {
+            name: "Tax Reserve A",
+            in: {
+              taxLocums: 100000,
+              taxRental: 0,
+              taxOther: 0,
+              taxReservePct: 30,
+              taxCurrentReserve: 10000,
+              taxPaymentsMade: 5000,
+              taxMonthsRemaining: 5,
+              taxSource: "cpa",
+            },
+            exp: {
+              totalIncome: "$100,000",
+              target: "$30,000",
+              gap: "$15,000",
+              monthly: "$3,000",
+              status: "yellow",
+            },
+          },
+          {
+            name: "Tax Reserve B",
+            in: {
+              taxLocums: 50000,
+              taxRental: 20000,
+              taxOther: 0,
+              taxReservePct: 30,
+              taxCurrentReserve: 25000,
+              taxPaymentsMade: 0,
+              taxMonthsRemaining: 4,
+              taxSource: "cpa",
+            },
+            exp: {
+              totalIncome: "$70,000",
+              target: "$21,000",
+              gap: "$0",
+              monthly: "$0",
+              status: "green",
+            },
+          },
+          {
+            name: "Tax Reserve C",
+            in: {
+              taxLocums: 40000,
+              taxRental: 0,
+              taxOther: 0,
+              taxReservePct: 0,
+              taxCurrentReserve: 0,
+              taxPaymentsMade: 0,
+              taxMonthsRemaining: 0,
+              taxSource: "unknown",
+            },
+            exp: {
+              totalIncome: "$40,000",
+              target: "$0",
+              gap: "$0",
+              monthly: "blank",
+              status: "red",
+            },
+          },
+        ].forEach((tc) => {
+          const gotRaw = computeTaxReserve(tc.in);
+          const got = {
+            totalIncome: money(gotRaw.totalIncome),
+            target: money(gotRaw.target),
+            gap: money(gotRaw.gap),
+            monthly: gotRaw.monthly === null ? "blank" : money(gotRaw.monthly),
+            status: gotRaw.status,
+          };
+          Object.entries(tc.exp).forEach(([metric, expected], i) => {
+            total++;
+            const ok = got[metric] === expected;
+            if (ok) pass++;
+            const tr = document.createElement("tr");
+            tr.innerHTML =
+              (i === 0 ? `<td rowspan="5"><b>${tc.name}</b></td>` : "") +
+              `<td>${metric}</td><td>${expected}</td><td>${got[metric]}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td>`;
+            tb.appendChild(tr);
+          });
+        });
+        [
+          {
+            name: "Real Estate A",
+            in: { reRent: 5000, reOtherIncome: 200, reVacancyPct: 5, reOperatingCosts: 1500, reDebtService: 2600, reCashInvested: 120000, reSleepWell: "green" },
+            exp: { gross: "$5,200", vacancy: "$260", noi: "$3,440", cashFlow: "$840", cashOnCash: "8.4%", dscr: "1.32", status: "green" },
+          },
+          {
+            name: "Real Estate B",
+            in: { reRent: 5000, reOtherIncome: 0, reVacancyPct: 0, reOperatingCosts: 2600, reDebtService: 2600, reCashInvested: 100000, reSleepWell: "green" },
+            exp: { gross: "$5,000", vacancy: "$0", noi: "$2,400", cashFlow: "-$200", cashOnCash: "-2.4%", dscr: "0.92", status: "red" },
+          },
+          {
+            name: "Real Estate C",
+            in: { reRent: 6000, reOtherIncome: 0, reVacancyPct: 5, reOperatingCosts: 1200, reDebtService: 2500, reCashInvested: 100000, reSleepWell: "red" },
+            exp: { gross: "$6,000", vacancy: "$300", noi: "$4,500", cashFlow: "$2,000", cashOnCash: "24.0%", dscr: "1.80", status: "red" },
+          },
+        ].forEach((tc) => {
+          const gotRaw = computeRealEstate(tc.in);
+          const got = {
+            gross: money(gotRaw.gross),
+            vacancy: money(gotRaw.vacancy),
+            noi: money(gotRaw.noi),
+            cashFlow: money(gotRaw.cashFlow),
+            cashOnCash: gotRaw.cashOnCash === null ? "blank" : (gotRaw.cashOnCash * 100).toFixed(1) + "%",
+            dscr: gotRaw.dscr === null ? "blank" : gotRaw.dscr.toFixed(2),
+            status: gotRaw.status,
+          };
+          Object.entries(tc.exp).forEach(([metric, expected], i) => {
+            total++;
+            const ok = got[metric] === expected;
+            if (ok) pass++;
+            const tr = document.createElement("tr");
+            tr.innerHTML =
+              (i === 0 ? `<td rowspan="7"><b>${tc.name}</b></td>` : "") +
+              `<td>${metric}</td><td>${expected}</td><td>${got[metric]}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td>`;
+            tb.appendChild(tr);
+          });
+        });
+        [
+          {
+            name: "Contract A",
+            statuses: { compensation: "green", schedule: "red", call: "yellow", leave: "green", restrictive: "red", exit: "green", life: "yellow" },
+            redFlags: 2,
+            exp: { counts: "3/2/2/0", reviewNeeded: "Yes", disposition: "Attorney review", status: "red" },
+          },
+          {
+            name: "Contract B",
+            statuses: { compensation: "green", schedule: "green", call: "green", leave: "green", restrictive: "green", exit: "green", life: "green" },
+            redFlags: 0,
+            exp: { counts: "7/0/0/0", reviewNeeded: "No", disposition: "Clear for next internal step", status: "green" },
+          },
+          {
+            name: "Contract C",
+            statuses: { compensation: "green", schedule: "yellow", call: "green", leave: "green", restrictive: "green", exit: "green", life: "green" },
+            redFlags: 0,
+            exp: { counts: "6/1/0/0", reviewNeeded: "Yes", disposition: "Attorney review", status: "yellow" },
+          },
+        ].forEach((tc) => {
+          const gotRaw = computeContractScan(tc.statuses, tc.redFlags);
+          const got = {
+            counts: `${gotRaw.counts.green}/${gotRaw.counts.yellow}/${gotRaw.counts.red}/${gotRaw.counts.na}`,
+            reviewNeeded: gotRaw.reviewNeeded ? "Yes" : "No",
+            disposition: gotRaw.disposition,
+            status: gotRaw.status,
+          };
+          Object.entries(tc.exp).forEach(([metric, expected], i) => {
+            total++;
+            const ok = got[metric] === expected;
+            if (ok) pass++;
+            const tr = document.createElement("tr");
+            tr.innerHTML =
+              (i === 0 ? `<td rowspan="4"><b>${tc.name}</b></td>` : "") +
+              `<td>${metric}</td><td>${expected}</td><td>${got[metric]}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td>`;
+            tb.appendChild(tr);
+          });
+        });
+        [
+          { name: "Family Access A", in: { faFolder: "yes", faTrusted: "yes", faAccounts: "yes", faEstate: "yes", faBeneficiaries: "yes", faEmergency: "yes", faPasswordLocation: "yes" }, exp: { complete: "7/7", partialOrMissing: "0", status: "green" } },
+          { name: "Family Access B", in: { faFolder: "yes", faTrusted: "partial", faAccounts: "yes", faEstate: "partial", faBeneficiaries: "yes", faEmergency: "partial", faPasswordLocation: "yes" }, exp: { complete: "4/7", partialOrMissing: "3", status: "yellow" } },
+          { name: "Family Access C", in: { faFolder: "no", faTrusted: "no", faAccounts: "partial", faEstate: "partial", faBeneficiaries: "partial", faEmergency: "no", faPasswordLocation: "no" }, exp: { complete: "0/7", partialOrMissing: "7", status: "red" } },
+        ].forEach((tc) => {
+          const gotRaw = computeFamilyAccess(tc.in);
+          const got = {
+            complete: `${gotRaw.complete}/${gotRaw.total}`,
+            partialOrMissing: String(gotRaw.partialOrMissing),
+            status: gotRaw.status,
+          };
+          Object.entries(tc.exp).forEach(([metric, expected], i) => {
+            total++;
+            const ok = got[metric] === expected;
+            if (ok) pass++;
+            const tr = document.createElement("tr");
+            tr.innerHTML =
+              (i === 0 ? `<td rowspan="3"><b>${tc.name}</b></td>` : "") +
+              `<td>${metric}</td><td>${expected}</td><td>${got[metric]}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td>`;
+            tb.appendChild(tr);
+          });
+        });
+        [
+          { name: "Master Action A", in: { maTotal: 5, maDone: 2, maProgress: 2, maWaiting: 1, maDeferred: 0, maP1Risk: "some" }, exp: { completion: "40%", active: "2/1/0", status: "yellow" } },
+          { name: "Master Action B", in: { maTotal: 4, maDone: 4, maProgress: 0, maWaiting: 0, maDeferred: 0, maP1Risk: "none" }, exp: { completion: "100%", active: "0/0/0", status: "green" } },
+          { name: "Master Action C", in: { maTotal: 3, maDone: 1, maProgress: 1, maWaiting: 0, maDeferred: 0, maP1Risk: "red" }, exp: { completion: "33%", active: "1/0/0", status: "red" } },
+        ].forEach((tc) => {
+          const gotRaw = computeMasterAction(tc.in);
+          const got = {
+            completion: gotRaw.completion === null ? "blank" : (gotRaw.completion * 100).toFixed(0) + "%",
+            active: `${gotRaw.progress}/${gotRaw.waiting}/${gotRaw.deferred}`,
+            status: gotRaw.status,
+          };
+          Object.entries(tc.exp).forEach(([metric, expected], i) => {
+            total++;
+            const ok = got[metric] === expected;
+            if (ok) pass++;
+            const tr = document.createElement("tr");
+            tr.innerHTML =
+              (i === 0 ? `<td rowspan="3"><b>${tc.name}</b></td>` : "") +
+              `<td>${metric}</td><td>${expected}</td><td>${got[metric]}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td>`;
+            tb.appendChild(tr);
+          });
+        });
+        [
+          { name: "Progress A", in: { prTotal: 15, prComplete: 10, prGreen: 10, prYellow: 3, prRed: 2, prReviewGaps: 0 }, exp: { completion: "67%", counts: "10/3/2", priority: "First Red section", status: "red" } },
+          { name: "Progress B", in: { prTotal: 15, prComplete: 15, prGreen: 15, prYellow: 0, prRed: 0, prReviewGaps: 0 }, exp: { completion: "100%", counts: "15/0/0", priority: "Maintain", status: "green" } },
+          { name: "Progress C", in: { prTotal: 15, prComplete: 14, prGreen: 13, prYellow: 1, prRed: 0, prReviewGaps: 1 }, exp: { completion: "93%", counts: "13/1/0", priority: "First Yellow section", status: "yellow" } },
+        ].forEach((tc) => {
+          const gotRaw = computeProgressTracker(tc.in);
+          const got = {
+            completion: gotRaw.completion === null ? "blank" : (gotRaw.completion * 100).toFixed(0) + "%",
+            counts: `${gotRaw.green}/${gotRaw.yellow}/${gotRaw.red}`,
+            priority: gotRaw.priority,
+            status: gotRaw.status,
+          };
+          Object.entries(tc.exp).forEach(([metric, expected], i) => {
+            total++;
+            const ok = got[metric] === expected;
+            if (ok) pass++;
+            const tr = document.createElement("tr");
+            tr.innerHTML =
+              (i === 0 ? `<td rowspan="4"><b>${tc.name}</b></td>` : "") +
+              `<td>${metric}</td><td>${expected}</td><td>${got[metric]}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td>`;
+            tb.appendChild(tr);
+          });
+        });
+        [
+          { name: "Annual Review A", in: { arGreen: 5, arYellow: 2, arRed: 0, arEvidence: "partial", arAction: "yes" }, exp: { counts: "5/2/0", weakest: "First Yellow domain", status: "yellow" } },
+          { name: "Annual Review B", in: { arGreen: 8, arYellow: 0, arRed: 0, arEvidence: "yes", arAction: "yes" }, exp: { counts: "8/0/0", weakest: "None", status: "green" } },
+          { name: "Annual Review C", in: { arGreen: 6, arYellow: 1, arRed: 1, arEvidence: "yes", arAction: "partial" }, exp: { counts: "6/1/1", weakest: "First Red domain", status: "red" } },
+        ].forEach((tc) => {
+          const gotRaw = computeAnnualReview(tc.in);
+          const got = {
+            counts: `${gotRaw.green}/${gotRaw.yellow}/${gotRaw.red}`,
+            weakest: gotRaw.weakest,
+            status: gotRaw.status,
+          };
+          Object.entries(tc.exp).forEach(([metric, expected], i) => {
+            total++;
+            const ok = got[metric] === expected;
+            if (ok) pass++;
+            const tr = document.createElement("tr");
+            tr.innerHTML =
+              (i === 0 ? `<td rowspan="3"><b>${tc.name}</b></td>` : "") +
               `<td>${metric}</td><td>${expected}</td><td>${got[metric]}</td><td class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</td>`;
             tb.appendChild(tr);
           });
