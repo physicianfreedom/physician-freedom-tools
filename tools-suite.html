@@ -57,6 +57,9 @@
         margin: 0;
         padding: 0;
       }
+      [hidden] {
+        display: none !important;
+      }
       html {
         scroll-behavior: smooth;
       }
@@ -199,6 +202,7 @@
         .suite-nav {
           position: sticky;
           top: 14px;
+          max-height: calc(100vh - 28px);
         }
       }
       .suite-nav-card {
@@ -210,10 +214,23 @@
         max-width: 100%;
         min-width: 0;
       }
+      @media (min-width: 1080px) {
+        .suite-nav-card {
+          display: flex;
+          flex-direction: column;
+          max-height: calc(100vh - 28px);
+        }
+      }
       .suite-nav-head {
         padding: 14px 15px;
         background: var(--warm-box);
         border-bottom: 1px solid var(--tan);
+      }
+      @media (min-width: 1080px) {
+        .suite-nav-head {
+          flex: none;
+          padding: 10px 14px;
+        }
       }
       .suite-nav-head .eyebrow {
         font-size: 10px;
@@ -231,11 +248,27 @@
         font-weight: 600;
         line-height: 1.2;
       }
+      @media (min-width: 1080px) {
+        .suite-nav-head strong {
+          font-size: 16px;
+        }
+      }
       .suite-nav-groups {
         display: grid;
         gap: 12px;
         padding: 12px;
         min-width: 0;
+      }
+      @media (min-width: 1080px) {
+        .suite-nav-groups {
+          flex: 1 1 auto;
+          gap: 6px;
+          min-height: 0;
+          overflow-y: auto;
+          overscroll-behavior: contain;
+          padding: 8px 10px;
+          scrollbar-width: thin;
+        }
       }
       .nav-group {
         display: grid;
@@ -261,6 +294,12 @@
         text-decoration: none;
         font-size: 13px;
         line-height: 1.25;
+      }
+      @media (min-width: 1080px) {
+        .suite-nav a {
+          min-height: 28px;
+          padding: 5px 8px;
+        }
       }
       .suite-nav a:hover,
       .suite-nav a:focus-visible,
@@ -4423,9 +4462,13 @@
           }))
           .filter((item) => item.target);
         const setActive = (id) => {
+          let activeLink = null;
           links.forEach((link) => {
-            link.classList.toggle("active", link.getAttribute("href") === `#${id}`);
+            const active = link.getAttribute("href") === `#${id}`;
+            link.classList.toggle("active", active);
+            if (active) activeLink = link;
           });
+          activeLink?.scrollIntoView({ block: "nearest", inline: "nearest" });
         };
         links.forEach((link) => {
           link.addEventListener("click", (event) => {
