@@ -318,36 +318,125 @@
         font-weight: 700;
         text-transform: uppercase;
       }
+      .suite-nav [data-section-link],
+      .suite-nav .overview-link {
+        cursor: pointer;
+      }
       .suite-content {
         min-width: 0;
       }
+      .suite-overview {
+        padding: 20px 0 8px;
+      }
+      .overview-head,
+      .active-section-head {
+        border-top: 1px solid var(--tan);
+        padding-top: 24px;
+        margin-bottom: 16px;
+      }
+      .overview-head h2,
+      .active-section-head h2 {
+        font-size: 22px;
+        font-weight: 600;
+      }
+      .overview-head p,
+      .active-section-head p {
+        max-width: 72ch;
+        margin-top: 6px;
+        color: var(--slate);
+        font-size: 14px;
+      }
+      .section-card-grid {
+        display: grid;
+        gap: 14px;
+      }
+      @media (min-width: 760px) {
+        .section-card-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (min-width: 1180px) {
+        .section-card-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+      .section-card {
+        border: 1px solid var(--tan);
+        border-radius: 8px;
+        background: #fff;
+        padding: 16px;
+        text-decoration: none;
+        color: var(--ink);
+        min-height: 154px;
+        display: grid;
+        align-content: start;
+        gap: 9px;
+      }
+      .section-card:hover,
+      .section-card:focus-visible {
+        border-color: var(--gold);
+        box-shadow: 0 0 0 3px var(--gold-fill);
+        outline: none;
+      }
+      .section-card .k {
+        color: var(--brass);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .section-card h3 {
+        font-size: 18px;
+        line-height: 1.2;
+        color: var(--navy);
+        font-weight: 600;
+      }
+      .section-card p {
+        color: var(--slate);
+        font-size: 13px;
+      }
+      .section-card .tools {
+        color: var(--charcoal);
+        font-size: 12px;
+        line-height: 1.35;
+      }
+      .active-section-head .back {
+        appearance: none;
+        border: 0;
+        background: none;
+        color: var(--brass);
+        cursor: pointer;
+        font: 700 11px/1 var(--sans);
+        letter-spacing: 0.08em;
+        margin-bottom: 10px;
+        padding: 0;
+        text-transform: uppercase;
+      }
       @media (max-width: 1079px) {
+        body[data-suite-mode="overview"] .suite-nav {
+          display: none;
+        }
         .suite-nav {
-          position: sticky;
-          top: 0;
-          margin: 0 -22px;
-          background: rgba(251, 249, 245, 0.96);
-          border-bottom: 1px solid var(--tan);
-          padding: 10px 22px;
-          backdrop-filter: blur(8px);
+          position: static;
+          margin: 0 0 18px;
+          padding: 0;
         }
         .suite-nav-card {
           border-radius: 8px;
         }
         .suite-nav-head {
-          display: none;
+          display: block;
+          padding: 12px 14px;
         }
         .suite-nav-groups {
-          display: flex;
-          gap: 10px;
-          overflow-x: auto;
+          display: grid;
+          gap: 8px;
+          overflow-x: visible;
           padding: 10px;
-          scroll-snap-type: x proximity;
           width: 100%;
         }
         .nav-group {
-          min-width: 210px;
-          scroll-snap-align: start;
+          min-width: 0;
         }
       }
 
@@ -361,7 +450,7 @@
       @media (max-width: 1079px) {
         section,
         article.tool-card {
-          scroll-margin-top: 128px;
+          scroll-margin-top: 20px;
         }
       }
       .workspace {
@@ -985,6 +1074,28 @@
         display: grid;
         gap: 16px;
       }
+      body[data-suite-mode="section"] .tool-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      @media (min-width: 1080px) {
+        body[data-suite-mode="section"] .tool-body {
+          grid-template-columns: minmax(0, 1fr) minmax(270px, 340px);
+          align-items: start;
+        }
+        body[data-suite-mode="section"] .tool-fields {
+          grid-column: 1;
+          grid-row: 1 / span 2;
+        }
+        body[data-suite-mode="section"] .tool-results,
+        body[data-suite-mode="section"] .tool-read {
+          grid-column: 2;
+        }
+        body[data-suite-mode="section"] .tool-results {
+          position: sticky;
+          top: 14px;
+          align-self: start;
+        }
+      }
       .tool-fields {
         display: grid;
         gap: 10px;
@@ -1331,9 +1442,9 @@
       <div class="intro">
         <h1>Physician Freedom Tools Suite</h1>
         <p class="lede">
-          Start with the Snapshot, then use the paid calculators below to
-          pressure-test emergency cash and off-ramp runway using the same
-          document-based numbers.
+          Choose an input family, then work through the calculators that use
+          the same numbers or evidence. Each section keeps unrelated tools out
+          of the way.
         </p>
         <div class="meta">
           <span class="pill">Takes about 5 minutes</span>
@@ -1355,96 +1466,148 @@
           <div class="suite-nav-card">
             <div class="suite-nav-head">
               <div class="eyebrow">Tools Suite</div>
-              <strong>Jump to a tool</strong>
+              <strong id="suite-nav-title">Choose a section</strong>
             </div>
             <div class="suite-nav-groups">
-              <div class="nav-group" aria-label="Snapshot">
-                <div class="nav-group-title">Snapshot</div>
-                <a href="#snapshot-workspace" data-suite-nav>
+              <div class="nav-group" aria-label="Suite overview" data-overview-nav>
+                <div class="nav-group-title">Overview</div>
+                <a href="#suite-overview" class="overview-link" data-overview-link>
+                  <span>All input families</span>
+                  <span class="badge">Start</span>
+                </a>
+                <a href="#baseline-section" data-section-link="baseline">
+                  <span>Snapshot baseline</span>
+                  <span class="badge">3</span>
+                </a>
+                <a href="#cash-section" data-section-link="cash">
+                  <span>Cash & runway</span>
+                  <span class="badge">3</span>
+                </a>
+                <a href="#disability-section" data-section-link="disability">
+                  <span>Disability protection</span>
+                  <span class="badge">1</span>
+                </a>
+                <a href="#retention-section" data-section-link="retention">
+                  <span>Retained income & tax</span>
+                  <span class="badge">2</span>
+                </a>
+                <a href="#fee-section" data-section-link="fee">
+                  <span>Investment cost</span>
+                  <span class="badge">1</span>
+                </a>
+                <a href="#real-estate-section" data-section-link="real-estate">
+                  <span>Real estate</span>
+                  <span class="badge">1</span>
+                </a>
+                <a href="#contract-section" data-section-link="contract">
+                  <span>Contract scan</span>
+                  <span class="badge">1</span>
+                </a>
+                <a href="#family-section" data-section-link="family">
+                  <span>Family access</span>
+                  <span class="badge">1</span>
+                </a>
+                <a href="#action-section" data-section-link="action">
+                  <span>Action plan</span>
+                  <span class="badge">5</span>
+                </a>
+              </div>
+              <div class="nav-group" aria-label="Snapshot baseline" data-nav-section="baseline">
+                <div class="nav-group-title">Snapshot baseline</div>
+                <a href="#snapshot-workspace" data-suite-nav data-tool-section="baseline">
                   <span>Paid Snapshot</span>
                   <span class="badge">Live</span>
                 </a>
-              </div>
-              <div class="nav-group" aria-label="Snapshot and first moves">
-                <div class="nav-group-title">First moves</div>
-                <a href="#five-minute-tool" data-suite-nav>
+                <a href="#five-minute-tool" data-suite-nav data-tool-section="baseline">
                   <span>Five-Minute Check</span>
                   <span class="badge">Live</span>
                 </a>
-                <a href="#scorecard-tool" data-suite-nav>
-                  <span>System Scorecard</span>
-                  <span class="badge">Live</span>
-                </a>
-                <a href="#moves-tool" data-suite-nav>
-                  <span>First Three Moves</span>
-                  <span class="badge">Live</span>
-                </a>
-              </div>
-              <div class="nav-group" aria-label="Freedom math">
-                <div class="nav-group-title">Freedom math</div>
-                <a href="#freedom-delta-tool" data-suite-nav>
+                <a href="#freedom-delta-tool" data-suite-nav data-tool-section="baseline">
                   <span>Freedom Delta / 300 Rule</span>
                   <span class="badge">Live</span>
                 </a>
-                <a href="#retention-tool" data-suite-nav>
+              </div>
+              <div class="nav-group" aria-label="Cash and runway" data-nav-section="cash">
+                <div class="nav-group-title">Cash & runway</div>
+                <a href="#emergency-tool" data-suite-nav data-tool-section="cash">
+                  <span>Emergency Cash Target</span>
+                  <span class="badge">Live</span>
+                </a>
+                <a href="#stress-tool" data-suite-nav data-tool-section="cash">
+                  <span>Ninety-Day Stress Test</span>
+                  <span class="badge">Live</span>
+                </a>
+                <a href="#offramp-tool" data-suite-nav data-tool-section="cash">
+                  <span>Off-Ramp Runway</span>
+                  <span class="badge">Live</span>
+                </a>
+              </div>
+              <div class="nav-group" aria-label="Disability protection" data-nav-section="disability">
+                <div class="nav-group-title">Disability</div>
+                <a href="#disability-tool" data-suite-nav data-tool-section="disability">
+                  <span>Disability Reality Check</span>
+                  <span class="badge">Live</span>
+                </a>
+              </div>
+              <div class="nav-group" aria-label="Retained income and tax" data-nav-section="retention">
+                <div class="nav-group-title">Retained income & tax</div>
+                <a href="#retention-tool" data-suite-nav data-tool-section="retention">
                   <span>Retention Stack</span>
                   <span class="badge">Live</span>
                 </a>
-                <a href="#fee-drag-tool" data-suite-nav>
-                  <span>Fee Drag</span>
-                  <span class="badge">Live</span>
-                </a>
-                <a href="#tax-reserve-tool" data-suite-nav>
+                <a href="#tax-reserve-tool" data-suite-nav data-tool-section="retention">
                   <span>Tax Reserve</span>
                   <span class="badge">Live</span>
                 </a>
               </div>
-              <div class="nav-group" aria-label="Assets and contracts">
-                <div class="nav-group-title">Assets & contracts</div>
-                <a href="#real-estate-tool" data-suite-nav>
+              <div class="nav-group" aria-label="Investment cost" data-nav-section="fee">
+                <div class="nav-group-title">Investment cost</div>
+                <a href="#fee-drag-tool" data-suite-nav data-tool-section="fee">
+                  <span>Fee Drag</span>
+                  <span class="badge">Live</span>
+                </a>
+              </div>
+              <div class="nav-group" aria-label="Real estate" data-nav-section="real-estate">
+                <div class="nav-group-title">Real estate</div>
+                <a href="#real-estate-tool" data-suite-nav data-tool-section="real-estate">
                   <span>Real Estate Cash Flow</span>
                   <span class="badge">Live</span>
                 </a>
-                <a href="#contract-tool" data-suite-nav>
+              </div>
+              <div class="nav-group" aria-label="Contract scan" data-nav-section="contract">
+                <div class="nav-group-title">Contract scan</div>
+                <a href="#contract-tool" data-suite-nav data-tool-section="contract">
                   <span>7-Clause Contract Scan</span>
                   <span class="badge">Live</span>
                 </a>
               </div>
-              <div class="nav-group" aria-label="Family and action plan">
-                <div class="nav-group-title">Action plan</div>
-                <a href="#family-folder-tool" data-suite-nav>
+              <div class="nav-group" aria-label="Family access" data-nav-section="family">
+                <div class="nav-group-title">Family access</div>
+                <a href="#family-folder-tool" data-suite-nav data-tool-section="family">
                   <span>Family Access Folder</span>
                   <span class="badge">Live</span>
                 </a>
-                <a href="#master-action-tool" data-suite-nav>
+              </div>
+              <div class="nav-group" aria-label="Action plan" data-nav-section="action">
+                <div class="nav-group-title">Action plan</div>
+                <a href="#scorecard-tool" data-suite-nav data-tool-section="action">
+                  <span>System Scorecard</span>
+                  <span class="badge">Live</span>
+                </a>
+                <a href="#moves-tool" data-suite-nav data-tool-section="action">
+                  <span>First Three Moves</span>
+                  <span class="badge">Live</span>
+                </a>
+                <a href="#master-action-tool" data-suite-nav data-tool-section="action">
                   <span>Master Action Plan</span>
                   <span class="badge">Live</span>
                 </a>
-                <a href="#progress-tool" data-suite-nav>
+                <a href="#progress-tool" data-suite-nav data-tool-section="action">
                   <span>Progress Tracker</span>
                   <span class="badge">Live</span>
                 </a>
-                <a href="#annual-review-tool" data-suite-nav>
+                <a href="#annual-review-tool" data-suite-nav data-tool-section="action">
                   <span>Annual Review</span>
-                  <span class="badge">Live</span>
-                </a>
-              </div>
-              <div class="nav-group" aria-label="Cash, runway, and risk">
-                <div class="nav-group-title">Cash & runway</div>
-                <a href="#emergency-tool" data-suite-nav>
-                  <span>Emergency Cash Target</span>
-                  <span class="badge">Live</span>
-                </a>
-                <a href="#stress-tool" data-suite-nav>
-                  <span>Ninety-Day Stress Test</span>
-                  <span class="badge">Live</span>
-                </a>
-                <a href="#disability-tool" data-suite-nav>
-                  <span>Disability Reality Check</span>
-                  <span class="badge">Live</span>
-                </a>
-                <a href="#offramp-tool" data-suite-nav>
-                  <span>Off-Ramp Runway</span>
                   <span class="badge">Live</span>
                 </a>
               </div>
@@ -1460,7 +1623,79 @@
         </nav>
 
         <div class="suite-content">
-          <div class="workspace" id="snapshot-workspace">
+          <section class="suite-overview" id="suite-overview" data-suite-overview>
+            <div class="overview-head">
+              <h2>Choose an input family</h2>
+              <p>
+                Each section groups tools by the numbers or evidence they use.
+                If a tool needs a different input set, it gets its own section.
+              </p>
+            </div>
+            <div class="section-card-grid">
+              <a class="section-card" href="#baseline-section" data-section-link="baseline">
+                <span class="k">Snapshot inputs</span>
+                <h3>Snapshot baseline</h3>
+                <p>Uses core spending, reliable non-clinical income, liquid reserves, and ownership assets.</p>
+                <span class="tools">Paid Snapshot, Five-Minute Check, Freedom Delta / 300 Rule</span>
+              </a>
+              <a class="section-card" href="#cash-section" data-section-link="cash">
+                <span class="k">Reserve inputs</span>
+                <h3>Cash & runway</h3>
+                <p>Uses core spending, liquid reserves, emergency target months, and transition assumptions.</p>
+                <span class="tools">Emergency Cash Target, Ninety-Day Stress Test, Off-Ramp Runway</span>
+              </a>
+              <a class="section-card" href="#disability-section" data-section-link="disability">
+                <span class="k">Policy inputs</span>
+                <h3>Disability protection</h3>
+                <p>Uses benefit amounts, taxability, elimination period, cash, and actual policy source.</p>
+                <span class="tools">Disability Benefit Reality Check</span>
+              </a>
+              <a class="section-card" href="#retention-section" data-section-link="retention">
+                <span class="k">Income inputs</span>
+                <h3>Retained income & tax</h3>
+                <p>Uses income, taxes, deductions, spending, and reserve percentages.</p>
+                <span class="tools">Retention Stack, Tax Reserve</span>
+              </a>
+              <a class="section-card" href="#fee-section" data-section-link="fee">
+                <span class="k">Portfolio cost inputs</span>
+                <h3>Investment cost</h3>
+                <p>Uses invested assets, fee percentages, optional return assumptions, and service clarity.</p>
+                <span class="tools">Fee Drag</span>
+              </a>
+              <a class="section-card" href="#real-estate-section" data-section-link="real-estate">
+                <span class="k">Property inputs</span>
+                <h3>Real estate</h3>
+                <p>Uses rent, vacancy, operating costs, debt service, cash invested, and Sleep-Well status.</p>
+                <span class="tools">Real Estate Cash Flow</span>
+              </a>
+              <a class="section-card" href="#contract-section" data-section-link="contract">
+                <span class="k">Contract evidence</span>
+                <h3>Contract scan</h3>
+                <p>Uses seven contract clause statuses and unresolved red flags for attorney-prep issue spotting.</p>
+                <span class="tools">Contract Review / 7-Clause Scan</span>
+              </a>
+              <a class="section-card" href="#family-section" data-section-link="family">
+                <span class="k">Family access evidence</span>
+                <h3>Family access</h3>
+                <p>Uses folder, document, trusted-person, beneficiary, and emergency sequence readiness.</p>
+                <span class="tools">Family Access Folder Checklist</span>
+              </a>
+              <a class="section-card" href="#action-section" data-section-link="action">
+                <span class="k">Operating plan inputs</span>
+                <h3>Action plan</h3>
+                <p>Uses G/Y/R domain status, action owners, dates, evidence, completion, and review cadence.</p>
+                <span class="tools">Scorecard, First Moves, Master Action Plan, Progress Tracker, Annual Review</span>
+              </a>
+            </div>
+          </section>
+
+          <section class="active-section-head" id="active-section-head" hidden>
+            <button type="button" class="back" data-overview-link>Back to suite overview</button>
+            <h2 id="active-section-title">Section</h2>
+            <p id="active-section-copy"></p>
+          </section>
+
+          <div class="workspace" id="snapshot-workspace" data-suite-section="baseline">
             <!-- INPUTS + STATUS -->
             <section class="numbers-col">
               <div class="sec-h">
@@ -1568,7 +1803,7 @@
             </section>
           </div>
 
-          <section class="m2-suite" id="first-moves-suite">
+          <section class="m2-suite" id="first-moves-suite" data-suite-block>
             <div class="suite-head">
               <h2>Snapshot & first moves</h2>
               <p>
@@ -1577,7 +1812,7 @@
               </p>
             </div>
             <div class="tool-grid">
-              <article class="tool-card" id="five-minute-tool">
+              <article class="tool-card" id="five-minute-tool" data-suite-section="baseline">
                 <header>
                   <h3>Five-Minute Freedom Check</h3>
                   <p>
@@ -1649,7 +1884,7 @@
                 </div>
               </article>
 
-              <article class="tool-card" id="scorecard-tool">
+              <article class="tool-card" id="scorecard-tool" data-suite-section="action">
                 <header>
                   <h3>Freedom System Scorecard</h3>
                   <p>
@@ -1721,7 +1956,7 @@
                 </div>
               </article>
 
-              <article class="tool-card" id="moves-tool">
+              <article class="tool-card" id="moves-tool" data-suite-section="action">
                 <header>
                   <h3>First Three Moves Generator</h3>
                   <p>
@@ -1792,7 +2027,7 @@
             </div>
           </section>
 
-          <section class="m2-suite" id="freedom-math-suite">
+          <section class="m2-suite" id="freedom-math-suite" data-suite-block>
             <div class="suite-head">
               <h2>Freedom math</h2>
               <p>
@@ -1801,7 +2036,7 @@
               </p>
             </div>
             <div class="tool-grid">
-              <article class="tool-card" id="freedom-delta-tool">
+              <article class="tool-card" id="freedom-delta-tool" data-suite-section="baseline">
                 <header>
                   <h3>Freedom Delta / 300 Rule</h3>
                   <p>
@@ -1859,7 +2094,7 @@
                 </div>
               </article>
 
-              <article class="tool-card" id="retention-tool">
+              <article class="tool-card" id="retention-tool" data-suite-section="retention">
                 <header>
                   <h3>Retention Stack</h3>
                   <p>
@@ -1936,7 +2171,7 @@
                 </div>
               </article>
 
-              <article class="tool-card" id="fee-drag-tool">
+              <article class="tool-card" id="fee-drag-tool" data-suite-section="fee">
                 <header>
                   <h3>Fee Drag</h3>
                   <p>
@@ -2015,7 +2250,7 @@
                 </div>
               </article>
 
-              <article class="tool-card" id="tax-reserve-tool">
+              <article class="tool-card" id="tax-reserve-tool" data-suite-section="retention">
                 <header>
                   <h3>Tax Reserve</h3>
                   <p>
@@ -2090,7 +2325,7 @@
             </div>
           </section>
 
-          <section class="m2-suite" id="assets-contracts-suite">
+          <section class="m2-suite" id="assets-contracts-suite" data-suite-block>
             <div class="suite-head">
               <h2>Assets & contracts</h2>
               <p>
@@ -2099,7 +2334,7 @@
               </p>
             </div>
             <div class="tool-grid">
-              <article class="tool-card" id="real-estate-tool">
+              <article class="tool-card" id="real-estate-tool" data-suite-section="real-estate">
                 <header>
                   <h3>Real Estate Cash Flow</h3>
                   <p>
@@ -2155,7 +2390,7 @@
                 </div>
               </article>
 
-              <article class="tool-card" id="contract-tool">
+              <article class="tool-card" id="contract-tool" data-suite-section="contract">
                 <header>
                   <h3>Contract Review / 7-Clause Scan</h3>
                   <p>
@@ -2189,7 +2424,7 @@
             </div>
           </section>
 
-          <section class="m2-suite" id="family-action-suite">
+          <section class="m2-suite" id="family-action-suite" data-suite-block>
             <div class="suite-head">
               <h2>Family & action plan</h2>
               <p>
@@ -2198,7 +2433,7 @@
               </p>
             </div>
             <div class="tool-grid">
-              <article class="tool-card" id="family-folder-tool">
+              <article class="tool-card" id="family-folder-tool" data-suite-section="family">
                 <header>
                   <h3>Family Access Folder Checklist</h3>
                   <p>
@@ -2225,7 +2460,7 @@
                 </div>
               </article>
 
-              <article class="tool-card" id="master-action-tool">
+              <article class="tool-card" id="master-action-tool" data-suite-section="action">
                 <header>
                   <h3>Master Action Plan Dashboard</h3>
                   <p>
@@ -2251,7 +2486,7 @@
                 </div>
               </article>
 
-              <article class="tool-card" id="progress-tool">
+              <article class="tool-card" id="progress-tool" data-suite-section="action">
                 <header>
                   <h3>Progress Tracker</h3>
                   <p>
@@ -2278,7 +2513,7 @@
                 </div>
               </article>
 
-              <article class="tool-card" id="annual-review-tool">
+              <article class="tool-card" id="annual-review-tool" data-suite-section="action">
                 <header>
                   <h3>Annual Freedom Review Dashboard</h3>
                   <p>
@@ -2305,7 +2540,7 @@
             </div>
           </section>
 
-          <section class="m2-suite" id="top-3-calculators">
+          <section class="m2-suite" id="top-3-calculators" data-suite-block>
             <div class="suite-head">
               <h2>Cash & runway tools</h2>
               <p>
@@ -2314,7 +2549,7 @@
               </p>
             </div>
             <div class="tool-grid">
-          <article class="tool-card" id="stress-tool">
+          <article class="tool-card" id="stress-tool" data-suite-section="cash">
             <header>
               <h3>Ninety-Day Stress Test</h3>
               <p>
@@ -2405,7 +2640,7 @@
             </div>
           </article>
 
-          <article class="tool-card" id="disability-tool">
+          <article class="tool-card" id="disability-tool" data-suite-section="disability">
             <header>
               <h3>Disability Benefit Reality Check</h3>
               <p>
@@ -2512,7 +2747,7 @@
             </div>
           </article>
 
-          <article class="tool-card" id="emergency-tool">
+          <article class="tool-card" id="emergency-tool" data-suite-section="cash">
             <header>
               <h3>Emergency Cash Target</h3>
               <p>
@@ -2599,7 +2834,7 @@
             </div>
           </article>
 
-          <article class="tool-card" id="offramp-tool">
+          <article class="tool-card" id="offramp-tool" data-suite-section="cash">
             <header>
               <h3>Off-Ramp Runway</h3>
               <p>
@@ -4451,8 +4686,132 @@
         });
       }
 
+      const SUITE_SECTIONS = {
+        baseline: {
+          title: "Snapshot baseline",
+          copy: "These tools share the Snapshot baseline: core spending, reliable non-clinical income, liquid reserves, and ownership assets.",
+        },
+        cash: {
+          title: "Cash & runway",
+          copy: "These tools share reserve and runway assumptions: core spending, liquid cash, emergency target months, and transition timing.",
+        },
+        disability: {
+          title: "Disability protection",
+          copy: "This tool uses policy-specific benefit amounts, taxability, elimination period, available cash, and actual policy source.",
+        },
+        retention: {
+          title: "Retained income & tax",
+          copy: "These tools use income, taxes, deductions, spending, and reserve percentages to show retained capacity and tax reserve gaps.",
+        },
+        fee: {
+          title: "Investment cost",
+          copy: "This section uses invested assets, fee percentages, optional return assumptions, and service clarity.",
+        },
+        "real-estate": {
+          title: "Real estate",
+          copy: "This section uses property-specific rent, vacancy, operating costs, debt service, cash invested, and Sleep-Well status.",
+        },
+        contract: {
+          title: "Contract scan",
+          copy: "This section uses contract clause statuses and unresolved red flags for issue spotting and attorney preparation only.",
+        },
+        family: {
+          title: "Family access",
+          copy: "This section uses family access evidence: folder location, trusted-person clarity, documents, beneficiaries, and emergency sequence.",
+        },
+        action: {
+          title: "Action plan",
+          copy: "These tools use domain status, action owners, dates, evidence, completion, and review cadence.",
+        },
+      };
+
+      function sectionFromHash(hash) {
+        const id = String(hash || "").replace(/^#/, "");
+        if (!id || id === "suite-overview") return "";
+        const sectionKey = id.endsWith("-section")
+          ? id.replace(/-section$/, "")
+          : "";
+        if (sectionKey && SUITE_SECTIONS[sectionKey]) return sectionKey;
+        const target = document.getElementById(id);
+        return target?.dataset?.suiteSection || "";
+      }
+
+      function setSuiteSection(section, options = {}) {
+        const active = SUITE_SECTIONS[section] ? section : "";
+        document.body.dataset.suiteMode = active ? "section" : "overview";
+        document.body.dataset.activeSuiteSection = active || "overview";
+
+        const overview = document.querySelector("[data-suite-overview]");
+        if (overview) overview.hidden = !!active;
+
+        const activeHead = $("active-section-head");
+        if (activeHead) activeHead.hidden = !active;
+        if (active) {
+          $("active-section-title").textContent = SUITE_SECTIONS[active].title;
+          $("active-section-copy").textContent = SUITE_SECTIONS[active].copy;
+        }
+
+        const navTitle = $("suite-nav-title");
+        if (navTitle) navTitle.textContent = active ? SUITE_SECTIONS[active].title : "Choose a section";
+
+        document.querySelectorAll("[data-overview-nav]").forEach((el) => {
+          el.hidden = !!active;
+        });
+        document.querySelectorAll("[data-nav-section]").forEach((el) => {
+          el.hidden = !active || el.dataset.navSection !== active;
+        });
+
+        document.querySelectorAll(".workspace[data-suite-section], .tool-card[data-suite-section]").forEach((el) => {
+          if (el.id === "snapshot-workspace") {
+            el.hidden = active !== "baseline";
+            return;
+          }
+          el.hidden = !active || el.dataset.suiteSection !== active;
+        });
+        document.querySelectorAll("[data-suite-block]").forEach((block) => {
+          const visibleTools = block.querySelectorAll(".tool-card:not([hidden])").length;
+          block.hidden = !active || visibleTools === 0;
+          const head = block.querySelector(".suite-head");
+          if (head) head.hidden = !!active;
+        });
+
+        document.querySelectorAll("[data-section-link]").forEach((link) => {
+          link.classList.toggle("active", !!active && link.dataset.sectionLink === active);
+        });
+
+        if (options.scroll) {
+          const target =
+            (options.targetId && document.getElementById(options.targetId)) ||
+            (active ? $("active-section-head") : overview);
+          target?.scrollIntoView({ behavior: options.instant ? "auto" : "smooth", block: "start" });
+        }
+      }
+
       function initSuiteNav() {
         const links = [...document.querySelectorAll("[data-suite-nav]")];
+        const sectionLinks = [...document.querySelectorAll("[data-section-link]")];
+        const overviewLinks = [...document.querySelectorAll("[data-overview-link]")];
+        const applyHash = (options = {}) => {
+          const section = sectionFromHash(window.location.hash);
+          setSuiteSection(section, options);
+        };
+        sectionLinks.forEach((link) => {
+          link.addEventListener("click", (event) => {
+            event.preventDefault();
+            const section = event.currentTarget.dataset.sectionLink;
+            history.replaceState(null, "", `#${section}-section`);
+            setSuiteSection(section, { scroll: true });
+          });
+        });
+        overviewLinks.forEach((link) => {
+          link.addEventListener("click", (event) => {
+            event.preventDefault();
+            history.replaceState(null, "", "#suite-overview");
+            setSuiteSection("", { scroll: true });
+          });
+        });
+        window.addEventListener("hashchange", () => applyHash({ scroll: true }));
+        applyHash({ instant: true });
         if (!links.length) return;
         let manualNavUntil = 0;
         const targets = links
@@ -4476,13 +4835,16 @@
             const target = document.getElementById(id);
             if (!target) return;
             event.preventDefault();
+            const section = target.dataset.suiteSection || sectionFromHash(`#${id}`);
+            if (section) setSuiteSection(section);
             manualNavUntil = Date.now() + 900;
             setActive(id);
             target.scrollIntoView({ behavior: "smooth", block: "start" });
             history.replaceState(null, "", `#${id}`);
           });
         });
-        setActive(targets[0].target.id);
+        const currentTarget = document.getElementById(String(window.location.hash || "").replace(/^#/, ""));
+        setActive(currentTarget?.id || targets[0].target.id);
         if (!("IntersectionObserver" in window)) return;
         const observer = new IntersectionObserver(
           (entries) => {
