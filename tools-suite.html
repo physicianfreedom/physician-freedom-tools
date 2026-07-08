@@ -322,6 +322,10 @@
       .suite-nav .overview-link {
         cursor: pointer;
       }
+      .section-overview-nav {
+        border-bottom: 1px solid var(--tan);
+        padding-bottom: 8px;
+      }
       .suite-content {
         min-width: 0;
       }
@@ -1469,6 +1473,13 @@
               <strong id="suite-nav-title">Choose a section</strong>
             </div>
             <div class="suite-nav-groups">
+              <div class="nav-group section-overview-nav" aria-label="Suite overview" data-section-overview-nav hidden>
+                <div class="nav-group-title">Section</div>
+                <a href="#suite-overview" class="overview-link" data-overview-link>
+                  <span>Suite overview</span>
+                  <span class="badge">Back</span>
+                </a>
+              </div>
               <div class="nav-group" aria-label="Suite overview" data-overview-nav>
                 <div class="nav-group-title">Overview</div>
                 <a href="#suite-overview" class="overview-link" data-overview-link>
@@ -4756,6 +4767,9 @@
 
         document.querySelectorAll("[data-overview-nav]").forEach((el) => {
           el.hidden = !!active;
+        });
+        document.querySelectorAll("[data-section-overview-nav]").forEach((el) => {
+          el.hidden = !active;
         });
         document.querySelectorAll("[data-nav-section]").forEach((el) => {
           el.hidden = !active || el.dataset.navSection !== active;
