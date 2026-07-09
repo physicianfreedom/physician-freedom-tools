@@ -177,6 +177,9 @@
         .suite-layout {
           grid-template-columns: 238px minmax(0, 1fr);
         }
+        body[data-suite-mode="section"] .m2-suite {
+          padding-top: 0;
+        }
       }
       .suite-nav {
         z-index: 3;
@@ -312,6 +315,9 @@
       }
       .suite-content {
         min-width: 0;
+      }
+      body[data-suite-mode="section"] .suite-layout {
+        align-items: start;
       }
       .suite-overview {
         padding: 20px 0 8px;
@@ -1475,6 +1481,12 @@
         </div>
       </div>
 
+      <section class="active-section-head" id="active-section-head" hidden>
+        <button type="button" class="back" data-overview-link>Back to suite overview</button>
+        <h2 id="active-section-title">Section</h2>
+        <p id="active-section-copy"></p>
+      </section>
+
       <div class="suite-layout">
         <nav class="suite-nav" aria-label="Tools Suite navigation">
           <div class="suite-nav-card">
@@ -1708,12 +1720,6 @@
                 <span class="tools">Scorecard, First Moves, Master Action Plan, Progress Tracker, Annual Review</span>
               </a>
             </div>
-          </section>
-
-          <section class="active-section-head" id="active-section-head" hidden>
-            <button type="button" class="back" data-overview-link>Back to suite overview</button>
-            <h2 id="active-section-title">Section</h2>
-            <p id="active-section-copy"></p>
           </section>
 
           <div class="workspace" id="snapshot-workspace" data-suite-section="baseline">
