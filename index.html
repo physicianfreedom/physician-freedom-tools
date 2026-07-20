@@ -8,6 +8,7 @@
       name="description"
       content="A one-page diagnostic: see your current financial structure before you try to improve it. Physician Freedom System."
     />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23a67c2d'/%3E%3Cpath d='M4 4h8v2H6v2h5v2H6v3H4z' fill='%23fff8ec'/%3E%3C/svg%3E" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -821,6 +822,12 @@
         gap: 9px;
         flex-wrap: wrap;
       }
+      .report-actions {
+        width: 100%;
+        display: flex;
+        gap: 9px;
+        flex-wrap: wrap;
+      }
       .capture input {
         flex: 1;
         min-width: 220px;
@@ -840,6 +847,10 @@
         font-weight: 600;
         font-size: 14px;
         cursor: pointer;
+      }
+      .capture button.secondary {
+        background: #eef0e9;
+        color: var(--navy);
       }
       .capture .note {
         width: 100%;
@@ -1149,30 +1160,34 @@
         </div>
       </section>
 
-      <!-- EMAIL CAPTURE (Kajabi-wired in production) -->
+      <!-- SUMMARY REPORT FRAMEWORK (Kajabi/email-wired in production) -->
       <div class="capture">
-        <b>Get your Snapshot summary</b>
+        <b>Save your Snapshot summary</b>
         <p>
-          Enter your email to save a copy of your results and your first action.
+          Generate a plain-English summary from the numbers on this page. You can
+          copy it, open an email draft, or print/save it as a PDF.
         </p>
-        <form
-          id="capture-form"
-          onsubmit="
-            event.preventDefault();
-            this.querySelector('button').textContent = 'Sent ✓';
-          "
-        >
+        <form id="capture-form">
           <input
             type="email"
             placeholder="you@example.com"
             required
             aria-label="Email address"
+            data-report-email
           />
-          <button type="submit">Email my Snapshot</button>
+          <div class="report-actions">
+            <button type="submit">Open email draft</button>
+            <button type="button" class="secondary" data-copy-report>
+              Copy summary
+            </button>
+            <button type="button" class="secondary" data-print-report>
+              Print / save PDF
+            </button>
+          </div>
           <div class="note">
-            In production this connects to the Physician Freedom System list in
-            Kajabi. No financial numbers are sent, only your email and the
-            summary you approve.
+            Framework only: this prepares the summary locally. Kajabi or an
+            email service can be connected later to send the approved summary
+            automatically.
           </div>
         </form>
       </div>
@@ -1790,8 +1805,106 @@
         e.target.dataset.touched = "1";
       });
 
+      function stripHtml(html) {
+        const div = document.createElement("div");
+        div.innerHTML = html;
+        return div.textContent || div.innerText || "";
+      }
+      function statusCounts() {
+        const counts = { green: 0, yellow: 0, red: 0, na: 0 };
+        Object.values(state.status).forEach((s) => counts[s]++);
+        return counts;
+      }
+      function track(eventName, detail = {}) {
+        const payload = {
+          event: eventName,
+          page: "free_snapshot",
+          path: window.location.pathname,
+          ...detail,
+        };
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(payload);
+        window.dispatchEvent(new CustomEvent("pfs:analytics", { detail: payload }));
+      }
+      function postEmbedHeight() {
+        window.parent?.postMessage(
+          {
+            type: "pfs:resize",
+            page: "free_snapshot",
+            height: document.documentElement.scrollHeight,
+          },
+          "*",
+        );
+      }
+      function buildSnapshotReport() {
+        const o = compute(state.vals);
+        const counts = statusCounts();
+        const action = $("action-text").value.trim() || "Not selected yet";
+        return [
+          "Physician Freedom Snapshot Summary",
+          "",
+          `Freedom Number (300 Rule): ${money(o.compass)}`,
+          `Freedom Delta: ${o.delta === 0 ? "Reached" : `${money(o.delta)} /mo`}`,
+          `Runway: ${o.runway === null ? "Not assessed" : `${o.runway.toFixed(1)} months`}`,
+          `Core covered by reliable non-clinical income: ${pctText(o.pct)}`,
+          `Progress to Freedom Number: ${
+            o.progress === null
+              ? "Freedom Number reached"
+              : `${money(state.vals.ownership || 0)} of ${money(o.compass)}`
+          }`,
+          `Status scan: ${counts.green}G / ${counts.yellow}Y / ${counts.red}R / ${counts.na} not assessed`,
+          "",
+          "What this means:",
+          stripHtml(snapshotRead(state.vals, o, counts)),
+          "",
+          "First action this week:",
+          action,
+          "",
+          `Generated from: ${window.location.origin}${window.location.pathname}`,
+        ].join("\n");
+      }
+      async function copyReport(button) {
+        const report = buildSnapshotReport();
+        await navigator.clipboard.writeText(report);
+        button.textContent = "Copied";
+        window.setTimeout(() => (button.textContent = "Copy summary"), 1600);
+        track("report_copy");
+      }
+      function openEmailReport(email) {
+        const report = buildSnapshotReport();
+        const subject = "Physician Freedom Snapshot Summary";
+        const href = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(report)}`;
+        window.location.href = href;
+        track("report_email_draft", { hasEmail: Boolean(email) });
+      }
+      function initReportFramework() {
+        const form = $("capture-form");
+        if (!form) return;
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const email = form.querySelector("[data-report-email]")?.value || "";
+          openEmailReport(email);
+        });
+        form.querySelector("[data-copy-report]")?.addEventListener("click", (event) => {
+          copyReport(event.currentTarget).catch(() => {
+            event.currentTarget.textContent = "Copy failed";
+          });
+        });
+        form.querySelector("[data-print-report]")?.addEventListener("click", () => {
+          track("report_print");
+          window.print();
+        });
+      }
+      window.addEventListener("load", () => {
+        track("calculator_view");
+        postEmbedHeight();
+      });
+      window.addEventListener("resize", postEmbedHeight);
+
       buildRows();
       render();
+      initReportFramework();
+      window.setTimeout(postEmbedHeight, 250);
 
       /* ================= QA HARNESS ================= */
       const QA = [
