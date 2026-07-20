@@ -36,7 +36,8 @@ The QA harness is hidden from normal paid users unless `?review=1`, `?qa=1`, or 
 
 ## Milestone 4 Framework
 
-- Summary report actions are available on both pages: open email draft, copy summary, and print/save PDF.
+- Summary report actions are available on both pages: open email draft, copy summary, and create a branded PDF-ready report.
+- The PDF report opens as a styled report preview with a cover band, key metrics, interpretation text, and section results. The browser print dialog is used only as the local PDF renderer.
 - Report summaries are generated locally from the current calculator state.
 - Vendor-neutral analytics events are emitted through `window.dataLayer` and a `pfs:analytics` browser event.
 - Kajabi iframe embedding is supported with `window.parent.postMessage({ type: "pfs:resize", ... })` height messages.

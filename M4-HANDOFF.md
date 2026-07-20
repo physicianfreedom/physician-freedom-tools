@@ -29,15 +29,17 @@ The paid suite opens with an input-family overview. Each section groups calculat
 - Family access: Family Access Folder Checklist
 - Action plan: Freedom System Scorecard, First Three Moves, Master Action Plan, Progress Tracker, Annual Review
 
-## Summary Report Framework
+## Branded Report Framework
 
-Both pages now include a browser-side summary report framework:
+Both pages now include a browser-side summary and report framework:
 
 - Open email draft
 - Copy summary
-- Print / save PDF
+- Create branded PDF report
 
-The summary is generated locally from the current calculator state. No automatic backend email service is connected yet. This keeps the current implementation credential-free while giving Kajabi, email automation, or CRM tooling a clear integration point later.
+The PDF report opens as a styled report preview with a Physician Freedom System cover band, key metrics, interpretation text, and the relevant calculator results. The browser print dialog is used as the local PDF renderer, so the user can save the report as a PDF without sending financial inputs to a server.
+
+The summary is generated locally from the current calculator state. No automatic backend email service or server-side PDF service is connected yet. This keeps the current implementation credential-free while giving Kajabi, email automation, CRM tooling, or server-side PDF generation a clear integration point later.
 
 ## Analytics Event Framework
 
@@ -47,6 +49,7 @@ Both pages emit vendor-neutral analytics events:
 - `report_email_draft`
 - `report_copy`
 - `report_print`
+- `report_print_save`
 
 Events are pushed to `window.dataLayer` when available and are also emitted as a `pfs:analytics` browser event. This allows Google Tag Manager or another analytics layer to listen without changing calculator formulas.
 

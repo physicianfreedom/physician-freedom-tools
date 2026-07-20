@@ -858,6 +858,182 @@
         color: #8aa0ab;
         margin-top: 4px;
       }
+      .premium-report {
+        display: none;
+        margin: 28px auto;
+        max-width: 920px;
+        background: #fff;
+        border: 1px solid var(--tan);
+        border-radius: 10px;
+        box-shadow: 0 8px 24px rgba(31, 31, 31, 0.08);
+        overflow: hidden;
+      }
+      .premium-report[aria-hidden="false"] {
+        display: block;
+      }
+      .report-toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 18px;
+        background: var(--warm-box);
+        border-bottom: 1px solid var(--tan);
+      }
+      .report-toolbar strong {
+        color: var(--navy);
+        font-size: 14px;
+      }
+      .report-toolbar button {
+        border: 1px solid var(--tan);
+        border-radius: 7px;
+        background: #fff;
+        color: var(--navy);
+        cursor: pointer;
+        font-weight: 600;
+        padding: 8px 12px;
+      }
+      .report-page {
+        color: var(--ink);
+        background: #fff;
+        font-size: 12px;
+        line-height: 1.45;
+      }
+      .report-cover {
+        background: var(--navy);
+        color: #fff;
+        padding: 28px 32px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 18px;
+        align-items: end;
+      }
+      .report-brand {
+        color: var(--gold);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+      .report-cover h2 {
+        margin-top: 10px;
+        font-family: var(--serif);
+        font-size: 31px;
+        font-weight: 600;
+        line-height: 1.08;
+      }
+      .report-date {
+        color: #c5d0d6;
+        font-size: 11px;
+        text-align: right;
+      }
+      .report-content {
+        padding: 28px 32px 32px;
+      }
+      .report-kicker {
+        color: var(--brass);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.13em;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+      }
+      .report-lede {
+        color: var(--charcoal);
+        font-size: 14px;
+        max-width: 70ch;
+      }
+      .report-stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin: 22px 0;
+      }
+      .report-stat {
+        background: var(--warm-box);
+        border: 1px solid var(--tan);
+        border-radius: 8px;
+        padding: 13px 14px;
+      }
+      .report-stat span {
+        color: var(--slate);
+        display: block;
+        font-size: 10.5px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .report-stat b {
+        color: var(--navy);
+        display: block;
+        font-family: var(--serif);
+        font-size: 22px;
+        line-height: 1.15;
+        margin-top: 5px;
+      }
+      .report-section {
+        border-top: 1px solid var(--tan);
+        padding-top: 18px;
+        margin-top: 18px;
+      }
+      .report-section h3 {
+        color: var(--navy);
+        font-family: var(--serif);
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+      .report-section p {
+        color: var(--charcoal);
+        margin: 0 0 8px;
+      }
+      .report-table {
+        border-collapse: collapse;
+        margin-top: 10px;
+        width: 100%;
+      }
+      .report-table th,
+      .report-table td {
+        border-bottom: 1px solid var(--warm-box);
+        padding: 8px 0;
+        text-align: left;
+        vertical-align: top;
+      }
+      .report-table th {
+        color: var(--slate);
+        font-size: 10.5px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .report-table td:last-child,
+      .report-table th:last-child {
+        color: var(--navy);
+        font-weight: 700;
+        text-align: right;
+      }
+      .report-footer {
+        border-top: 1px solid var(--tan);
+        color: var(--slate);
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 24px;
+        padding-top: 12px;
+        font-size: 10.5px;
+      }
+      @media (max-width: 720px) {
+        .report-cover,
+        .report-content {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+        .report-cover,
+        .report-stats {
+          grid-template-columns: 1fr;
+        }
+        .report-date {
+          text-align: left;
+        }
+      }
 
       /* QA harness */
       .qa {
@@ -943,6 +1119,10 @@
       }
 
       @media print {
+        @page {
+          size: letter;
+          margin: 0.42in;
+        }
         .capture,
         .qa,
         .snapshot-panel,
@@ -955,6 +1135,33 @@
         }
         body {
           background: #fff;
+        }
+        body.report-printing > :not(.premium-report) {
+          display: none !important;
+        }
+        body.report-printing .premium-report {
+          display: block !important;
+          border: 0;
+          box-shadow: none;
+          margin: 0;
+          overflow: visible;
+        }
+        body.report-printing .report-toolbar {
+          display: none;
+        }
+        body.report-printing .report-cover {
+          border-radius: 0;
+          padding: 24px 26px;
+        }
+        body.report-printing .report-content {
+          padding: 22px 26px 0;
+        }
+        body.report-printing .report-stats {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        body.report-printing .report-section,
+        body.report-printing .report-stat {
+          break-inside: avoid;
         }
       }
       @media (prefers-reduced-motion: reduce) {
@@ -1164,8 +1371,8 @@
       <div class="capture">
         <b>Save your Snapshot summary</b>
         <p>
-          Generate a plain-English summary from the numbers on this page. You can
-          copy it, open an email draft, or print/save it as a PDF.
+          Generate a branded PDF-ready Snapshot report from the numbers on this
+          page. Preview it first, then print or save it as a PDF.
         </p>
         <form id="capture-form">
           <input
@@ -1181,13 +1388,12 @@
               Copy summary
             </button>
             <button type="button" class="secondary" data-print-report>
-              Print / save PDF
+              Create PDF report
             </button>
           </div>
           <div class="note">
-            Framework only: this prepares the summary locally. Kajabi or an
-            email service can be connected later to send the approved summary
-            automatically.
+            The report is generated locally from the current calculator state.
+            Use your browser's print dialog to save the preview as a PDF.
           </div>
         </form>
       </div>
@@ -1218,6 +1424,17 @@
         <div class="summary" id="qa-summary"></div>
       </div>
     </main>
+
+    <section class="premium-report" id="premium-report" aria-hidden="true">
+      <div class="report-toolbar">
+        <strong>Branded PDF report preview</strong>
+        <div>
+          <button type="button" data-close-report>Close</button>
+          <button type="button" data-save-report>Print / save PDF</button>
+        </div>
+      </div>
+      <div class="report-page" id="report-page"></div>
+    </section>
 
     <footer>
       <div class="wrap">
@@ -1807,8 +2024,10 @@
 
       function stripHtml(html) {
         const div = document.createElement("div");
-        div.innerHTML = html;
-        return div.textContent || div.innerText || "";
+        div.innerHTML = String(html || "")
+          .replace(/<br\s*\/?>/gi, " ")
+          .replace(/<\/p>/gi, " </p>");
+        return (div.textContent || div.innerText || "").replace(/\s+/g, " ").trim();
       }
       function statusCounts() {
         const counts = { green: 0, yellow: 0, red: 0, na: 0 };
@@ -1863,6 +2082,81 @@
           `Generated from: ${window.location.origin}${window.location.pathname}`,
         ].join("\n");
       }
+      function esc(text) {
+        return String(text ?? "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+      function reportRows(rows) {
+        return `<table class="report-table"><thead><tr><th>Metric</th><th>Result</th></tr></thead><tbody>${rows
+          .map(([label, value]) => `<tr><td>${esc(label)}</td><td>${esc(value)}</td></tr>`)
+          .join("")}</tbody></table>`;
+      }
+      function buildPremiumReportHtml() {
+        const o = compute(state.vals);
+        const counts = statusCounts();
+        const action = $("action-text").value.trim() || "Not selected yet";
+        const generated = new Date().toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+        const progress =
+          o.progress === null
+            ? "Freedom Number reached"
+            : `${money(state.vals.ownership || 0)} of ${money(o.compass)}`;
+        return `
+          <div class="report-cover">
+            <div>
+              <div class="report-brand">Physician Freedom System</div>
+              <h2>Freedom Snapshot Report</h2>
+            </div>
+            <div class="report-date">Generated ${esc(generated)}</div>
+          </div>
+          <div class="report-content">
+            <div class="report-kicker">Current position</div>
+            <p class="report-lede">A concise snapshot of the numbers and statuses entered on the Freedom Snapshot Calculator.</p>
+            <div class="report-stats">
+              <div class="report-stat"><span>Freedom Number</span><b>${esc(money(o.compass))}</b></div>
+              <div class="report-stat"><span>Freedom Delta</span><b>${esc(o.delta === 0 ? "Reached" : `${money(o.delta)} /mo`)}</b></div>
+              <div class="report-stat"><span>Status scan</span><b>${counts.green}G / ${counts.yellow}Y / ${counts.red}R</b></div>
+            </div>
+            <section class="report-section">
+              <h3>Snapshot Metrics</h3>
+              ${reportRows([
+                ["Runway", o.runway === null ? "Not assessed" : `${o.runway.toFixed(1)} months`],
+                ["Core covered", pctText(o.pct)],
+                ["Progress to Freedom Number", progress],
+                ["Not assessed rows", String(counts.na)],
+              ])}
+            </section>
+            <section class="report-section">
+              <h3>What This Means</h3>
+              <p>${esc(stripHtml(snapshotRead(state.vals, o, counts)))}</p>
+            </section>
+            <section class="report-section">
+              <h3>First Action This Week</h3>
+              <p>${esc(action)}</p>
+            </section>
+            <div class="report-footer">
+              <span>Physician Freedom System</span>
+              <span>${esc(window.location.origin + window.location.pathname)}</span>
+            </div>
+          </div>`;
+      }
+      function showPremiumReport() {
+        $("report-page").innerHTML = buildPremiumReportHtml();
+        const report = $("premium-report");
+        report.setAttribute("aria-hidden", "false");
+        report.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      function printPremiumReport() {
+        showPremiumReport();
+        document.body.classList.add("report-printing");
+        window.setTimeout(() => window.print(), 60);
+      }
       async function copyReport(button) {
         const report = buildSnapshotReport();
         await navigator.clipboard.writeText(report);
@@ -1891,10 +2185,20 @@
           });
         });
         form.querySelector("[data-print-report]")?.addEventListener("click", () => {
+          showPremiumReport();
           track("report_print");
-          window.print();
+        });
+        document.querySelector("[data-close-report]")?.addEventListener("click", () => {
+          $("premium-report").setAttribute("aria-hidden", "true");
+        });
+        document.querySelector("[data-save-report]")?.addEventListener("click", () => {
+          track("report_print_save");
+          printPremiumReport();
         });
       }
+      window.addEventListener("afterprint", () => {
+        document.body.classList.remove("report-printing");
+      });
       window.addEventListener("load", () => {
         track("calculator_view");
         postEmbedHeight();
